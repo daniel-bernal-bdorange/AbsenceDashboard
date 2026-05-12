@@ -60,7 +60,7 @@ npm run preview
 
 ## CI/CD
 
-El workflow de GitHub Actions está en `.github/workflows/azure-static-web-apps.yml` y despliega el build de Vite en Azure Static Web Apps.
+El despliegue automático en Azure Static Web Apps está desactivado temporalmente mientras se configura Azure. El workflow queda disponible en `.github/workflows/azure-static-web-apps.yml` solo para ejecución manual si hiciera falta.
 
 ## Estructura inicial
 
