@@ -1,0 +1,10 @@
+{
+  "monthlyAbsencesTitle": "Ausencias mensuales",
+  "chartLegend": "Leyenda",
+  "vacationSeries": "Vacaciones",
+  "sickLeaveSeries": "Baja por enfermedad",
+  "specialSeries": "Permisos especiales",
+  "axisMonths": "Meses",
+  "axisDays": "Días",
+  "chartDescription": "Serie de ejemplo para validar el motor de gráficos del proyecto desde el scaffold inicial."
+}

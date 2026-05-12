@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=Nunito+Sans:wght@700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ob-orange: #ff6600;
+  --ob-orange-dark: #cc5200;
+  --ob-orange-light: #ff8533;
+  --ob-orange-pale: #fff0e6;
+  --ob-black: #1a1a1a;
+  --ob-gray-dark: #333333;
+  --ob-gray-mid: #666666;
+  --ob-gray-light: #f5f5f5;
+  --ob-white: #ffffff;
+  --ob-success: #2e7d32;
+  --ob-warning: #f57c00;
+  --ob-error: #c62828;
+  --ob-info: #0277bd;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #fff;
+  color: var(--ob-black);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-display {
+  font-family: 'Nunito Sans', system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--ob-orange);
+  color: var(--ob-white);
+}
+
+@layer components {
+  .surface {
+    @apply rounded-[28px] border border-white/70 bg-white/85 shadow-soft backdrop-blur;
+  }
+}

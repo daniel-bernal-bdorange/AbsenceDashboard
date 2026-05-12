@@ -1,0 +1,21 @@
+{
+  "title": "Base técnica del proyecto React + TypeScript",
+  "subtitle": "Una base visual con Orange Business, autenticación Entra ID, i18n, estado global y despliegue en Azure Static Web Apps.",
+  "chartCardTitle": "Gráfico base",
+  "chartTitle": "Evolución mensual de ausencias",
+  "chartDescription": "ECharts ya está conectado al proyecto con un ejemplo de barras apiladas para validar el stack gráfico desde el primer día.",
+  "selectedYear": "Año",
+  "environmentCardTitle": "Variables de entorno",
+  "stackCardTitle": "Stack instalado",
+  "setupChecklistTitle": "Comprobación del scaffold",
+  "authCardTitle": "Autenticación",
+  "authPending": "Sin sesión iniciada",
+  "user": "Usuario",
+  "clientId": "Client ID de Entra ID",
+  "tenantId": "Tenant ID de Entra ID",
+  "redirectUri": "Redirect URI",
+  "sharepointSiteId": "SharePoint site ID",
+  "sharepointDriveId": "SharePoint drive ID",
+  "sharepointFolderPath": "Ruta de carpeta",
+  "departmentConfigFile": "Fichero de departamentos"
+}

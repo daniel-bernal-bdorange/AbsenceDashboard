@@ -1,0 +1,10 @@
+{
+  "monthlyAbsencesTitle": "Monthly absences",
+  "chartLegend": "Legend",
+  "vacationSeries": "Vacation",
+  "sickLeaveSeries": "Sick leave",
+  "specialSeries": "Special leave",
+  "axisMonths": "Months",
+  "axisDays": "Days",
+  "chartDescription": "Sample series used to validate the chart engine from the initial scaffold."
+}

@@ -1,0 +1,21 @@
+{
+  "title": "React + TypeScript project foundation",
+  "subtitle": "A visual starter with Orange Business branding, Entra ID auth, i18n, global state, and Azure Static Web Apps deployment.",
+  "chartCardTitle": "Base chart",
+  "chartTitle": "Monthly absence trend",
+  "chartDescription": "ECharts is already wired into the app with a stacked bar example so the charting stack is validated from day one.",
+  "selectedYear": "Year",
+  "environmentCardTitle": "Environment variables",
+  "stackCardTitle": "Installed stack",
+  "setupChecklistTitle": "Scaffold checklist",
+  "authCardTitle": "Authentication",
+  "authPending": "No active session",
+  "user": "User",
+  "clientId": "Entra ID client ID",
+  "tenantId": "Entra ID tenant ID",
+  "redirectUri": "Redirect URI",
+  "sharepointSiteId": "SharePoint site ID",
+  "sharepointDriveId": "SharePoint drive ID",
+  "sharepointFolderPath": "Folder path",
+  "departmentConfigFile": "Department config file"
+}

@@ -1,0 +1,7 @@
+{
+  "authNotConfigured": "Authentication is not configured yet.",
+  "missingEnv": "Required environment variables are missing.",
+  "generic": "An unexpected error occurred.",
+  "buildFailed": "The build failed.",
+  "previewFailed": "The preview could not be opened."
+}

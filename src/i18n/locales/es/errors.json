@@ -1,0 +1,7 @@
+{
+  "authNotConfigured": "La autenticación no está configurada todavía.",
+  "missingEnv": "Faltan variables de entorno requeridas.",
+  "generic": "Se ha producido un error inesperado.",
+  "buildFailed": "La compilación ha fallado.",
+  "previewFailed": "No se ha podido abrir la vista previa."
+}

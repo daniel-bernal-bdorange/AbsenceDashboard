@@ -1,0 +1,20 @@
+{
+  "appName": "Absence Dashboard",
+  "appSubtitle": "Starter scaffolding for absence analytics",
+  "language": "Language",
+  "spanish": "Spanish",
+  "english": "English",
+  "signIn": "Sign in",
+  "signOut": "Sign out",
+  "loading": "Loading",
+  "status": "Status",
+  "configured": "Configured",
+  "notConfigured": "Pending",
+  "environment": "Environment",
+  "stack": "Stack",
+  "preview": "Preview",
+  "build": "Build",
+  "deploy": "Deploy",
+  "setup": "Local setup",
+  "ready": "Ready"
+}

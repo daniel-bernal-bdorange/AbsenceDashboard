@@ -1,0 +1,11 @@
+{
+  "employee": "Employee",
+  "type": "Type",
+  "from": "From",
+  "till": "Till",
+  "days": "Days",
+  "status": "Status",
+  "emptyState": "No records",
+  "rowsPerPage": "Rows per page",
+  "exportCsv": "Export CSV"
+}

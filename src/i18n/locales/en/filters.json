@@ -1,0 +1,10 @@
+{
+  "year": "Year",
+  "language": "Language",
+  "scope": "Scope",
+  "allDepartments": "All departments",
+  "prod": "Prod",
+  "backOffice": "Back Office",
+  "clear": "Clear filters",
+  "apply": "Apply filters"
+}
