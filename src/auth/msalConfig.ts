@@ -2,10 +2,12 @@ import { type Configuration, LogLevel, PublicClientApplication } from '@azure/ms
 
 import { appEnv } from '../config/env';
 
+const defaultAuthority = 'https://login.microsoftonline.com/common';
+
 const msalConfig: Configuration = {
   auth: {
     clientId: appEnv.aadClientId,
-    authority: appEnv.aadAuthority,
+    authority: appEnv.aadAuthority || defaultAuthority,
     redirectUri: appEnv.aadRedirectUri,
     postLogoutRedirectUri: appEnv.aadRedirectUri,
     navigateToLoginRequestUrl: false,
