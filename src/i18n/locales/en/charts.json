@@ -6,5 +6,11 @@
   "specialSeries": "Special leave",
   "axisMonths": "Months",
   "axisDays": "Days",
-  "chartDescription": "Sample series used to validate the chart engine from the initial scaffold."
+  "chartDescription": "Sample series used to validate the chart engine from the initial scaffold.",
+  "absenceCalendar": "Absence calendar",
+  "trendTitle": "Year-over-Year Trend",
+  "currentYear": "Current Year",
+  "previousYear": "Previous Year",
+  "projection": "Projection",
+  "vsLastYear": "vs last year"
 }

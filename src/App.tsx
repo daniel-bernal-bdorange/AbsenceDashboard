@@ -1,10 +1,7 @@
 import { useMemo, useState } from 'react';
 
-import { ErrorBoundary } from './components/common/ErrorBoundary';
-import { OverviewChart } from './components/OverviewChart';
-import { FolderPicker } from './components/FolderPicker';
-import { AppShell, type NavigationItem } from './components/layout/AppShell';
-import { ToastContainer } from './components/common/Toast';
+import { ErrorBoundary, OverviewChart, TrendLine, FolderPicker, AppShell, ToastContainer } from './components';
+import { type NavigationItem } from './components/layout/AppShell';
 import { appEnv } from './config/env';
 import { useTranslation } from './i18n/useTranslation';
 import { useAppStore } from './store/useAppStore';
@@ -145,6 +142,10 @@ export function App() {
             sickLeaveData={monthlySeries.sickLeaveData}
             year={selectedYear}
           />
+        </div>
+
+        <div className="mt-6">
+          <TrendLine year={selectedYear} />
         </div>
       </section>
 

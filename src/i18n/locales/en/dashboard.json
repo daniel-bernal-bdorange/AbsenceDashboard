@@ -32,5 +32,6 @@
   "kpiTopEmployee": "Top absence",
   "kpiEmployees": "Employees",
   "kpiEmployeesSubtitle": "With some absence",
-  "days": "days"
+  "days": "days",
+  "trendCardTitle": "Trends"
 }
