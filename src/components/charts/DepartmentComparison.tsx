@@ -62,7 +62,7 @@ export function DepartmentComparison({ year }: DepartmentComparisonProps) {
     data.Prod.absenteeismRate = (data.Prod.totalDays / (prodEmployees * workingDays)) * 100;
     data.BackOffice.absenteeismRate = (data.BackOffice.totalDays / (boEmployees * workingDays)) * 100;
 
-    return Object.values(data).filter(d => d.totalDays > 0).sort((a, b) => b.totalDays - a.totalDays);
+    return Object.values(data).filter(d => d.totalDays > 0).sort((a, b) => a.totalDays - b.totalDays);
   }, [records, year]);
 
   const option: EChartsOption = useMemo(() => ({

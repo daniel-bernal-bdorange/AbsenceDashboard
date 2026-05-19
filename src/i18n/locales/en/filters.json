@@ -6,5 +6,7 @@
   "prod": "Prod",
   "backOffice": "Back Office",
   "clear": "Clear filters",
-  "apply": "Apply filters"
+  "apply": "Apply filters",
+  "activeFilters": "active filters",
+  "noActiveFilters": "No active filters"
 }

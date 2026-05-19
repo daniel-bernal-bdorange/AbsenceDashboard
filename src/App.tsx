@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { ErrorBoundary, OverviewChart, TrendLine, AbsenceTypeDonut, DepartmentComparison, FolderPicker, AppShell, ToastContainer } from './components';
+import { ErrorBoundary, OverviewChart, TrendLine, AbsenceTypeDonut, DepartmentComparison, FolderPicker, AppShell, ToastContainer, FilterPanel } from './components';
 import { type NavigationItem } from './components/layout/AppShell';
 import { appEnv } from './config/env';
 import { useTranslation } from './i18n/useTranslation';
@@ -118,10 +118,14 @@ export function App() {
             </label>
           </div>
 
-          <div className="py-10">
-            <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
-              {tDashboard('chartTitle')}
-            </p>
+<div className="mb-8 relative">
+              <FilterPanel />
+            </div>
+
+            <div className="py-10">
+              <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
+                {tDashboard('chartTitle')}
+              </p>
             <OverviewChart
               specialLeaveData={monthlySeries.specialLeaveData}
               vacationData={monthlySeries.vacationData}

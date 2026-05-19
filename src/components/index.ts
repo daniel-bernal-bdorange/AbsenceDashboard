@@ -16,3 +16,4 @@ export { AbsenceCalendar, TrendLine, AbsenceTypeDonut, DepartmentComparison } fr
 
 export { OverviewChart } from './OverviewChart';
 export { FolderPicker } from './FolderPicker';
+export { FilterPanel } from './filters/FilterPanel';

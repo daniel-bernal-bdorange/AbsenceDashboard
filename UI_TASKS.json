@@ -42,11 +42,11 @@
     "filters": {
       "description": "Panel de filtros",
       "tasks": [
-        { "id": "UI-017", "name": "FilterPanel", "status": "pending" },
-        { "id": "UI-018", "name": "EmployeeFilter (multiselect)", "status": "pending" },
-        { "id": "UI-019", "name": "DepartmentFilter (Prod/BackOffice)", "status": "pending" },
-        { "id": "UI-020", "name": "DateRangeFilter", "status": "pending" },
-        { "id": "UI-021", "name": "AbsenceTypeFilter", "status": "pending" }
+        { "id": "UI-017", "name": "FilterPanel", "status": "completed", "file": "src/components/filters/FilterPanel.tsx" },
+        { "id": "UI-018", "name": "EmployeeFilter (multiselect)", "status": "completed", "file": "src/components/filters/EmployeeFilter.tsx" },
+        { "id": "UI-019", "name": "DepartmentFilter (Prod/BackOffice)", "status": "completed", "file": "src/components/filters/DepartmentFilter.tsx" },
+        { "id": "UI-020", "name": "DateRangeFilter", "status": "completed", "file": "src/components/filters/DateRangeFilter.tsx" },
+        { "id": "UI-021", "name": "AbsenceTypeFilter", "status": "completed", "file": "src/components/filters/AbsenceTypeFilter.tsx" }
       ]
     },
     "tables": {
@@ -68,8 +68,8 @@
   },
   "summary": {
     "total": 27,
-    "completed": 18,
-    "pending": 9
+    "completed": 23,
+    "pending": 4
   },
-  "nextTask": "UI-017 (FilterPanel)"
+  "nextTask": "UI-022 (AbsenceTable)"
 }
