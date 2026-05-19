@@ -1,53 +1,26 @@
 import type { ReactNode } from 'react';
 
 import { useTranslation } from '../../i18n/useTranslation';
-
-const getInitials = (name?: string | null) => {
-  const trimmedName = name?.trim();
-
-  if (!trimmedName) {
-    return 'OB';
-  }
-
-  const initials = trimmedName
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase() ?? '')
-    .join('');
-
-  return initials || 'OB';
-};
+import { useAppStore } from '../../store/useAppStore';
 
 type HeaderProps = {
-  accountEmail?: string | null;
-  accountName?: string | null;
   appName: string;
   appSubtitle: string;
-  authConfigured: boolean;
-  isAuthenticated: boolean;
-  isBusy: boolean;
   languageSwitcher: ReactNode;
-  onAuthAction: () => void;
   onToggleSidebar: () => void;
   sidebarOpen: boolean;
 };
 
 export function Header({
-  accountEmail,
-  accountName,
   appName,
   appSubtitle,
-  authConfigured,
-  isAuthenticated,
-  isBusy,
   languageSwitcher,
-  onAuthAction,
   onToggleSidebar,
   sidebarOpen,
 }: HeaderProps) {
   const { t: tCommon } = useTranslation('common');
   const { t: tDashboard } = useTranslation('dashboard');
+  const { folderName, clearRecords } = useAppStore();
 
   return (
     <header className="rounded-[28px] border border-white/70 bg-ink shadow-soft">
@@ -81,39 +54,23 @@ export function Header({
 
             {languageSwitcher}
 
-            {isAuthenticated ? (
-              <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-3 py-2.5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orangeBusiness text-sm font-black text-white shadow-insetGlow">
-                  {getInitials(accountName ?? accountEmail)}
-                </div>
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold text-white">
-                    {accountName ?? tDashboard('user')}
-                  </p>
-                  {accountEmail ? (
-                    <p className="truncate text-xs text-white/65">{accountEmail}</p>
-                  ) : null}
-                </div>
-              </div>
-            ) : null}
-
             <button
               className="rounded-full bg-orangeBusiness px-5 py-2.5 font-medium text-white transition hover:bg-orangeBusiness-dark disabled:cursor-not-allowed disabled:opacity-60"
-              disabled={!authConfigured || isBusy}
               type="button"
-              onClick={onAuthAction}
+              onClick={clearRecords}
             >
-              {isAuthenticated ? tCommon('signOut') : tCommon('signIn')}
+              {tDashboard('changeFolder')}
             </button>
           </div>
 
-          {!isAuthenticated ? (
-            <div className="flex flex-wrap items-center gap-3 text-sm text-white/70">
-              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-                {tDashboard('authPending')}
-              </span>
-            </div>
-          ) : null}
+          <div className="flex flex-wrap items-center gap-3 text-sm text-white/70">
+            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
+              {tDashboard('loadedFolder')}
+            </span>
+            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
+              {folderName ?? '—'}
+            </span>
+          </div>
         </div>
       </div>
     </header>

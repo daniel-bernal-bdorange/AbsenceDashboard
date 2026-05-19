@@ -1,0 +1,5513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+xmlns:html="http://www.w3.org/TR/REC-html40">
+<Styles>
+<Style ss:ID="header">
+<Interior ss:Color="#CCCCCC" ss:Pattern="Solid"/>
+<Font ss:Bold="1"/>
+</Style>
+<Style ss:ID="green">
+<Interior ss:Color="#00FF00" ss:Pattern="Solid"/>
+<NumberFormat ss:Format="Standard"/>
+</Style>
+<Style ss:ID="blue">
+<Interior ss:Color="#0000FF" ss:Pattern="Solid"/>
+<NumberFormat ss:Format="Standard"/>
+</Style>
+<Style ss:ID="red">
+<Interior ss:Color="#FF0000" ss:Pattern="Solid"/>
+<NumberFormat ss:Format="Standard"/>
+</Style>
+<Style ss:ID="orange">
+<Interior ss:Color="#FFA500" ss:Pattern="Solid"/>
+<NumberFormat ss:Format="Standard"/>
+</Style>
+<Style ss:ID="violet">
+<Interior ss:Color="#7F00FF" ss:Pattern="Solid"/>
+<NumberFormat ss:Format="Standard"/>
+</Style>
+<Style ss:ID="row">
+<NumberFormat ss:Format="Standard"/>
+</Style>
+<Style ss:ID="row-number">
+<NumberFormat ss:Format="Standard"/>
+</Style>
+<Style ss:ID="row-sdate">
+<NumberFormat ss:Format="Short Date"/>
+</Style>
+<Style ss:ID="row-gdate">
+<NumberFormat ss:Format="General Date"/>
+</Style>
+</Styles>
+<Worksheet ss:Name="Export ASA">
+<Table x:FullColumns="1" x:FullRows="1">
+<Row ss:StyleID="header">
+<Cell><Data ss:Type="String"><![CDATA[Code]]></Data></Cell>
+<Cell><Data ss:Type="String"><![CDATA[Employee]]></Data></Cell>
+<Cell><Data ss:Type="String"><![CDATA[Type]]></Data></Cell>
+<Cell><Data ss:Type="String"><![CDATA[From]]></Data></Cell>
+<Cell><Data ss:Type="String"><![CDATA[Till]]></Data></Cell>
+<Cell><Data ss:Type="String"><![CDATA[Request date]]></Data></Cell>
+<Cell><Data ss:Type="String"><![CDATA[Number of days]]></Data></Cell>
+<Cell><Data ss:Type="String"><![CDATA[Status]]></Data></Cell>
+<Cell><Data ss:Type="String"><![CDATA[Validation status]]></Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez-041]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-10-23T13:56:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ldouzet-023]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ldouzet]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-26T09:45:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara-023]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[03/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-20T14:17:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">22.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcamacho-036]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcamacho]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Permiso maternidad/paternidad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-23T12:59:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">40.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ldouzet-011]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ldouzet]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-09-26T10:15:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Canceled]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[slopez-048]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[slopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-10-20T17:08:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jpeiro-028]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jpeiro]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-10-21T11:24:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[alotero-023]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[alotero]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-10-22T08:47:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jsorroche-029]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jsorroche]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-10-23T11:48:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dvowinckel-005]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dvowinckel]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-03T09:12:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dbernal-017]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dbernal]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-03T17:01:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dbernal-019]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dbernal]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-04T09:50:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rlopez-018]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rlopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-11T08:43:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dmartinez-026]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dmartinez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-11T08:55:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">4.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[nvalls-057]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[nvalls]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-12T15:59:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">6.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara-020]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-18T10:21:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[srementeria-035]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[srementeria]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-25T09:01:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jpegg-049]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jpegg]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-25T10:04:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcarpio-039]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcarpio]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-26T10:19:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jelopez-011]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jelopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-26T17:09:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rgomez-038]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rgomez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-04T09:54:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gcernuda-001]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gcernuda]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-12T07:34:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mviejo-002]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mviejo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-12T10:38:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acamacho-054]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acamacho]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-12T12:25:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[msantos-002]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[msantos]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-18T11:21:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[imejdoub-002]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[imejdoub]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-02T19:00:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aornbratt-006]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aornbratt]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-16T12:54:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">0.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jlopez-034]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jlopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-07-16T15:30:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ynaydon-014]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ynaydon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-04T11:01:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iscridon-012]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iscridon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-05T14:57:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rlopez-017]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rlopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-11T08:43:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ldouzet-016]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ldouzet]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-24T10:35:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo-079]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-24T12:15:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gcernuda-003]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gcernuda]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-12T10:50:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acastillo-035]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acastillo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-12T14:57:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">4.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aornbratt-004]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aornbratt]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-16T12:48:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gmorin-059]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gmorin]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-30T07:56:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez-042]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[08/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-18T11:46:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[slopez-049]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[slopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-10-20T17:09:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jpeiro-029]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jpeiro]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-10-21T11:27:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">4.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dbernal-018]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dbernal]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-03T17:01:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ynaydon-015]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ynaydon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-04T11:02:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rlopez-019]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rlopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-11T08:44:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[alotero-025]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[alotero]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-24T10:05:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo-080]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-24T12:15:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ldouzet-024]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ldouzet]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-26T09:46:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcarpio-040]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcarpio]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-26T10:21:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gcernuda-002]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gcernuda]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-12T07:37:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aornbratt-005]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aornbratt]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-16T12:49:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cconde-067]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cconde]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Permisos especiales/ Enfermedad u operación de un familiar]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-21T14:04:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[amartin-049]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[amartin]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[08/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[26/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-07T12:07:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">13.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jlopez-039]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jlopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[08/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-20T12:23:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez-043]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-18T11:46:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aornbratt-007]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aornbratt]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-28T09:43:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[hkatta-007]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[hkatta]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-14T14:27:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dmartinez-028]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dmartinez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-11T08:58:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">0.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jlopez-038]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jlopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[13/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-20T12:31:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[msuarez-002]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[msuarez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[16/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-02T13:19:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[srementeria-036]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[srementeria]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[19/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-10T13:36:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">6.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo-083]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-15T14:43:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[slopez-058]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[slopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-22T12:34:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[bluaces-033]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[bluaces]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-31T13:40:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gmorin-060]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gmorin]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[15/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[16/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-02T16:22:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mpaniagua-035]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mpaniagua]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[15/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[16/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-08T17:02:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rmulas-045]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rmulas]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[15/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[18/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-16T08:14:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">25.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo-084]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[16/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[16/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-13T15:23:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo-082]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[19/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[19/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-24T12:19:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez-044]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[19/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[26/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-21T13:52:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">6.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cconde-068]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cconde]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/01/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-21T14:05:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">0.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cconde-069]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cconde]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[21/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[21/01/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-21T14:06:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">0.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo-078]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[26/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[26/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-24T11:57:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[bluaces-034]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[bluaces]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[26/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[28/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-08T21:19:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[amartin-051]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[amartin]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[27/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[27/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-19T19:04:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez-045]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[27/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[31/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-23T16:15:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">4.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acamacho-055]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acamacho]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[29/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[30/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-22T11:12:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gmorin-061]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gmorin]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[30/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[30/01/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-02T16:22:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jledezma-015]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jledezma]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[30/01/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-27T16:37:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez-046]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-26T11:51:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ynaydon-016]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ynaydon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-11-04T11:03:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[alotero-027]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[alotero]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-26T15:14:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mpaniagua-036]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mpaniagua]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[16/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-29T10:08:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">11.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ldouzet-025]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ldouzet]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Permisos especiales/ Fallecimiento familiar]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[03/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-04T17:02:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[avargas-023]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[avargas]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Permisos especiales/ Enfermedad u operación de un familiar]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[03/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[04/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-18T10:21:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara-024]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[04/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[17/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-03T14:24:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">10.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jpegg-050]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jpegg]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-03T13:26:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez-047]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-17T17:55:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">10.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[hkatta-009]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[hkatta]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[10/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[11/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-17T09:59:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cconde-070]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cconde]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[16/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-11T15:01:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[hkatta-008]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[hkatta]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[13/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-17T09:58:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jelopez-012]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jelopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[16/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[18/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-19T10:37:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo-085]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[16/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[17/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-21T11:23:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jocana-046]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jocana]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[16/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-03T13:14:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dmartinez-031]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dmartinez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Permisos especiales/ Fallecimiento familiar]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[17/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[18/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-16T14:01:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mpaniagua-037]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mpaniagua]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[17/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[21/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-20T09:36:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">4.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[nvalls-059]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[nvalls]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Permisos especiales/ Enfermedad u operación de un familiar]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[17/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[23/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-24T09:27:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo-086]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ccampo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[18/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-21T11:23:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara-025]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[18/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[27/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-17T11:33:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">8.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rmulas-046]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rmulas]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[19/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[31/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-20T09:28:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">29.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[hkatta-010]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[hkatta]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-18T10:33:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez-048]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[21/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-22T18:29:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">20.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jpegg-052]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jpegg]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Permisos especiales/ Matrimonio]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[23/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-12T11:30:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">10.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mpaniagua-038]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mpaniagua]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[23/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[28/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-02T09:49:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jelopez-013]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jelopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[27/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[27/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-19T10:38:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[nvalls-058]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[nvalls]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[27/02/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[27/02/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-23T14:57:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mpaniagua-039]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mpaniagua]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[31/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-31T19:47:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">22.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gcernuda-004]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gcernuda]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[02/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-13T12:33:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">4.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iscridon-016]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iscridon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[03/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[03/03/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-02T12:03:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">0.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dmartinez-032]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dmartinez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Permisos especiales/ Mudanza]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[04/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[04/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-26T13:14:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gmorin-062]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gmorin]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-18T07:49:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara-027]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-06T08:15:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dvowinckel-006]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dvowinckel]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[09/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[10/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2025-12-11T12:07:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ffalero-026]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ffalero]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[13/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-20T09:51:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jelopez-014]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jelopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[13/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-03T10:14:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">6.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara-031]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[13/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[13/03/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-11T11:32:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">0.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jpegg-051]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jpegg]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[16/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-12T11:29:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara-026]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[17/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[17/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-04T12:36:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[imejdoub-003]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[imejdoub]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[18/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[19/03/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-04T01:15:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[imejdoub-004]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[imejdoub]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[19/03/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-09T19:18:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[msantos-003]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[msantos]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[23/03/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-22T12:18:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dvowinckel-007]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dvowinckel]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[23/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-09T11:40:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara-032]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/03/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-12T10:54:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">0.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez-049]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[21/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-24T08:10:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">23.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jpegg-053]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jpegg]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Permisos especiales/ Matrimonio]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[23/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-25T15:42:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">10.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[imejdoub-005]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[imejdoub]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[23/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-09T19:20:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[msantos-004]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[msantos]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[23/03/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[08/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-22T12:19:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">10.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acastillo-039]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acastillo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Permisos especiales/ Fallecimiento familiar]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[25/03/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[27/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-30T09:30:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jledezma-016]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jledezma]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[26/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[30/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-09T15:02:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cconde-071]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cconde]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[27/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[27/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-16T12:12:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aavalos-035]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aavalos]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[27/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[30/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-20T14:10:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[alotero-026]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[alotero]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[30/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-01-26T11:48:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara-028]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[30/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-11T10:06:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[nvalls-060]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[nvalls]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[30/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-27T14:17:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[nvalls-063]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[nvalls]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[30/03/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[31/03/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-30T11:18:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcarpio-041]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcarpio]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-11T09:35:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rlopez-022]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rlopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-27T11:48:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[nvalls-061]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[nvalls]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-27T14:34:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jmena-001]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jmena]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-31T10:56:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acamacho-056]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acamacho]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-15T16:32:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcarpio-043]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcarpio]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-17T09:54:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mpaniagua-040]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mpaniagua]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[30/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-21T10:34:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">20.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rmulas-047]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rmulas]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[30/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-21T10:35:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">20.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acastillo-036]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acastillo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-03T13:46:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cconde-072]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cconde]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-17T16:05:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ffalero-027]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ffalero]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[13/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-18T13:05:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">6.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[hkatta-011]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[hkatta]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[08/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-23T14:52:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rgomez-039]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rgomez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-08T08:58:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[hkatta-012]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[hkatta]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-09T10:11:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara-033]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[08/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[10/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-08T09:51:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcamacho-037]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcamacho]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[10/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[10/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-15T09:17:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[nvalls-062]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[nvalls]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[17/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-27T14:35:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[slopez-059]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[slopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[17/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-21T10:05:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">6.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acamacho-057]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acamacho]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[21/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[22/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-15T16:33:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acastillo-038]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acastillo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[23/04/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-03T17:36:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[srementeria-037]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[srementeria]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-11T13:14:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ldouzet-026]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ldouzet]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/04/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-13T12:07:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">0.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rgomez-040]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rgomez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[27/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-28T09:46:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[slopez-060]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[slopez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[25/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[18/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-26T19:43:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">14.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez-050]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[cperez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[25/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[30/04/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-05-05T09:45:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">4.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[alotero-028]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[alotero]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[27/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[04/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-10T14:13:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcamacho-038]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcamacho]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[29/04/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[29/04/2026 Noon]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-24T09:50:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">0.5</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rmulas-048]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[rmulas]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Baja por enfermedad]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/05/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[31/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-05-04T12:13:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">19.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara-029]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[04/05/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[04/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-11T10:07:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aavalos-036]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aavalos]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones año anterior]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/05/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-28T15:11:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ldouzet-027]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ldouzet]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/05/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[07/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-28T15:18:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aavalos-037]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aavalos]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[08/05/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[08/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-28T15:11:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aornbratt-008]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aornbratt]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[11/05/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[14/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-05T14:20:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">4.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aornbratt-009]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aornbratt]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[18/05/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[22/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-05T14:21:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iscridon-014]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iscridon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[21/05/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[22/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-24T09:58:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[avargas-024]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[avargas]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[22/05/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[26/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-06T10:32:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcarpio-042]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcarpio]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[22/05/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[28/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-11T09:36:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iscridon-015]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iscridon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[25/05/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[25/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-02-25T09:47:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Refused]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Cancellation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aornbratt-010]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[aornbratt]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[25/05/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[29/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-05T14:21:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcarpio-044]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[dcarpio]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[29/05/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[29/05/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-28T13:31:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mviejo-004]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mviejo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[10/06/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[12/06/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-05-05T12:55:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gmorin-063]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gmorin]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[15/06/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[19/06/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-21T12:39:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acastillo-037]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[acastillo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[22/06/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/06/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-03T13:49:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gmorin-064]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gmorin]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[22/06/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[23/06/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-21T12:42:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">2.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[msuarez-003]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[msuarez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[22/06/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/06/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-05-07T10:55:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Running]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Employee validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gmorin-065]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[gmorin]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/06/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/06/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-21T12:45:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">1.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jmena-002]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jmena]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[29/06/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[03/07/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-04-06T10:13:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mviejo-005]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[mviejo]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[01/07/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[03/07/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-05-05T12:56:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">3.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[msuarez-004]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[msuarez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[06/07/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[17/07/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-05-07T10:56:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">10.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Running]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Employee validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara-030]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[iazuara]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[13/07/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[17/07/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-11T10:07:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ynaydon-018]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ynaydon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/07/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[24/07/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-17T18:22:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jsorroche-031]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[jsorroche]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[20/07/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[14/08/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-24T11:21:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">20.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[msuarez-005]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[msuarez]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[31/08/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[04/09/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-05-07T10:58:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">5.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Running]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Employee validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ynaydon-019]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[ynaydon]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Vacaciones]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[05/10/2026 Morning]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[16/10/2026 End of the day]]></Data>
+</Cell>
+<Cell ss:StyleID="row-gdate">
+<Data ss:Type="DateTime"  format="yyyy\-mm\-dd" >2026-03-17T18:23:00.000</Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">9.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Accepted]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[HR validation]]></Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[Total]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[]]></Data>
+</Cell>
+<Cell ss:StyleID="row-number">
+<Data ss:Type="Number">746.0</Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[]]></Data>
+</Cell>
+<Cell ss:StyleID="row">
+<Data ss:Type="String"><![CDATA[]]></Data>
+</Cell>
+</Row>
+</Table>
+</Worksheet>
+</Workbook>
