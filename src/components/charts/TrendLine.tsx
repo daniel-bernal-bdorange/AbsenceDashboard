@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import type { EChartsOption } from 'echarts';
 import ReactECharts from 'echarts-for-react';
 
@@ -42,7 +42,51 @@ const getHistoricalAverage = (data: number[], upToMonth: number): number => {
 export function TrendLine({ year }: TrendLineProps) {
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
+  const setFilters = useAppStore((s) => s.setFilters);
   const { i18n, t } = useTranslation('charts');
+
+  const handleChartClick = useCallback((params: unknown) => {
+    console.log('TrendLine click:', params);
+    const p = params as { dataIndex?: number; seriesIndex?: number; componentType?: string; seriesName?: string };
+
+    if ((p.componentType === 'xAxis' || p.componentType === 'axisLabel') && p.dataIndex !== undefined) {
+      const month = p.dataIndex;
+      const fromDate = new Date(year, month, 1);
+      const toDate = new Date(year, month + 1, 0);
+
+      if (filters.selectedMonth === month) {
+        setFilters({ selectedMonth: null, dateRange: { from: null, to: null } });
+      } else {
+        setFilters({ 
+          selectedMonth: month,
+          dateRange: { from: fromDate, to: toDate }
+        });
+      }
+      return;
+    }
+
+    if (p.dataIndex !== undefined && p.seriesIndex !== undefined) {
+      const month = p.dataIndex;
+      const seriesName = p.seriesName;
+      const targetYear = seriesName === t('previousYear') ? year - 1 : year;
+      
+      const fromDate = new Date(targetYear, month, 1);
+      const toDate = new Date(targetYear, month + 1, 0);
+
+      if (filters.selectedMonth === month && filters.dateRange.from?.getFullYear() === targetYear) {
+        setFilters({ selectedMonth: null, dateRange: { from: null, to: null } });
+      } else {
+        setFilters({ 
+          selectedMonth: month,
+          dateRange: { from: fromDate, to: toDate }
+        });
+      }
+    }
+  }, [filters.selectedMonth, filters.dateRange, setFilters, year, t]);
+
+  const onEvents = {
+  click: handleChartClick
+};
 
   const filteredRecords = useMemo(() => {
     return records.filter((r) => {
@@ -130,12 +174,13 @@ export function TrendLine({ year }: TrendLineProps) {
         top: 48,
         containLabel: true,
       },
-      xAxis: {
+xAxis: {
         type: 'category',
         data: monthLabels,
+        triggerEvent: true,
         axisLine: { lineStyle: { color: '#e5e5e5' } },
         axisTick: { show: false },
-        axisLabel: { color: '#666', fontSize: 11 },
+        axisLabel: { color: '#666', fontSize: 11, triggerEvent: true },
       },
       yAxis: {
         type: 'value',
@@ -191,7 +236,11 @@ export function TrendLine({ year }: TrendLineProps) {
 
   return (
     <div style={{ overflow: 'visible' }}>
-      <ReactECharts option={option} style={{ height: 280, width: '100%' }} />
+      <ReactECharts 
+        option={option} 
+        style={{ height: 280, width: '100%' }}
+        onEvents={onEvents}
+      />
     </div>
   );
 }
