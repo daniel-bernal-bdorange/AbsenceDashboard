@@ -22,5 +22,15 @@
   "sharepointSiteId": "SharePoint site ID",
   "sharepointDriveId": "SharePoint drive ID",
   "sharepointFolderPath": "Ruta de carpeta",
-  "departmentConfigFile": "Fichero de departamentos"
+  "departmentConfigFile": "Fichero de departamentos",
+  "kpiTotalDays": "Días de ausencia",
+  "kpiTotalDaysSubtitle": "Total días solicitados",
+  "kpiCurrentlyOut": "Fuera ahora",
+  "kpiCurrentlyOutSubtitle": "Empleados ausentes hoy",
+  "kpiAbsenteeismRate": "Tasa absentismo",
+  "kpiAbsenteeismRateSubtitle": "vs año anterior",
+  "kpiTopEmployee": "Mayor ausencia",
+  "kpiEmployees": "Empleados",
+  "kpiEmployeesSubtitle": "Con alguna ausencia",
+  "days": "días"
 }

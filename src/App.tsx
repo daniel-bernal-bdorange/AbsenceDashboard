@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react';
 
+import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { OverviewChart } from './components/OverviewChart';
 import { FolderPicker } from './components/FolderPicker';
 import { AppShell, type NavigationItem } from './components/layout/AppShell';
+import { ToastContainer } from './components/common/Toast';
 import { appEnv } from './config/env';
 import { useTranslation } from './i18n/useTranslation';
 import { useAppStore } from './store/useAppStore';
@@ -97,7 +99,9 @@ export function App() {
   const decadeYears = [selectedYear - 1, selectedYear, selectedYear + 1];
 
   return (
-    <AppShell
+    <ErrorBoundary>
+      <ToastContainer />
+      <AppShell
       activeSection={activeSection}
       appName={appEnv.appTitle}
       appSubtitle={tCommon('appSubtitle')}
@@ -181,5 +185,6 @@ export function App() {
         </section>
       </div>
     </AppShell>
+    </ErrorBoundary>
   );
 }
