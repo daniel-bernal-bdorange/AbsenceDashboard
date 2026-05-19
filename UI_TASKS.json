@@ -53,7 +53,7 @@
       "description": "Tablas de datos",
       "tasks": [
         { "id": "UI-022", "name": "AbsenceTable", "status": "completed", "file": "src/components/tables/AbsenceTable.tsx" },
-        { "id": "UI-023", "name": "EmployeeSummaryTable", "status": "pending" }
+        { "id": "UI-023", "name": "EmployeeSummaryTable", "status": "completed", "file": "src/components/tables/EmployeeSummaryTable.tsx" }
       ]
     },
     "pages": {
@@ -71,5 +71,5 @@
     "completed": 23,
     "pending": 4
   },
-  "nextTask": "UI-023 (EmployeeSummaryTable)"
+  "nextTask": "UI-026 (EmployeeDetail)"
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { ErrorBoundary, OverviewChart, TrendLine, AbsenceTypeDonut, DepartmentComparison, FolderPicker, AppShell, ToastContainer, FilterPanel } from './components';
-import { AbsenceTable } from './components/tables';
+import { AbsenceTable, EmployeeSummaryTable } from './components/tables';
 import { type NavigationItem } from './components/layout/AppShell';
 import { appEnv } from './config/env';
 import { useTranslation } from './i18n/useTranslation';
@@ -10,6 +10,8 @@ import { useAppStore } from './store/useAppStore';
 export function App() {
   const { selectedYear, setSelectedYear, records } = useAppStore();
   const [activeSection, setActiveSection] = useState('overview');
+  const [absenceTableExpanded, setAbsenceTableExpanded] = useState(true);
+  const [employeeSummaryExpanded, setEmployeeSummaryExpanded] = useState(true);
   const { t: tCommon } = useTranslation('common');
   const { t: tDashboard } = useTranslation('dashboard');
   const { t: tCharts } = useTranslation('charts');
@@ -97,15 +99,6 @@ export function App() {
 
           <hr className="border-gray-100" />
 
-          <div className="py-10">
-            <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
-              {tCharts('tableTitle') || 'Registro de ausencias'}
-            </p>
-            <AbsenceTable />
-          </div>
-
-          <hr className="border-gray-100" />
-
           <div className="py-10 grid grid-cols-1 xl:grid-cols-2 gap-16">
             <div>
               <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
@@ -129,6 +122,36 @@ export function App() {
               {tCharts('departmentComparison')}
             </p>
             <DepartmentComparison year={selectedYear} />
+          </div>
+
+          <hr className="border-gray-100" />
+
+          <div className="py-10 space-y-6">
+            <button
+              onClick={() => setAbsenceTableExpanded(!absenceTableExpanded)}
+              className="flex w-full items-center justify-between px-2 py-3 hover:bg-gray-50 rounded-lg transition-colors"
+            >
+              <span className="text-xs font-medium uppercase tracking-widest text-gray-400">
+                Registro de ausencias
+              </span>
+              <span className={`text-gray-400 transition-transform duration-200 ${absenceTableExpanded ? 'rotate-180' : ''}`}>
+                ▼
+              </span>
+            </button>
+            {absenceTableExpanded && <AbsenceTable />}
+
+            <button
+              onClick={() => setEmployeeSummaryExpanded(!employeeSummaryExpanded)}
+              className="flex w-full items-center justify-between px-2 py-3 hover:bg-gray-50 rounded-lg transition-colors"
+            >
+              <span className="text-xs font-medium uppercase tracking-widest text-gray-400">
+                Resumen por empleado
+              </span>
+              <span className={`text-gray-400 transition-transform duration-200 ${employeeSummaryExpanded ? 'rotate-180' : ''}`}>
+                ▼
+              </span>
+            </button>
+            {employeeSummaryExpanded && <EmployeeSummaryTable />}
           </div>
 
           <hr className="border-gray-100" />
