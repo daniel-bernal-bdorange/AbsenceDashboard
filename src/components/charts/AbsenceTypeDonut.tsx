@@ -19,8 +19,20 @@ const categoryColors: Record<AbsenceCategory, string> = {
 };
 
 export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
-  const { records } = useAppStore();
+  const records = useAppStore((s) => s.records);
+  const filters = useAppStore((s) => s.filters);
   const { t } = useTranslation('charts');
+
+  const filteredRecords = useMemo(() => {
+    return records.filter((r) => {
+      if (filters.departments.length && !filters.departments.includes(r.department ?? 'Unknown')) return false;
+      if (filters.employees.length && !filters.employees.includes(r.employeeUsername)) return false;
+      if (filters.categories.length && !filters.categories.includes(r.category)) return false;
+      if (filters.dateRange.from && r.from < filters.dateRange.from) return false;
+      if (filters.dateRange.to && r.till > filters.dateRange.to) return false;
+      return true;
+    });
+  }, [records, filters]);
 
   const distribution = useMemo(() => {
     const totals: Record<AbsenceCategory, number> = {
@@ -30,7 +42,7 @@ export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
       Special: 0,
     };
 
-    for (const record of records) {
+    for (const record of filteredRecords) {
       if (record.from.getFullYear() !== year) continue;
       if (record.status !== 'Accepted') continue;
       totals[record.category] += record.numberOfDays;
@@ -43,7 +55,7 @@ export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
         value,
         color: categoryColors[key as AbsenceCategory],
       }));
-  }, [records, year]);
+  }, [filteredRecords, year]);
 
   const totalDays = distribution.reduce((sum, d) => sum + d.value, 0);
 

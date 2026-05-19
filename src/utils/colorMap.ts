@@ -1,5 +1,3 @@
-import type { AbsenceType } from '../types';
-
 export const ABSENCE_COLORS: Record<string, string> = {
   'Vacaciones': '#FF6600',
   'Vacaciones año anterior': '#FF8533',

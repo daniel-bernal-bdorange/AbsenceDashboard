@@ -40,10 +40,22 @@ const getHistoricalAverage = (data: number[], upToMonth: number): number => {
 };
 
 export function TrendLine({ year }: TrendLineProps) {
-  const { records } = useAppStore();
+  const records = useAppStore((s) => s.records);
+  const filters = useAppStore((s) => s.filters);
   const { i18n, t } = useTranslation('charts');
 
-  const monthlyData = useMemo(() => buildMonthlyData(records, year), [records, year]);
+  const filteredRecords = useMemo(() => {
+    return records.filter((r) => {
+      if (filters.departments.length && !filters.departments.includes(r.department ?? 'Unknown')) return false;
+      if (filters.employees.length && !filters.employees.includes(r.employeeUsername)) return false;
+      if (filters.categories.length && !filters.categories.includes(r.category)) return false;
+      if (filters.dateRange.from && r.from < filters.dateRange.from) return false;
+      if (filters.dateRange.to && r.till > filters.dateRange.to) return false;
+      return true;
+    });
+  }, [records, filters]);
+
+  const monthlyData = useMemo(() => buildMonthlyData(filteredRecords, year), [filteredRecords, year]);
   
   const monthLabels = useMemo(() => {
     return Array.from({ length: 12 }, (_, i) =>
@@ -59,7 +71,7 @@ export function TrendLine({ year }: TrendLineProps) {
       if (idx <= currentYearMonth) return null;
       return getHistoricalAverage(monthlyData.previousYear, idx);
     });
-  }, [monthlyData]);
+  }, [monthlyData, year]);
 
   const option: EChartsOption = useMemo(() => {
     return {

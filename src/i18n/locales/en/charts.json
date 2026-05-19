@@ -23,5 +23,6 @@
   "absenteeismRate": "Absenteeism rate",
   "departmentComparison": "Department comparison",
   "prodDept": "Production",
-  "backOfficeDept": "Back Office"
+  "backOfficeDept": "Back Office",
+  "tableTitle": "Absence records"
 }

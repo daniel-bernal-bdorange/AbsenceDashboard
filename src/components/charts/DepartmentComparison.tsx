@@ -18,8 +18,20 @@ interface DepartmentData {
 }
 
 export function DepartmentComparison({ year }: DepartmentComparisonProps) {
-  const { records } = useAppStore();
+  const records = useAppStore((s) => s.records);
+  const filters = useAppStore((s) => s.filters);
   const { t } = useTranslation('charts');
+
+  const filteredRecords = useMemo(() => {
+    return records.filter((r) => {
+      if (filters.departments.length && !filters.departments.includes(r.department ?? 'Unknown')) return false;
+      if (filters.employees.length && !filters.employees.includes(r.employeeUsername)) return false;
+      if (filters.categories.length && !filters.categories.includes(r.category)) return false;
+      if (filters.dateRange.from && r.from < filters.dateRange.from) return false;
+      if (filters.dateRange.to && r.till > filters.dateRange.to) return false;
+      return true;
+    });
+  }, [records, filters]);
 
   const departmentData = useMemo(() => {
     const data: Record<string, DepartmentData> = {
@@ -42,7 +54,7 @@ export function DepartmentComparison({ year }: DepartmentComparisonProps) {
       BackOffice: new Set(),
     };
 
-    for (const record of records) {
+    for (const record of filteredRecords) {
       if (record.from.getFullYear() !== year) continue;
       if (record.status !== 'Accepted') continue;
 
@@ -54,7 +66,7 @@ export function DepartmentComparison({ year }: DepartmentComparisonProps) {
       employeeCounts[dept].add(record.employeeUsername);
     }
 
-    const totalEmployees = new Set(records.map(r => r.employeeUsername)).size || 1;
+    const totalEmployees = new Set(filteredRecords.map(r => r.employeeUsername)).size || 1;
     const prodEmployees = employeeCounts.Prod.size || Math.floor(totalEmployees * 0.6);
     const boEmployees = employeeCounts.BackOffice.size || Math.floor(totalEmployees * 0.4);
     const workingDays = 260;
@@ -63,7 +75,7 @@ export function DepartmentComparison({ year }: DepartmentComparisonProps) {
     data.BackOffice.absenteeismRate = (data.BackOffice.totalDays / (boEmployees * workingDays)) * 100;
 
     return Object.values(data).filter(d => d.totalDays > 0).sort((a, b) => a.totalDays - b.totalDays);
-  }, [records, year]);
+  }, [filteredRecords, year]);
 
   const option: EChartsOption = useMemo(() => ({
     backgroundColor: 'transparent',

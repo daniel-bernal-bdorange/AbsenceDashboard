@@ -1,14 +1,13 @@
+import { useMemo } from 'react';
 import type { EChartsOption } from 'echarts';
 import ReactECharts from 'echarts-for-react';
 
 import { useTranslation } from '../i18n/useTranslation';
+import { useAppStore } from '../store/useAppStore';
 import { chartColors } from './charts/chartColors';
 
 type OverviewChartProps = {
   year: number;
-  vacationData: number[];
-  sickLeaveData: number[];
-  specialLeaveData: number[];
 };
 
 const monthLabels = (language: string, year: number) =>
@@ -16,13 +15,57 @@ const monthLabels = (language: string, year: number) =>
     new Intl.DateTimeFormat(language, { month: 'short' }).format(new Date(year, index, 1)),
   );
 
-export function OverviewChart({
-  year,
-  vacationData,
-  sickLeaveData,
-  specialLeaveData,
-}: OverviewChartProps) {
+const buildMonthlySeries = (records: ReturnType<typeof useAppStore.getState>['records'], year: number) => {
+  const vacationData = Array(12).fill(0);
+  const sickLeaveData = Array(12).fill(0);
+  const specialLeaveData = Array(12).fill(0);
+
+  for (const record of records) {
+    if (record.from.getFullYear() !== year) continue;
+    if (record.status !== 'Accepted') continue;
+
+    const monthIndex = record.from.getMonth();
+    const days = record.numberOfDays;
+
+    switch (record.category) {
+      case 'Vacation':
+        vacationData[monthIndex] += days;
+        break;
+      case 'SickLeave':
+        sickLeaveData[monthIndex] += days;
+        break;
+      case 'Maternity':
+      case 'Special':
+        specialLeaveData[monthIndex] += days;
+        break;
+    }
+  }
+
+  return { vacationData, sickLeaveData, specialLeaveData };
+};
+
+export function OverviewChart({ year }: OverviewChartProps) {
   const { i18n, t } = useTranslation('charts');
+  const records = useAppStore((s) => s.records);
+  const filters = useAppStore((s) => s.filters);
+  const selectedYear = useAppStore((s) => s.selectedYear);
+
+  const filteredRecords = useMemo(() => {
+    return records.filter((r) => {
+      if (r.from.getFullYear() !== selectedYear) return false;
+      if (filters.departments.length && !filters.departments.includes(r.department ?? 'Unknown')) return false;
+      if (filters.employees.length && !filters.employees.includes(r.employeeUsername)) return false;
+      if (filters.categories.length && !filters.categories.includes(r.category)) return false;
+      if (filters.dateRange.from && r.from < filters.dateRange.from) return false;
+      if (filters.dateRange.to && r.till > filters.dateRange.to) return false;
+      return true;
+    });
+  }, [records, filters, selectedYear]);
+
+  const monthlySeries = useMemo(
+    () => buildMonthlySeries(filteredRecords, year),
+    [filteredRecords, year],
+  );
 
   const option: EChartsOption = {
     backgroundColor: 'transparent',
@@ -73,7 +116,7 @@ export function OverviewChart({
         stack: 'absences',
         barWidth: 20,
         emphasis: { focus: 'series' },
-        data: vacationData,
+        data: monthlySeries.vacationData,
       },
       {
         name: t('sickLeaveSeries'),
@@ -81,7 +124,7 @@ export function OverviewChart({
         stack: 'absences',
         barWidth: 20,
         emphasis: { focus: 'series' },
-        data: sickLeaveData,
+        data: monthlySeries.sickLeaveData,
       },
       {
         name: t('specialSeries'),
@@ -89,7 +132,7 @@ export function OverviewChart({
         stack: 'absences',
         barWidth: 20,
         emphasis: { focus: 'series' },
-        data: specialLeaveData,
+        data: monthlySeries.specialLeaveData,
       },
     ],
   };

@@ -1,5 +1,3 @@
-import { useTranslation } from '../../i18n/useTranslation';
-
 import type { NavigationItem } from './AppShell';
 
 type SidebarProps = {
@@ -10,8 +8,6 @@ type SidebarProps = {
 };
 
 export function Sidebar({ activeSection, isOpen, navigationItems, onNavigate }: SidebarProps) {
-  const { t: tCommon } = useTranslation('common');
-
   return (
     <aside
       className={`sticky top-[97px] hidden h-[calc(100vh-97px)] w-48 flex-shrink-0 flex-col border-r border-gray-100 lg:flex ${isOpen ? '' : ''}`}

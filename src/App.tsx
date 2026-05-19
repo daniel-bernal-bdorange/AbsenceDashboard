@@ -1,53 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { ErrorBoundary, OverviewChart, TrendLine, AbsenceTypeDonut, DepartmentComparison, FolderPicker, AppShell, ToastContainer, FilterPanel } from './components';
+import { AbsenceTable } from './components/tables';
 import { type NavigationItem } from './components/layout/AppShell';
 import { appEnv } from './config/env';
 import { useTranslation } from './i18n/useTranslation';
 import { useAppStore } from './store/useAppStore';
-import type { AbsenceRecord } from './types';
-
-const stackItems = [
-  'Vite + React + TypeScript',
-  'Tailwind CSS 3',
-  'Apache ECharts',
-  'Zustand',
-  'i18next',
-  'ESLint + Prettier',
-  'Local file loading',
-];
-
-const setupChecks = ['Vite', 'ECharts', 'i18n', 'Zustand'];
-
-const createEmptyMonthlySeries = () => Array.from({ length: 12 }, () => 0);
-
-const buildMonthlySeries = (records: AbsenceRecord[], year: number) => {
-  const vacationData = createEmptyMonthlySeries();
-  const sickLeaveData = createEmptyMonthlySeries();
-  const specialLeaveData = createEmptyMonthlySeries();
-
-  for (const record of records) {
-    if (record.from.getFullYear() !== year) continue;
-
-    const monthIndex = record.from.getMonth();
-    const days = record.numberOfDays;
-
-    switch (record.category) {
-      case 'Vacation':
-        vacationData[monthIndex] += days;
-        break;
-      case 'SickLeave':
-        sickLeaveData[monthIndex] += days;
-        break;
-      case 'Maternity':
-      case 'Special':
-        specialLeaveData[monthIndex] += days;
-        break;
-    }
-  }
-
-  return { vacationData, sickLeaveData, specialLeaveData };
-};
 
 export function App() {
   const { selectedYear, setSelectedYear, records } = useAppStore();
@@ -55,14 +13,22 @@ export function App() {
   const { t: tCommon } = useTranslation('common');
   const { t: tDashboard } = useTranslation('dashboard');
   const { t: tCharts } = useTranslation('charts');
-  const monthlySeries = useMemo(
-    () => buildMonthlySeries(records, selectedYear),
-    [records, selectedYear],
-  );
 
   if (records.length === 0) {
     return <FolderPicker />;
   }
+
+  const stackItems = [
+    'Vite + React + TypeScript',
+    'Tailwind CSS 3',
+    'Apache ECharts',
+    'Zustand',
+    'i18next',
+    'ESLint + Prettier',
+    'Local file loading',
+  ];
+
+  const setupChecks = ['Vite', 'ECharts', 'i18n', 'Zustand'];
 
   const handleNavigate = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -126,12 +92,16 @@ export function App() {
               <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
                 {tDashboard('chartTitle')}
               </p>
-            <OverviewChart
-              specialLeaveData={monthlySeries.specialLeaveData}
-              vacationData={monthlySeries.vacationData}
-              sickLeaveData={monthlySeries.sickLeaveData}
-              year={selectedYear}
-            />
+            <OverviewChart year={selectedYear} />
+          </div>
+
+          <hr className="border-gray-100" />
+
+          <div className="py-10">
+            <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
+              {tCharts('tableTitle') || 'Registro de ausencias'}
+            </p>
+            <AbsenceTable />
           </div>
 
           <hr className="border-gray-100" />

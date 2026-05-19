@@ -11,7 +11,7 @@ interface KPICardProps {
   icon?: ReactNode;
 }
 
-export function KPICard({ title, value, subtitle, trend, icon }: KPICardProps) {
+export function KPICard({ title, value, subtitle, trend, icon: _icon }: KPICardProps) {
   const trendColors = {
     up: 'text-error',
     down: 'text-success',

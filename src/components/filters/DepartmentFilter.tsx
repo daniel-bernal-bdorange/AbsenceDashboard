@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { useTranslation } from '../../i18n/useTranslation';
 import type { Department } from './filterTypes';

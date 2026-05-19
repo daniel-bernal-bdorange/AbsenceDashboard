@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 
-import { useTranslation } from '../../i18n/useTranslation';
 import { useAppStore } from '../../store/useAppStore';
 
 import { LanguageSwitcher } from '../LanguageSwitcher';
@@ -32,7 +31,6 @@ export function AppShell({
   onNavigate,
 }: AppShellProps) {
   const { sidebarOpen, toggleSidebar, setSidebarOpen } = useAppStore();
-  const { t: tCommon } = useTranslation('common');
 
   const handleNavigate = (sectionId: string) => {
     onNavigate(sectionId);

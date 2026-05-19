@@ -52,7 +52,7 @@
     "tables": {
       "description": "Tablas de datos",
       "tasks": [
-        { "id": "UI-022", "name": "AbsenceTable", "status": "pending" },
+        { "id": "UI-022", "name": "AbsenceTable", "status": "completed", "file": "src/components/tables/AbsenceTable.tsx" },
         { "id": "UI-023", "name": "EmployeeSummaryTable", "status": "pending" }
       ]
     },
@@ -71,5 +71,5 @@
     "completed": 23,
     "pending": 4
   },
-  "nextTask": "UI-022 (AbsenceTable)"
+  "nextTask": "UI-023 (EmployeeSummaryTable)"
 }

@@ -23,5 +23,6 @@
   "absenteeismRate": "Tasa absentismo",
   "departmentComparison": "Comparativa departamentos",
   "prodDept": "Producción",
-  "backOfficeDept": "Back Office"
+  "backOfficeDept": "Back Office",
+  "tableTitle": "Registro de ausencias"
 }

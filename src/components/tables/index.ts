@@ -1,0 +1,1 @@
+export { AbsenceTable } from './AbsenceTable';
