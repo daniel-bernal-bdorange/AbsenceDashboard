@@ -4,6 +4,7 @@
   "vacationSeries": "Vacation",
   "sickLeaveSeries": "Sick leave",
   "specialSeries": "Special leave",
+  "maternitySeries": "Maternity/Paternity",
   "axisMonths": "Months",
   "axisDays": "Days",
   "chartDescription": "Sample series used to validate the chart engine from the initial scaffold.",
@@ -12,5 +13,15 @@
   "currentYear": "Current Year",
   "previousYear": "Previous Year",
   "projection": "Projection",
-  "vsLastYear": "vs last year"
+  "vsLastYear": "vs last year",
+  "distribution": "Distribution by type",
+  "days": "days",
+  "percentage": "%",
+  "totalAbsences": "total days",
+  "donutTitle": "Absence Distribution",
+  "totalDays": "Total days",
+  "absenteeismRate": "Absenteeism rate",
+  "departmentComparison": "Department comparison",
+  "prodDept": "Production",
+  "backOfficeDept": "Back Office"
 }

@@ -147,6 +147,7 @@ const parseAbsenceRows = (rows: EverwinAbsenceRow[], sourceFile: string): Absenc
       status: parseAbsenceStatus(row.Status, sourceFile),
       validationStatus: parseRequiredText(row['Validation status'], 'Validation status', sourceFile),
       sourceFile,
+      department: undefined,
     } satisfies AbsenceRecord;
   });
 };

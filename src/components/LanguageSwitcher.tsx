@@ -12,11 +12,11 @@ export function LanguageSwitcher() {
   };
 
   return (
-    <label className="flex items-center gap-3 rounded-full border border-white/70 bg-white/80 px-4 py-2 text-sm text-ink shadow-soft backdrop-blur">
-      <span className="font-medium text-ink-muted">{t('language')}</span>
+    <label className="flex items-center gap-2 text-sm text-gray-500">
+      <span className="font-medium">{t('language')}</span>
       <select
         aria-label={t('language')}
-        className="cursor-pointer bg-transparent text-ink outline-none"
+        className="cursor-pointer bg-transparent font-medium text-gray-900 outline-none"
         value={currentLanguage}
         onChange={handleChange}
       >

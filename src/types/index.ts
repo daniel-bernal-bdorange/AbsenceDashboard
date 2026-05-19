@@ -61,6 +61,7 @@ export interface AbsenceRecord {
   id: string;
   employeeCode: string;
   employeeUsername: string;
+  department: Department | undefined;
   type: AbsenceType;
   category: AbsenceCategory;
   from: Date;

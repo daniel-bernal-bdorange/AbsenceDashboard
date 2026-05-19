@@ -43,8 +43,8 @@ export function AppShell({
   };
 
   return (
-    <main className="min-h-screen bg-orange-radial text-ink">
-      <div className="mx-auto flex min-h-screen w-full max-w-[1600px] flex-col gap-4 px-4 py-4 md:px-6 lg:px-8">
+    <main className="min-h-screen bg-white text-gray-900">
+      <div className="mx-auto max-w-screen-xl">
         <Header
           appName={appName}
           appSubtitle={appSubtitle}
@@ -53,16 +53,7 @@ export function AppShell({
           sidebarOpen={sidebarOpen}
         />
 
-        <div className="relative flex flex-1 gap-4">
-          {sidebarOpen ? (
-            <button
-              aria-label={tCommon('hideSidebar')}
-              className="fixed inset-0 z-20 bg-ink/35 lg:hidden"
-              type="button"
-              onClick={() => setSidebarOpen(false)}
-            />
-          ) : null}
-
+        <div className="flex">
           <Sidebar
             activeSection={activeSection}
             isOpen={sidebarOpen}
@@ -70,8 +61,8 @@ export function AppShell({
             onNavigate={handleNavigate}
           />
 
-          <div className="relative z-0 flex min-w-0 flex-1 flex-col pb-6">
-            <div className="grid gap-6">{children}</div>
+          <div className="relative z-0 flex min-w-0 flex-1 flex-col">
+            <div>{children}</div>
           </div>
         </div>
       </div>

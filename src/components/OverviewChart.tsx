@@ -2,6 +2,7 @@ import type { EChartsOption } from 'echarts';
 import ReactECharts from 'echarts-for-react';
 
 import { useTranslation } from '../i18n/useTranslation';
+import { chartColors } from './charts/chartColors';
 
 type OverviewChartProps = {
   year: number;
@@ -25,17 +26,24 @@ export function OverviewChart({
 
   const option: EChartsOption = {
     backgroundColor: 'transparent',
-    color: ['#ff6600', '#c62828', '#0277bd'],
+    color: [chartColors.vacation, chartColors.sickLeave, chartColors.special],
     tooltip: {
       trigger: 'axis',
       axisPointer: {
         type: 'shadow',
       },
+      backgroundColor: '#1A1A1A',
+      borderColor: '#FF7900',
+      borderWidth: 1,
+      textStyle: { color: '#fff', fontSize: 12 },
     },
     legend: {
       top: 0,
+      itemWidth: 14,
+      itemHeight: 3,
       textStyle: {
-        color: '#333333',
+        color: '#666666',
+        fontSize: 11,
       },
     },
     grid: {
@@ -48,22 +56,22 @@ export function OverviewChart({
     xAxis: {
       type: 'category',
       data: monthLabels(i18n.resolvedLanguage ?? 'es', year),
-      axisLine: { lineStyle: { color: '#d6c6bb' } },
+      axisLine: { lineStyle: { color: '#e5e5e5' } },
       axisTick: { show: false },
-      axisLabel: { color: '#666666' },
+      axisLabel: { color: '#666666', fontSize: 11 },
     },
     yAxis: {
       type: 'value',
       axisLine: { show: false },
-      splitLine: { lineStyle: { color: '#f0e4da' } },
-      axisLabel: { color: '#666666' },
+      splitLine: { lineStyle: { color: '#f5f5f5' } },
+      axisLabel: { color: '#666666', fontSize: 11 },
     },
     series: [
       {
         name: t('vacationSeries'),
         type: 'bar',
         stack: 'absences',
-        barWidth: 18,
+        barWidth: 20,
         emphasis: { focus: 'series' },
         data: vacationData,
       },
@@ -71,7 +79,7 @@ export function OverviewChart({
         name: t('sickLeaveSeries'),
         type: 'bar',
         stack: 'absences',
-        barWidth: 18,
+        barWidth: 20,
         emphasis: { focus: 'series' },
         data: sickLeaveData,
       },
@@ -79,12 +87,16 @@ export function OverviewChart({
         name: t('specialSeries'),
         type: 'bar',
         stack: 'absences',
-        barWidth: 18,
+        barWidth: 20,
         emphasis: { focus: 'series' },
         data: specialLeaveData,
       },
     ],
   };
 
-  return <ReactECharts option={option} style={{ height: 360, width: '100%' }} />;
+  return (
+    <div style={{ overflow: 'visible' }}>
+      <ReactECharts option={option} style={{ height: 320, width: '100%' }} />
+    </div>
+  );
 }

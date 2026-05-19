@@ -35,8 +35,8 @@
         { "id": "UI-012", "name": "OverviewChart (barras apiladas)", "status": "completed", "file": "src/components/OverviewChart.tsx" },
         { "id": "UI-013", "name": "AbsenceCalendar (heatmap)", "status": "completed", "file": "src/components/charts/AbsenceCalendar.tsx" },
         { "id": "UI-014", "name": "TrendLine (Year-over-Year)", "status": "completed", "file": "src/components/charts/TrendLine.tsx" },
-        { "id": "UI-015", "name": "AbsenceTypeDonut", "status": "pending" },
-        { "id": "UI-016", "name": "DepartmentComparison", "status": "pending" }
+        { "id": "UI-015", "name": "AbsenceTypeDonut", "status": "completed", "file": "src/components/charts/AbsenceTypeDonut.tsx" },
+        { "id": "UI-016", "name": "DepartmentComparison", "status": "completed", "file": "src/components/charts/DepartmentComparison.tsx" }
       ]
     },
     "filters": {
@@ -68,8 +68,8 @@
   },
   "summary": {
     "total": 27,
-    "completed": 16,
-    "pending": 11
+    "completed": 18,
+    "pending": 9
   },
-  "nextTask": "UI-015 (AbsenceTypeDonut)"
+  "nextTask": "UI-017 (FilterPanel)"
 }

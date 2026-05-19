@@ -4,6 +4,7 @@ import * as XLSX from 'xlsx';
 
 import { parseExcelFile, parseSpreadsheetXmlFile } from '../api/excelParser';
 import { useAppStore } from '../store/useAppStore';
+import type { Department, AbsenceRecord } from '../types';
 
 import { loadDepartmentMap } from './departmentMapper';
 
@@ -15,6 +16,16 @@ type UseFolderPickerReturn = {
 };
 
 const isExcelFile = (fileName: string) => /\.(xlsx|xls)$/i.test(fileName);
+
+const enrichWithDepartment = (
+  records: AbsenceRecord[],
+  departmentMap: Map<string, Department>
+) => {
+  return records.map((record) => ({
+    ...record,
+    department: departmentMap.get(record.employeeUsername.toLowerCase()) ?? 'Unknown',
+  }));
+};
 
 export function useFolderPicker(): UseFolderPickerReturn {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,8 +46,9 @@ export function useFolderPicker(): UseFolderPickerReturn {
       }
 
       const dirHandle = await window.showDirectoryPicker({ mode: 'read' });
-      const records = [] as ReturnType<typeof parseExcelFile>;
-      await loadDepartmentMap(dirHandle);
+      const departmentMap = await loadDepartmentMap(dirHandle);
+      console.log('Loaded department map:', departmentMap.size, 'entries');
+      const records: AbsenceRecord[] = [];
 
       for await (const entry of dirHandle.values()) {
         if (entry.kind !== 'file' || !isExcelFile(entry.name)) {
@@ -87,7 +99,9 @@ export function useFolderPicker(): UseFolderPickerReturn {
         throw new Error('No se encontraron ficheros Excel validos en la carpeta.');
       }
 
-      useAppStore.getState().setRecords(records, dirHandle.name);
+      const enrichedRecords = enrichWithDepartment(records, departmentMap);
+      console.log('Enriched', enrichedRecords.length, 'records with departments');
+      useAppStore.getState().setRecords(enrichedRecords, dirHandle.name);
       setFolderName(dirHandle.name);
     } catch (error_) {
       if (error_ instanceof DOMException && error_.name === 'AbortError') {

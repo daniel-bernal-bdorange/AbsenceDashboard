@@ -12,7 +12,7 @@ export { Sidebar } from './layout/Sidebar';
 export { KPICard } from './kpis/KPICard';
 export { KPIBar } from './kpis/KPIBar';
 
-export { AbsenceCalendar, TrendLine } from './charts';
+export { AbsenceCalendar, TrendLine, AbsenceTypeDonut, DepartmentComparison } from './charts';
 
 export { OverviewChart } from './OverviewChart';
 export { FolderPicker } from './FolderPicker';

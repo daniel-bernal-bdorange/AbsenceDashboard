@@ -7,38 +7,36 @@ export function FolderPicker() {
   const { pickFolder, isLoading, error, folderName } = useFolderPicker();
 
   return (
-    <main className="min-h-screen bg-orange-radial text-ink">
-      <div className="mx-auto flex min-h-screen w-full max-w-3xl items-center px-4 py-6 md:px-6 lg:px-8">
-        <section className="surface w-full p-8 md:p-10">
-          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orangeBusiness">
-            {tCommon('appName')}
-          </p>
-          <h1 className="mt-3 font-display text-3xl font-extrabold text-ink md:text-4xl">
-            {tDashboard('folderPickerTitle')}
-          </h1>
-          <p className="mt-4 max-w-2xl text-sm text-ink-muted md:text-base">
-            {tDashboard('folderPickerDescription')}
-          </p>
+    <main className="min-h-screen bg-white">
+      <div className="mx-auto max-w-2xl px-8 py-20">
+        <p className="text-xs font-medium uppercase tracking-widest text-gray-400">
+          {tCommon('appName')}
+        </p>
+        <h1 className="mt-3 text-4xl font-bold tracking-tight text-gray-900">
+          {tDashboard('folderPickerTitle')}
+        </h1>
+        <p className="mt-4 max-w-xl text-base text-gray-500 leading-relaxed">
+          {tDashboard('folderPickerDescription')}
+        </p>
 
-          {folderName ? (
-            <p className="mt-4 rounded-2xl border border-orangeBusiness-pale bg-orangeBusiness-pale px-4 py-3 text-sm font-medium text-ink">
-              {folderName}
-            </p>
-          ) : null}
-
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <button
-              className="rounded-full bg-orangeBusiness px-5 py-2.5 font-medium text-white transition hover:bg-orangeBusiness-dark disabled:cursor-not-allowed disabled:opacity-60"
-              type="button"
-              disabled={isLoading}
-              onClick={() => void pickFolder()}
-            >
-              {isLoading ? tCommon('loading') : tDashboard('selectFolder')}
-            </button>
+        {folderName && (
+          <div className="mt-6 border border-gray-200 bg-gray-50 px-4 py-3">
+            <span className="text-sm text-gray-600">{folderName}</span>
           </div>
+        )}
 
-          {error ? <p className="mt-4 text-sm font-medium text-warning">{error}</p> : null}
-        </section>
+        <div className="mt-8">
+          <button
+            className="bg-orangeBusiness px-6 py-3 text-sm font-medium text-white hover:bg-orangeBusiness-dark disabled:opacity-60"
+            type="button"
+            disabled={isLoading}
+            onClick={() => void pickFolder()}
+          >
+            {isLoading ? tCommon('loading') : tDashboard('selectFolder')}
+          </button>
+        </div>
+
+        {error && <p className="mt-4 text-sm font-medium text-warning">{error}</p>}
       </div>
     </main>
   );

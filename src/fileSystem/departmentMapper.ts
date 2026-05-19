@@ -14,6 +14,14 @@ const toText = (value: unknown) => String(value ?? '').trim();
 const normalizeDepartment = (value: unknown): Department | null => {
   const text = toText(value).toLowerCase();
 
+  if (text.includes('spain prod') || text.includes('spainprod')) {
+    return 'Prod';
+  }
+
+  if (text.includes('spain bo') || text.includes('spainbo') || text.includes('back office')) {
+    return 'BackOffice';
+  }
+
   if (text === 'prod' || text === 'production') {
     return 'Prod';
   }

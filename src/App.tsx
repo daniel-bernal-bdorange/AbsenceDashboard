@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { ErrorBoundary, OverviewChart, TrendLine, FolderPicker, AppShell, ToastContainer } from './components';
+import { ErrorBoundary, OverviewChart, TrendLine, AbsenceTypeDonut, DepartmentComparison, FolderPicker, AppShell, ToastContainer } from './components';
 import { type NavigationItem } from './components/layout/AppShell';
 import { appEnv } from './config/env';
 import { useTranslation } from './i18n/useTranslation';
@@ -27,9 +27,7 @@ const buildMonthlySeries = (records: AbsenceRecord[], year: number) => {
   const specialLeaveData = createEmptyMonthlySeries();
 
   for (const record of records) {
-    if (record.from.getFullYear() !== year) {
-      continue;
-    }
+    if (record.from.getFullYear() !== year) continue;
 
     const monthIndex = record.from.getMonth();
     const days = record.numberOfDays;
@@ -56,6 +54,7 @@ export function App() {
   const [activeSection, setActiveSection] = useState('overview');
   const { t: tCommon } = useTranslation('common');
   const { t: tDashboard } = useTranslation('dashboard');
+  const { t: tCharts } = useTranslation('charts');
   const monthlySeries = useMemo(
     () => buildMonthlySeries(records, selectedYear),
     [records, selectedYear],
@@ -67,30 +66,16 @@ export function App() {
 
   const handleNavigate = (sectionId: string) => {
     setActiveSection(sectionId);
-
     const target = document.getElementById(sectionId);
-
     if (target) {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
   const navigationItems: NavigationItem[] = [
-    {
-      id: 'overview',
-      label: tCommon('navDashboard'),
-      shortLabel: 'DB',
-    },
-    {
-      id: 'stack',
-      label: tCommon('navStack'),
-      shortLabel: 'STK',
-    },
-    {
-      id: 'setup',
-      label: tCommon('navSetup'),
-      shortLabel: 'SET',
-    },
+    { id: 'overview', label: tCommon('navDashboard'), shortLabel: 'DB' },
+    { id: 'stack', label: tCommon('navStack'), shortLabel: 'STK' },
+    { id: 'setup', label: tCommon('navSetup'), shortLabel: 'SET' },
   ];
 
   const decadeYears = [selectedYear - 1, selectedYear, selectedYear + 1];
@@ -99,93 +84,103 @@ export function App() {
     <ErrorBoundary>
       <ToastContainer />
       <AppShell
-      activeSection={activeSection}
-      appName={appEnv.appTitle}
-      appSubtitle={tCommon('appSubtitle')}
-      navigationItems={navigationItems}
-      onNavigate={handleNavigate}
-    >
-      <section id="overview" className="surface scroll-mt-28 p-6 md:p-8">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orangeBusiness">
-              {tDashboard('chartCardTitle')}
-            </p>
-            <h2 className="mt-2 font-display text-2xl font-extrabold text-ink md:text-3xl">
-              {tDashboard('chartTitle')}
-            </h2>
-            <p className="mt-2 max-w-2xl text-sm text-ink-muted md:text-base">
-              {tDashboard('chartDescription')}
-            </p>
+        activeSection={activeSection}
+        appName={appEnv.appTitle}
+        appSubtitle={tCommon('appSubtitle')}
+        navigationItems={navigationItems}
+        onNavigate={handleNavigate}
+      >
+        <section id="overview" className="px-8 py-12">
+          <div className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-widest text-gray-400">
+                {tDashboard('chartCardTitle')}
+              </p>
+              <h1 className="mt-3 text-4xl font-bold tracking-tight text-gray-900 lg:text-5xl">
+                {tDashboard('chartTitle')}
+              </h1>
+              <p className="mt-4 max-w-xl text-base text-gray-500 leading-relaxed">
+                {tDashboard('chartDescription')}
+              </p>
+            </div>
+
+            <label className="flex items-center gap-2 self-start text-sm text-gray-500 lg:self-auto">
+              <span className="font-medium">{tDashboard('selectedYear')}</span>
+              <select
+                className="bg-transparent font-bold text-gray-900 outline-none cursor-pointer"
+                value={selectedYear}
+                onChange={(event) => setSelectedYear(Number(event.target.value))}
+              >
+                {decadeYears.map((year) => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
+              </select>
+            </label>
           </div>
 
-          <label className="flex items-center gap-3 rounded-2xl border border-orangeBusiness-pale bg-orangeBusiness-pale px-4 py-3 text-sm text-ink">
-            <span className="font-semibold">{tDashboard('selectedYear')}</span>
-            <select
-              className="bg-transparent font-semibold outline-none"
-              value={selectedYear}
-              onChange={(event) => setSelectedYear(Number(event.target.value))}
-            >
-              {decadeYears.map((year) => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
+          <div className="py-10">
+            <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
+              {tDashboard('chartTitle')}
+            </p>
+            <OverviewChart
+              specialLeaveData={monthlySeries.specialLeaveData}
+              vacationData={monthlySeries.vacationData}
+              sickLeaveData={monthlySeries.sickLeaveData}
+              year={selectedYear}
+            />
+          </div>
 
-        <div className="mt-6">
-          <OverviewChart
-            specialLeaveData={monthlySeries.specialLeaveData}
-            vacationData={monthlySeries.vacationData}
-            sickLeaveData={monthlySeries.sickLeaveData}
-            year={selectedYear}
-          />
-        </div>
+          <hr className="border-gray-100" />
 
-        <div className="mt-6">
-          <TrendLine year={selectedYear} />
-        </div>
-      </section>
+          <div className="py-10 grid grid-cols-1 xl:grid-cols-2 gap-16">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
+                {tCharts('trendTitle')}
+              </p>
+              <TrendLine year={selectedYear} />
+            </div>
 
-      <div className="grid gap-6 xl:grid-cols-[1.4fr_0.9fr]">
-        <section id="stack" className="surface scroll-mt-28 p-6">
-          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orangeBusiness">
-            {tDashboard('stackCardTitle')}
-          </p>
-          <ul className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-            {stackItems.map((item) => (
-              <li
-                key={item}
-                className="rounded-2xl border border-orangeBusiness-pale bg-white px-4 py-3 text-sm font-medium text-ink shadow-[0_2px_10px_rgba(26,26,26,0.04)]"
-              >
-                {item}
-              </li>
+            <div>
+              <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
+                {tCharts('donutTitle')}
+              </p>
+              <AbsenceTypeDonut year={selectedYear} />
+            </div>
+          </div>
+
+          <hr className="border-gray-100" />
+
+          <div className="py-10">
+            <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
+              {tCharts('departmentComparison')}
+            </p>
+            <DepartmentComparison year={selectedYear} />
+          </div>
+
+          <hr className="border-gray-100" />
+
+          <div className="py-10 grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-200">
+            {stackItems.slice(0, 4).map((item) => (
+              <div key={item} className="px-6 first:pl-0">
+                <span className="text-xs uppercase tracking-wider text-gray-400">{item}</span>
+              </div>
             ))}
-          </ul>
-        </section>
+          </div>
 
-        <section id="setup" className="surface scroll-mt-28 p-6 md:p-8">
-          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orangeBusiness">
-            {tDashboard('setupChecklistTitle')}
-          </p>
-          <div className="mt-5 grid gap-4 md:grid-cols-2">
+          <hr className="border-gray-100" />
+
+          <div className="py-6 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-4">
             {setupChecks.map((item) => (
-              <div
-                key={item}
-                className="flex items-center justify-between rounded-2xl border border-orangeBusiness-pale bg-white px-4 py-4"
-              >
-                <span className="font-medium text-ink-soft">{item}</span>
-                <span className="rounded-full bg-success/10 px-3 py-1 text-xs font-semibold text-success">
-                  {tCommon('configured')}
-                </span>
+              <div key={item} className="flex items-center gap-2">
+                <svg className="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-sm text-gray-600">{item}</span>
               </div>
             ))}
           </div>
         </section>
-      </div>
-    </AppShell>
+      </AppShell>
     </ErrorBoundary>
   );
 }

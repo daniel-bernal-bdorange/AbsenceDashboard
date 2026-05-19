@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 interface KPICardProps {
   title: string;
   value: string | number;
@@ -6,14 +8,14 @@ interface KPICardProps {
     value: number;
     direction: 'up' | 'down' | 'neutral';
   };
-  icon?: React.ReactNode;
+  icon?: ReactNode;
 }
 
 export function KPICard({ title, value, subtitle, trend, icon }: KPICardProps) {
   const trendColors = {
     up: 'text-error',
     down: 'text-success',
-    neutral: 'text-ink-muted',
+    neutral: 'text-gray-400',
   };
 
   const trendIcons = {
@@ -23,23 +25,18 @@ export function KPICard({ title, value, subtitle, trend, icon }: KPICardProps) {
   };
 
   return (
-    <div className="rounded-2xl border border-orangeBusiness-pale bg-white p-4 shadow-[0_2px_8px_rgba(26,26,26,0.08)]">
-      <div className="flex items-start justify-between">
-        <p className="text-sm font-medium text-ink-muted">{title}</p>
-        {icon && <div className="text-orangeBusiness">{icon}</div>}
-      </div>
-
-      <div className="mt-2 flex items-baseline gap-2">
-        <span className="font-display text-3xl font-bold text-ink">{value}</span>
+    <div className="flex flex-col gap-1 py-6 border-t border-gray-200">
+      <span className="text-xs uppercase tracking-widest text-gray-400">{title}</span>
+      <div className="flex items-baseline gap-3">
+        <span className="text-5xl font-bold text-gray-900 tabular-nums">{value}</span>
         {trend && (
-          <span className={`text-sm font-semibold ${trendColors[trend.direction]}`}>
+          <span className={`text-sm font-medium ${trendColors[trend.direction]}`}>
             {trendIcons[trend.direction]} {Math.abs(trend.value).toFixed(1)}%
           </span>
         )}
       </div>
-
       {subtitle && (
-        <p className="mt-1 text-xs text-ink-muted">{subtitle}</p>
+        <p className="text-sm text-gray-400">{subtitle}</p>
       )}
     </div>
   );

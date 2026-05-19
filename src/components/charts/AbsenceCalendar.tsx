@@ -147,10 +147,12 @@ export function AbsenceCalendar({ year }: AbsenceCalendarProps) {
       <h3 className="mb-4 font-display text-lg font-semibold text-ink">
         {tCharts('absenceCalendar')}
       </h3>
-      <ReactECharts
-        option={option}
-        style={{ height: 400, width: '100%' }}
-      />
+      <div style={{ overflow: 'visible' }}>
+        <ReactECharts
+          option={option}
+          style={{ height: 400, width: '100%' }}
+        />
+      </div>
     </div>
   );
 }
