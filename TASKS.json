@@ -1,0 +1,69 @@
+{
+  "project": "Absence Dashboard",
+  "mode": "Local (File System Access API)",
+  "lastUpdated": "2026-05-19",
+  "tasks": {
+    "azure_removed": {
+      "description": "Tareas de Azure/SharePoint eliminadas en el refactor a modo local",
+      "items": [
+        { "id": "TASK-001", "status": "removed", "reason": "Eliminada: modo local" },
+        { "id": "TASK-002", "status": "removed", "reason": "Eliminada: modo local" },
+        { "id": "TASK-003", "status": "removed", "reason": "Eliminada: modo local" },
+        { "id": "TASK-004", "status": "removed", "reason": "Eliminada: modo local" },
+        { "id": "TASK-005", "status": "removed", "reason": "Eliminada: modo local" },
+        { "id": "TASK-006", "status": "removed", "reason": "Eliminada: modo local" },
+        { "id": "TASK-007", "status": "removed", "reason": "Eliminada: modo local" },
+        { "id": "TASK-016", "status": "removed", "reason": "Eliminada: modo local" },
+        { "id": "TASK-017", "status": "removed", "reason": "Eliminada: modo local" },
+        { "id": "TASK-018", "status": "removed", "reason": "Eliminada: modo local" }
+      ]
+    },
+    "code": {
+      "description": "Tareas de implementación de código",
+      "items": [
+        { "id": "TASK-008", "status": "completed", "file": "src/api/excelParser.ts", "note": "parseExcelFile implementada" },
+        { "id": "TASK-009", "status": "completed", "file": "src/api/excelParser.ts", "note": "parseFromField maneja formato Morning/End of day" },
+        { "id": "TASK-010", "status": "completed", "file": "src/store/useAppStore.ts", "note": "Persistencia en sessionStorage con Zustand persist" },
+        { "id": "TASK-011", "status": "completed", "file": "src/index.css", "note": "Google Fonts configurado (Nunito Sans + IBM Plex Sans)" },
+        { "id": "TASK-012", "status": "completed", "file": "src/components/common/Badge.tsx", "note": "Badge con colores por AbsenceType" },
+        { "id": "TASK-013", "status": "completed", "file": "src/components/kpis/kpiCalculations.ts", "note": "calcAbsenteeismRate implementada" },
+        { "id": "TASK-014", "status": "completed", "file": "src/components/common/", "note": "ErrorBoundary + Toast implementados" },
+        { "id": "TASK-015", "status": "completed", "file": "src/utils/exportCSV.ts", "note": "Export CSV con filtros activos" }
+      ]
+    },
+    "i18n": {
+      "description": "Tareas de internacionalización",
+      "items": [
+        { "id": "TASK-019", "status": "completed", "file": "package.json", "note": "i18next + react-i18next instalados" },
+        { "id": "TASK-020", "status": "completed", "file": "src/i18n/locales/", "note": "Estructura es/en con 7 namespaces" },
+        { "id": "TASK-021", "status": "completed", "file": "src/i18n/locales/es/absenceTypes.json", "note": "8 tipos traducidos" },
+        { "id": "TASK-022", "status": "completed", "file": "src/i18n/TranslationKeys.ts", "note": "Tipo TranslationKeys para autocompletado" },
+        { "id": "TASK-023", "status": "completed", "file": "src/components/LanguageSwitcher.tsx", "note": "Integrado en Header" },
+        { "id": "TASK-024", "status": "completed", "file": "src/utils/dateUtils.ts", "note": "date-fns con locale dinámico" },
+        { "id": "TASK-025", "status": "completed", "file": "src/utils/dateUtils.ts", "note": "formatNumber con Intl.NumberFormat" },
+        { "id": "TASK-026", "status": "completed", "file": "src/components/OverviewChart.tsx", "note": "ECharts usa Intl.DateTimeFormat para meses" },
+        { "id": "TASK-027", "status": "completed", "note": "Audit completado, ErrorBoundary corregido" }
+      ]
+    },
+    "refactor_local": {
+      "description": "Tareas del refactor a modo local",
+      "items": [
+        { "id": "REF-001", "status": "completed", "note": "Eliminar src/auth/ (MSAL)" },
+        { "id": "REF-002", "status": "completed", "note": "Eliminar staticwebapp.config.json" },
+        { "id": "REF-003", "status": "completed", "note": "Eliminar workflows de Azure" },
+        { "id": "REF-004", "status": "completed", "file": "src/fileSystem/useFolderPicker.ts", "note": "Hook File System Access API" },
+        { "id": "REF-005", "status": "completed", "file": "src/fileSystem/departmentMapper.ts", "note": "Carga employee-departments.json" },
+        { "id": "REF-006", "status": "completed", "file": "src/components/FolderPicker.tsx", "note": "Pantalla de bienvenida" },
+        { "id": "REF-007", "status": "completed", "file": "vite.config.ts", "note": "base: './' para file://" },
+        { "id": "REF-008", "status": "completed", "note": "xlsx instalado (SheetJS)" }
+      ]
+    }
+  },
+  "summary": {
+    "total": 35,
+    "completed": 30,
+    "pending": 0,
+    "partial": 0,
+    "removed": 10
+  }
+}

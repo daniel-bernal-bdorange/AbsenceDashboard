@@ -3,5 +3,8 @@
   "missingEnv": "Faltan variables de entorno requeridas.",
   "generic": "Se ha producido un error inesperado.",
   "buildFailed": "La compilación ha fallado.",
-  "previewFailed": "No se ha podido abrir la vista previa."
+  "previewFailed": "No se ha podido abrir la vista previa.",
+  "errorTitle": "Algo salió mal",
+  "errorMessage": "Error inesperado",
+  "retryButton": "Reintentar"
 }

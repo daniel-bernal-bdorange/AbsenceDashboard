@@ -3,5 +3,8 @@
   "missingEnv": "Required environment variables are missing.",
   "generic": "An unexpected error occurred.",
   "buildFailed": "The build failed.",
-  "previewFailed": "The preview could not be opened."
+  "previewFailed": "The preview could not be opened.",
+  "errorTitle": "Something went wrong",
+  "errorMessage": "Unexpected error",
+  "retryButton": "Retry"
 }
