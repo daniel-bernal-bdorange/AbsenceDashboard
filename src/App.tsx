@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { OverviewChart } from './components/OverviewChart';
 import { FolderPicker } from './components/FolderPicker';
@@ -6,6 +6,7 @@ import { AppShell, type NavigationItem } from './components/layout/AppShell';
 import { appEnv } from './config/env';
 import { useTranslation } from './i18n/useTranslation';
 import { useAppStore } from './store/useAppStore';
+import type { AbsenceRecord } from './types';
 
 const stackItems = [
   'Vite + React + TypeScript',
@@ -19,11 +20,47 @@ const stackItems = [
 
 const setupChecks = ['Vite', 'ECharts', 'i18n', 'Zustand'];
 
+const createEmptyMonthlySeries = () => Array.from({ length: 12 }, () => 0);
+
+const buildMonthlySeries = (records: AbsenceRecord[], year: number) => {
+  const vacationData = createEmptyMonthlySeries();
+  const sickLeaveData = createEmptyMonthlySeries();
+  const specialLeaveData = createEmptyMonthlySeries();
+
+  for (const record of records) {
+    if (record.from.getFullYear() !== year) {
+      continue;
+    }
+
+    const monthIndex = record.from.getMonth();
+    const days = record.numberOfDays;
+
+    switch (record.category) {
+      case 'Vacation':
+        vacationData[monthIndex] += days;
+        break;
+      case 'SickLeave':
+        sickLeaveData[monthIndex] += days;
+        break;
+      case 'Maternity':
+      case 'Special':
+        specialLeaveData[monthIndex] += days;
+        break;
+    }
+  }
+
+  return { vacationData, sickLeaveData, specialLeaveData };
+};
+
 export function App() {
   const { selectedYear, setSelectedYear, records } = useAppStore();
   const [activeSection, setActiveSection] = useState('overview');
   const { t: tCommon } = useTranslation('common');
   const { t: tDashboard } = useTranslation('dashboard');
+  const monthlySeries = useMemo(
+    () => buildMonthlySeries(records, selectedYear),
+    [records, selectedYear],
+  );
 
   if (records.length === 0) {
     return <FolderPicker />;
@@ -58,9 +95,6 @@ export function App() {
   ];
 
   const decadeYears = [selectedYear - 1, selectedYear, selectedYear + 1];
-  const vacationData = [12, 10, 9, 14, 11, 16, 18, 14, 12, 13, 9, 8];
-  const sickLeaveData = [3, 4, 2, 5, 4, 4, 6, 5, 4, 3, 2, 3];
-  const specialLeaveData = [1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 1, 2];
 
   return (
     <AppShell
@@ -102,9 +136,9 @@ export function App() {
 
         <div className="mt-6">
           <OverviewChart
-            specialLeaveData={specialLeaveData}
-            vacationData={vacationData}
-            sickLeaveData={sickLeaveData}
+            specialLeaveData={monthlySeries.specialLeaveData}
+            vacationData={monthlySeries.vacationData}
+            sickLeaveData={monthlySeries.sickLeaveData}
             year={selectedYear}
           />
         </div>
