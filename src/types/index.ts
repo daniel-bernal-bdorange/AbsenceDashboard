@@ -23,6 +23,33 @@ export type Department = 'Prod' | 'BackOffice' | 'Unknown';
 
 export type AbsenceCategory = 'Vacation' | 'SickLeave' | 'Maternity' | 'Special';
 
+export interface EverwinAbsenceRow {
+  Code: string;
+  Employee: string;
+  Type: AbsenceType;
+  From: string | Date;
+  Till: string | Date;
+  'Request date': string | Date;
+  'Number of days': number;
+  Status: AbsenceStatus;
+  'Validation status': string;
+}
+
+export interface EmployeeRosterRow {
+  Code: string;
+  Name: string;
+  'First name': string;
+  'Primary entity': string;
+  'Resource type': string;
+  Check: string;
+  'HC/FTE': number;
+}
+
+export interface DepartmentSummaryRow {
+  'Row Labels': string;
+  'Sum of HC/FTE': number;
+}
+
 export interface Employee {
   code: string;
   username: string;

@@ -1,12 +1,10 @@
 import * as XLSX from 'xlsx';
 
-import type { Department } from '../types';
+import type { Department, EmployeeRosterRow } from '../types';
 
 type JsonDepartmentMapping = {
   mappings?: Array<{ username?: string; department?: Department | string }>;
 };
-
-const departmentLabels = new Set(['Prod', 'BackOffice', 'Unknown']);
 
 const isExcelFile = (fileName: string) => /\.(xlsx|xls)$/i.test(fileName);
 const isJsonFile = (fileName: string) => /\.json$/i.test(fileName);
@@ -59,20 +57,24 @@ const loadExcelMappings = async (fileHandle: FileSystemFileHandle) => {
   const file = await fileHandle.getFile();
   const workbook = XLSX.read(await file.arrayBuffer(), { type: 'array' });
   const map = new Map<string, Department>();
+  const worksheet = workbook.Sheets['Export ASA'] ?? workbook.Sheets[workbook.SheetNames[0]];
 
-  for (const sheetName of workbook.SheetNames) {
-    const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(workbook.Sheets[sheetName], {
-      defval: '',
-    });
+  if (!worksheet) {
+    return map;
+  }
 
-    for (const row of rows) {
-      const entries = Object.entries(row).map(([key, value]) => [key.toLowerCase(), toText(value)] as const);
-      const usernameValue = entries.find(([key]) => key.includes('user') || key.includes('employee'))?.[1];
-      const departmentValue = entries.find(([, value]) => departmentLabels.has(value) || /prod|back\s?office/i.test(value))?.[1];
+  const rows = XLSX.utils.sheet_to_json<EmployeeRosterRow>(worksheet, {
+    defval: '',
+  });
 
-      if (usernameValue && isUsernameLike(usernameValue)) {
-        addMapping(map, usernameValue, normalizeDepartment(departmentValue));
-      }
+  for (const row of rows) {
+    const usernameValue = toText(row.Code);
+    const primaryEntity = toText(row['Primary entity']);
+    const checkEntity = toText(row.Check);
+    const departmentValue = normalizeDepartment(primaryEntity) ?? normalizeDepartment(checkEntity);
+
+    if (usernameValue && isUsernameLike(usernameValue)) {
+      addMapping(map, usernameValue, departmentValue);
     }
   }
 
@@ -104,7 +106,13 @@ export async function loadDepartmentMap(dirHandle: FileSystemDirectoryHandle): P
 
   for (const [fileName, fileHandle] of fileHandles) {
     if (/employee|category|user/i.test(fileName)) {
-      const map = await loadExcelMappings(fileHandle);
+      let map: Map<string, Department>;
+
+      try {
+        map = await loadExcelMappings(fileHandle);
+      } catch {
+        continue;
+      }
 
       if (map.size > 0) {
         return map;
