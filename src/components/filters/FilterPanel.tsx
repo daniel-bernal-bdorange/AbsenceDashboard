@@ -16,7 +16,8 @@ export function FilterPanel() {
     filters.employees.length +
     filters.categories.length +
     (filters.dateRange.from ? 1 : 0) +
-    (filters.dateRange.to ? 1 : 0);
+    (filters.dateRange.to ? 1 : 0) +
+    (filters.selectedMonth !== null ? 1 : 0);
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white">
@@ -35,16 +36,23 @@ export function FilterPanel() {
         </div>
         <div className="flex items-center gap-2">
           {activeCount > 0 && (
-            <button
-              className="text-xs text-gray-400 hover:text-orangeBusiness transition-colors px-2"
+            <span
+              className="text-xs text-gray-400 hover:text-orangeBusiness transition-colors px-2 cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 resetFilters();
               }}
-              type="button"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.stopPropagation();
+                  resetFilters();
+                }
+              }}
             >
               {t('clear')}
-            </button>
+            </span>
           )}
           <span className="text-gray-400 transition-transform duration-200" style={{ transform: collapsed ? 'rotate(180deg)' : 'rotate(0deg)' }}>
             ▼

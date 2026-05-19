@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useTranslation } from '../../i18n/useTranslation';
 import { useAppStore } from '../../store/useAppStore';
 import { NoDataState } from '../common/EmptyState';
@@ -18,8 +18,17 @@ export function EmployeeSummaryTable() {
   const { t } = useTranslation('table');
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
+  const setFilters = useAppStore((s) => s.setFilters);
   const selectedYear = useAppStore((s) => s.selectedYear);
   const isLoading = useAppStore((s) => s.records.length === 0);
+
+  const handleRowClick = useCallback((username: string) => {
+    if (filters.employees.length === 1 && filters.employees[0] === username) {
+      setFilters({ employees: [] });
+    } else {
+      setFilters({ employees: [username] });
+    }
+  }, [filters.employees, setFilters]);
 
   const filteredRecords = useMemo(() => {
     return records.filter((r) => {
@@ -110,10 +119,13 @@ export function EmployeeSummaryTable() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
-            {employeeSummaries.map((summary) => (
+            {employeeSummaries.map((summary) => {
+              const isSelected = filters.employees.includes(summary.username);
+              return (
               <tr
                 key={summary.username}
-                className="transition-colors hover:bg-gray-50/50"
+                className={`transition-colors cursor-pointer ${isSelected ? 'bg-orange-50/80' : 'hover:bg-gray-50/50'}`}
+                onClick={() => handleRowClick(summary.username)}
               >
                 <td className="px-4 py-3 text-sm font-medium text-gray-900">
                   {summary.username}
@@ -137,7 +149,8 @@ export function EmployeeSummaryTable() {
                   {summary.absenceCount}
                 </td>
               </tr>
-            ))}
+              );
+            })}
           </tbody>
         </table>
       </div>

@@ -7,6 +7,7 @@ export interface AbsenceFilters {
   employees: string[];
   dateRange: { from: Date | null; to: Date | null };
   categories: AbsenceCategory[];
+  selectedMonth: number | null;
 }
 
 export const defaultFilters: AbsenceFilters = {
@@ -14,4 +15,5 @@ export const defaultFilters: AbsenceFilters = {
   employees: [],
   dateRange: { from: null, to: null },
   categories: [],
+  selectedMonth: null,
 };

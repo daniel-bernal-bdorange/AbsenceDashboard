@@ -51,6 +51,11 @@ export function TrendLine({ year }: TrendLineProps) {
       if (filters.categories.length && !filters.categories.includes(r.category)) return false;
       if (filters.dateRange.from && r.from < filters.dateRange.from) return false;
       if (filters.dateRange.to && r.till > filters.dateRange.to) return false;
+      if (filters.selectedMonth !== null) {
+        const recordMonth = r.from.getMonth();
+        const recordEndMonth = r.till.getMonth();
+        if (recordMonth > filters.selectedMonth || recordEndMonth < filters.selectedMonth) return false;
+      }
       return true;
     });
   }, [records, filters]);

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import type { EChartsOption } from 'echarts';
 import ReactECharts from 'echarts-for-react';
 
@@ -21,6 +21,7 @@ const categoryColors: Record<AbsenceCategory, string> = {
 export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
+  const setFilters = useAppStore((s) => s.setFilters);
   const { t } = useTranslation('charts');
 
   const filteredRecords = useMemo(() => {
@@ -57,6 +58,22 @@ export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
       }));
   }, [filteredRecords, year]);
 
+  const handleDonutClick = useCallback((params: unknown) => {
+    const p = params as { dataIndex?: number };
+    if (p.dataIndex === undefined) return;
+    
+    const categoryKey = distribution[p.dataIndex]?.name;
+    if (!categoryKey) return;
+    
+    const category = categoryKey as AbsenceCategory;
+    
+    if (filters.categories.length === 1 && filters.categories[0] === category) {
+      setFilters({ categories: [] });
+    } else {
+      setFilters({ categories: [category] });
+    }
+  }, [filters.categories, setFilters, distribution]);
+
   const totalDays = distribution.reduce((sum, d) => sum + d.value, 0);
 
   const option: EChartsOption = useMemo(() => ({
@@ -71,11 +88,18 @@ export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
       extraCssText: 'max-width: 200px; word-wrap: break-word;',
       formatter: (params: unknown) => {
         const p = params as { name: string; value: number; percent: number; color: string };
+        const nameKeyMap: Record<string, string> = {
+          Vacation: 'vacationSeries',
+          SickLeave: 'sickLeaveSeries',
+          Maternity: 'maternitySeries',
+          Special: 'specialSeries',
+        };
+        const translatedName = (t as (key: string) => string)(nameKeyMap[p.name] || p.name) || p.name;
         return `
           <div style="min-width:140px">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
               <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${p.color}"></span>
-              <span style="font-weight:600">${p.name}</span>
+              <span style="font-weight:600">${translatedName}</span>
             </div>
             <div style="display:flex;justify-content:space-between;gap:16px">
               <span style="color:#999">${t('days')}</span>
@@ -100,6 +124,16 @@ export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
         color: '#666',
         fontSize: 11,
       },
+      formatter: (name: string) => {
+        const keyMap: Record<string, string> = {
+          Vacation: 'vacationSeries',
+          SickLeave: 'sickLeaveSeries',
+          Maternity: 'maternitySeries',
+          Special: 'specialSeries',
+        };
+        const key = keyMap[name] || name;
+        return (t as (key: string) => string)(key) || name;
+      },
     },
     series: [
       {
@@ -123,7 +157,7 @@ export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
         },
         data: distribution.map(d => ({
           value: d.value,
-          name: t(d.name.toLowerCase() as never) || d.name,
+          name: d.name,
           itemStyle: { color: d.color },
         })),
       },
@@ -132,7 +166,11 @@ export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
 
   return (
     <div className="relative" style={{ overflow: 'visible' }}>
-      <ReactECharts option={option} style={{ height: 280, width: '100%' }} />
+      <ReactECharts 
+        option={option} 
+        style={{ height: 280, width: '100%' }}
+        onEvents={{ click: handleDonutClick }}
+      />
       
       {totalDays > 0 && (
         <div className="absolute left-1/2 top-[42%] -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
