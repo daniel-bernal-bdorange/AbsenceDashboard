@@ -1,0 +1,75 @@
+{
+  "project": "Absence Dashboard - UI Tasks",
+  "mode": "Local (File System Access API)",
+  "lastUpdated": "2026-05-19",
+  "categories": {
+    "layout": {
+      "description": "Componentes de estructura",
+      "tasks": [
+        { "id": "UI-001", "name": "AppShell", "status": "completed", "file": "src/components/layout/AppShell.tsx" },
+        { "id": "UI-002", "name": "Sidebar", "status": "completed", "file": "src/components/layout/Sidebar.tsx" },
+        { "id": "UI-003", "name": "Header", "status": "completed", "file": "src/components/layout/Header.tsx" }
+      ]
+    },
+    "common": {
+      "description": "Componentes reutilizables",
+      "tasks": [
+        { "id": "UI-004", "name": "Badge", "status": "completed", "file": "src/components/common/Badge.tsx" },
+        { "id": "UI-005", "name": "ErrorBoundary", "status": "completed", "file": "src/components/common/ErrorBoundary.tsx" },
+        { "id": "UI-006", "name": "Toast", "status": "completed", "file": "src/components/common/Toast.tsx" },
+        { "id": "UI-007", "name": "LoadingSpinner", "status": "completed", "file": "src/components/common/LoadingSpinner.tsx" },
+        { "id": "UI-008", "name": "EmptyState", "status": "completed", "file": "src/components/common/EmptyState.tsx" }
+      ]
+    },
+    "kpis": {
+      "description": "Componentes de KPIs",
+      "tasks": [
+        { "id": "UI-009", "name": "KPICard", "status": "completed", "file": "src/components/kpis/KPICard.tsx" },
+        { "id": "UI-010", "name": "KPIBar", "status": "completed", "file": "src/components/kpis/KPIBar.tsx" },
+        { "id": "UI-011", "name": "kpiCalculations", "status": "completed", "file": "src/components/kpis/kpiCalculations.ts" }
+      ]
+    },
+    "charts": {
+      "description": "Gráficos ECharts",
+      "tasks": [
+        { "id": "UI-012", "name": "OverviewChart (barras apiladas)", "status": "completed", "file": "src/components/OverviewChart.tsx" },
+        { "id": "UI-013", "name": "AbsenceCalendar (heatmap)", "status": "pending" },
+        { "id": "UI-014", "name": "TrendLine (Year-over-Year)", "status": "pending" },
+        { "id": "UI-015", "name": "AbsenceTypeDonut", "status": "pending" },
+        { "id": "UI-016", "name": "DepartmentComparison", "status": "pending" }
+      ]
+    },
+    "filters": {
+      "description": "Panel de filtros",
+      "tasks": [
+        { "id": "UI-017", "name": "FilterPanel", "status": "pending" },
+        { "id": "UI-018", "name": "EmployeeFilter (multiselect)", "status": "pending" },
+        { "id": "UI-019", "name": "DepartmentFilter (Prod/BackOffice)", "status": "pending" },
+        { "id": "UI-020", "name": "DateRangeFilter", "status": "pending" },
+        { "id": "UI-021", "name": "AbsenceTypeFilter", "status": "pending" }
+      ]
+    },
+    "tables": {
+      "description": "Tablas de datos",
+      "tasks": [
+        { "id": "UI-022", "name": "AbsenceTable", "status": "pending" },
+        { "id": "UI-023", "name": "EmployeeSummaryTable", "status": "pending" }
+      ]
+    },
+    "pages": {
+      "description": "Vistas/Páginas",
+      "tasks": [
+        { "id": "UI-024", "name": "Dashboard", "status": "completed", "file": "src/App.tsx" },
+        { "id": "UI-025", "name": "Login/FolderPicker", "status": "completed", "file": "src/components/FolderPicker.tsx" },
+        { "id": "UI-026", "name": "EmployeeDetail", "status": "pending" },
+        { "id": "UI-027", "name": "Trends", "status": "pending" }
+      ]
+    }
+  },
+  "summary": {
+    "total": 27,
+    "completed": 15,
+    "pending": 12
+  },
+  "nextTask": "UI-013 (AbsenceCalendar)"
+}
