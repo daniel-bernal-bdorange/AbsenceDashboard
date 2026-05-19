@@ -1,22 +1,16 @@
 import * as XLSX from 'xlsx';
 
-import { AbsenceStatus, AbsenceType, type AbsenceCategory, type AbsenceRecord } from '../types';
+import {
+  AbsenceStatus,
+  AbsenceType,
+  type AbsenceCategory,
+  type AbsenceRecord,
+  type EverwinAbsenceRow,
+} from '../types';
 
 import type { WorkBook } from 'xlsx';
 
 const SHEET_NAME = 'Export ASA';
-
-type RawAbsenceRow = {
-  Code?: string | number;
-  Employee?: string | number;
-  Type?: string | number;
-  From?: string | number | Date;
-  Till?: string | number | Date;
-  'Request date'?: string | number | Date;
-  'Number of days'?: string | number;
-  Status?: string | number;
-  'Validation status'?: string | number;
-};
 
 const typeToCategory: Record<AbsenceType, AbsenceCategory> = {
   [AbsenceType.VACATION]: 'Vacation',
@@ -70,16 +64,34 @@ const parseDateTime = (value: unknown, fieldName: string, sourceFile: string) =>
 };
 
 const parseBoundaryDate = (value: unknown, fieldName: string, sourceFile: string) => {
+  console.log('parseBoundaryDate', fieldName, 'value:', value, 'type:', typeof value, 'instance:', value?.constructor?.name);
+
+  if (value instanceof Date) {
+    const d = new Date(value);
+    d.setHours(23, 59, 0, 0);
+    return d;
+  }
+
   const text = parseRequiredText(value, fieldName, sourceFile);
-  const match = text.match(/^([0-3]\d)\/([0-1]\d)\/(\d{4})\s+(Morning|End of the day)$/);
+
+  const isoMatch = text.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (isoMatch) {
+    const [, year, month, day] = isoMatch;
+    const parsed = new Date(Number(year), Number(month) - 1, Number(day), 23, 59, 0, 0);
+    if (!Number.isNaN(parsed.getTime())) {
+      return parsed;
+    }
+  }
+
+  const match = text.match(/^([0-3]\d)\/([0-1]\d)\/(\d{4})\s+(Morning|Noon|End of the day)$/);
 
   if (!match) {
     throw new Error(`Campo ${fieldName} invalido en ${sourceFile}`);
   }
 
   const [, day, month, year, boundary] = match;
-  const hours = boundary === 'Morning' ? 0 : 23;
-  const minutes = boundary === 'Morning' ? 0 : 59;
+  const hours = boundary === 'Morning' ? 0 : boundary === 'Noon' ? 12 : 23;
+  const minutes = boundary === 'Morning' ? 0 : boundary === 'Noon' ? 0 : 59;
   const parsed = new Date(Number(year), Number(month) - 1, Number(day), hours, minutes, 0, 0);
 
   if (Number.isNaN(parsed.getTime())) {
@@ -113,16 +125,13 @@ export function getAbsenceCategory(type: AbsenceType) {
   return typeToCategory[type];
 }
 
-export function parseExcelFile(workbook: WorkBook, sourceFile: string): AbsenceRecord[] {
-  const worksheet = workbook.Sheets[SHEET_NAME];
-
-  if (!worksheet) {
-    throw new Error(`No existe hoja ${SHEET_NAME} en ${sourceFile}`);
-  }
-
-  const rows = XLSX.utils.sheet_to_json<RawAbsenceRow>(worksheet, { defval: '' });
-
-  return rows.map((row) => {
+const parseAbsenceRows = (rows: EverwinAbsenceRow[], sourceFile: string): AbsenceRecord[] => {
+  return rows
+    .filter((row) => {
+      const code = String(row.Code ?? '').toLowerCase();
+      return !code.startsWith('total') && !code.includes('suma') && code.trim() !== '';
+    })
+    .map((row) => {
     const type = parseAbsenceType(row.Type, sourceFile);
 
     return {
@@ -140,4 +149,91 @@ export function parseExcelFile(workbook: WorkBook, sourceFile: string): AbsenceR
       sourceFile,
     } satisfies AbsenceRecord;
   });
+};
+
+const parseSpreadsheetXmlValue = (cell: Element) => {
+  const dataCell = cell.getElementsByTagName('Data')[0];
+
+  if (!dataCell) {
+    return '';
+  }
+
+  const cellType = dataCell.getAttribute('ss:Type') ?? dataCell.getAttribute('Type') ?? 'String';
+  const text = dataCell.textContent?.trim() ?? '';
+
+  if (cellType === 'DateTime') {
+    return new Date(text);
+  }
+
+  if (cellType === 'Number') {
+    return Number(text);
+  }
+
+  return text;
+};
+
+const parseSpreadsheetXml = (xmlText: string, sourceFile: string): EverwinAbsenceRow[] => {
+  const document = new DOMParser().parseFromString(xmlText, 'text/xml');
+
+  if (document.querySelector('parsererror')) {
+    throw new Error(`No se pudo interpretar ${sourceFile}`);
+  }
+
+  const worksheet = Array.from(document.getElementsByTagName('Worksheet')).find((node) => {
+    return node.getAttribute('ss:Name') === SHEET_NAME || node.getAttribute('Name') === SHEET_NAME;
+  });
+
+  const table = worksheet?.getElementsByTagName('Table')[0];
+
+  if (!table) {
+    throw new Error(`No existe hoja ${SHEET_NAME} en ${sourceFile}`);
+  }
+
+  const rows = Array.from(table.getElementsByTagName('Row'));
+
+  if (rows.length === 0) {
+    return [];
+  }
+
+  const headers = Array.from(rows[0].getElementsByTagName('Cell')).map((cell) => String(parseSpreadsheetXmlValue(cell)));
+
+  return rows.slice(1).map((row) => {
+    const rowData: Partial<EverwinAbsenceRow> = {};
+    const cells = Array.from(row.getElementsByTagName('Cell'));
+    let currentIndex = 0;
+
+    for (const cell of cells) {
+      const indexValue = cell.getAttribute('ss:Index') ?? cell.getAttribute('Index');
+
+      if (indexValue) {
+        currentIndex = Number(indexValue) - 1;
+      }
+
+      const header = headers[currentIndex];
+
+      if (header) {
+        rowData[header as keyof EverwinAbsenceRow] = parseSpreadsheetXmlValue(cell) as never;
+      }
+
+      currentIndex += 1;
+    }
+
+    return rowData as EverwinAbsenceRow;
+  });
+};
+
+export function parseExcelFile(workbook: WorkBook, sourceFile: string): AbsenceRecord[] {
+  const worksheet = workbook.Sheets[SHEET_NAME];
+
+  if (!worksheet) {
+    throw new Error(`No existe hoja ${SHEET_NAME} en ${sourceFile}`);
+  }
+
+  const rows = XLSX.utils.sheet_to_json<EverwinAbsenceRow>(worksheet, { defval: '' });
+
+  return parseAbsenceRows(rows, sourceFile);
+}
+
+export function parseSpreadsheetXmlFile(xmlText: string, sourceFile: string): AbsenceRecord[] {
+  return parseAbsenceRows(parseSpreadsheetXml(xmlText, sourceFile), sourceFile);
 }
