@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useTranslation } from '../i18n/useTranslation';
 import { useAppStore } from '../store/useAppStore';
 import { chartColors } from './charts/chartColors';
-import type { AbsenceCategory, Department } from '../types';
+import type { AbsenceCategory } from '../types';
 
 interface EmployeeDetailProps {
   username: string;

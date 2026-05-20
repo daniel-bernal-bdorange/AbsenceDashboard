@@ -7,7 +7,7 @@
   "maternitySeries": "Maternity/Paternity",
   "axisMonths": "Months",
   "axisDays": "Days",
-  "chartDescription": "Sample series used to validate the chart engine from the initial scaffold.",
+  "chartDescription": "Monthly series of absence days broken down by type.",
   "absenceCalendar": "Absence calendar",
   "trendTitle": "Year-over-Year Trend",
   "currentYear": "Current Year",

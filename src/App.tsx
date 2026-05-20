@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ErrorBoundary, OverviewChart, TrendLine, AbsenceTypeDonut, DepartmentComparison, FolderPicker, AppShell, ToastContainer, FilterPanel, EmployeeDetail } from './components';
+import { ErrorBoundary, OverviewChart, TrendLine, AbsenceTypeDonut, DepartmentComparison, FolderPicker, AppShell, ToastContainer, FilterPanel, EmployeeDetail, KPIBar } from './components';
 import { AbsenceTable, EmployeeSummaryTable } from './components/tables';
 import { type NavigationItem } from './components/layout/AppShell';
 import { appEnv } from './config/env';
@@ -20,18 +20,6 @@ export function App() {
     return <FolderPicker />;
   }
 
-  const stackItems = [
-    'Vite + React + TypeScript',
-    'Tailwind CSS 3',
-    'Apache ECharts',
-    'Zustand',
-    'i18next',
-    'ESLint + Prettier',
-    'Local file loading',
-  ];
-
-  const setupChecks = ['Vite', 'ECharts', 'i18n', 'Zustand'];
-
   const handleNavigate = (sectionId: string) => {
     setActiveSection(sectionId);
     const target = document.getElementById(sectionId);
@@ -41,9 +29,9 @@ export function App() {
   };
 
   const navigationItems: NavigationItem[] = [
-    { id: 'overview', label: tCommon('navDashboard'), shortLabel: 'DB' },
-    { id: 'stack', label: tCommon('navStack'), shortLabel: 'STK' },
-    { id: 'setup', label: tCommon('navSetup'), shortLabel: 'SET' },
+    { id: 'overview', label: tDashboard('navOverview'), shortLabel: 'DB' },
+    { id: 'charts', label: tDashboard('navCharts'), shortLabel: 'GR' },
+    { id: 'tables', label: tDashboard('navTables'), shortLabel: 'TB' },
   ];
 
   const decadeYears = [selectedYear - 1, selectedYear, selectedYear + 1];
@@ -58,7 +46,7 @@ export function App() {
         navigationItems={navigationItems}
         onNavigate={handleNavigate}
       >
-        <section id="overview" className="px-8 py-12">
+        <div id="overview" className="px-8 py-12">
           <div className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="text-xs font-medium uppercase tracking-widest text-gray-400">
@@ -86,20 +74,22 @@ export function App() {
             </label>
           </div>
 
-<div className="mb-8 relative">
-              <FilterPanel />
-            </div>
+          <div className="mb-8">
+            <FilterPanel />
+          </div>
 
-            <div className="py-10">
-              <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
-                {tDashboard('chartTitle')}
-              </p>
+          <KPIBar />
+
+          <div className="py-10">
+            <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
+              {tDashboard('overviewTitle')}
+            </p>
             <OverviewChart year={selectedYear} />
           </div>
 
           <hr className="border-gray-100" />
 
-          <div className="py-10 grid grid-cols-1 xl:grid-cols-2 gap-16">
+          <div id="charts" className="py-10 grid grid-cols-1 xl:grid-cols-2 gap-16">
             <div>
               <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
                 {tCharts('trendTitle')}
@@ -126,13 +116,13 @@ export function App() {
 
           <hr className="border-gray-100" />
 
-          <div className="py-10 space-y-6">
+          <div id="tables" className="py-10 space-y-6">
             <button
               onClick={() => setAbsenceTableExpanded(!absenceTableExpanded)}
               className="flex w-full items-center justify-between px-2 py-3 hover:bg-gray-50 rounded-lg transition-colors"
             >
               <span className="text-xs font-medium uppercase tracking-widest text-gray-400">
-                Registro de ausencias
+                {tDashboard('absenceRegister')}
               </span>
               <span className={`text-gray-400 transition-transform duration-200 ${absenceTableExpanded ? 'rotate-180' : ''}`}>
                 ▼
@@ -145,7 +135,7 @@ export function App() {
               className="flex w-full items-center justify-between px-2 py-3 hover:bg-gray-50 rounded-lg transition-colors"
             >
               <span className="text-xs font-medium uppercase tracking-widest text-gray-400">
-                Resumen por empleado
+                {tDashboard('employeeSummary')}
               </span>
               <span className={`text-gray-400 transition-transform duration-200 ${employeeSummaryExpanded ? 'rotate-180' : ''}`}>
                 ▼
@@ -153,30 +143,7 @@ export function App() {
             </button>
             {employeeSummaryExpanded && <EmployeeSummaryTable />}
           </div>
-
-          <hr className="border-gray-100" />
-
-          <div className="py-10 grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-200">
-            {stackItems.slice(0, 4).map((item) => (
-              <div key={item} className="px-6 first:pl-0">
-                <span className="text-xs uppercase tracking-wider text-gray-400">{item}</span>
-              </div>
-            ))}
-          </div>
-
-          <hr className="border-gray-100" />
-
-          <div className="py-6 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-4">
-            {setupChecks.map((item) => (
-              <div key={item} className="flex items-center gap-2">
-                <svg className="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-sm text-gray-600">{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        </div>
         {selectedEmployeeDetail && (
           <EmployeeDetail 
             username={selectedEmployeeDetail} 
