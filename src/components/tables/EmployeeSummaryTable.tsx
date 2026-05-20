@@ -121,17 +121,18 @@ export function EmployeeSummaryTable() {
           <tbody className="divide-y divide-gray-50">
             {employeeSummaries.map((summary) => {
               const isSelected = filters.employees.includes(summary.username);
+              const isUnknown = summary.department === 'Unknown';
               return (
               <tr
                 key={summary.username}
-                className={`transition-colors cursor-pointer ${isSelected ? 'bg-orange-50/80' : 'hover:bg-gray-50/50'}`}
+                className={`transition-colors cursor-pointer ${isSelected ? 'bg-orange-50/80' : isUnknown ? 'bg-yellow-50 border-l-4 border-l-yellow-400' : 'hover:bg-gray-50/50'}`}
                 onClick={() => handleRowClick(summary.username)}
               >
                 <td className="px-4 py-3 text-sm font-medium text-gray-900">
                   {summary.username}
                 </td>
-                <td className="px-4 py-3 text-sm text-gray-500">
-                  {summary.department}
+                <td className={`px-4 py-3 text-sm ${isUnknown ? 'text-yellow-700 font-medium' : 'text-gray-500'}`}>
+                  {isUnknown ? t('unknown') : summary.department}
                 </td>
                 <td className="px-4 py-3 text-right text-sm font-bold text-gray-900">
                   {summary.totalDays}

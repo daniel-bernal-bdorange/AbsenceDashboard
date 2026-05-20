@@ -79,7 +79,7 @@ const loadExcelMappings = async (fileHandle: FileSystemFileHandle) => {
     const usernameValue = toText(row.Code);
     const primaryEntity = toText(row['Primary entity']);
     const checkEntity = toText(row.Check);
-    const departmentValue = normalizeDepartment(primaryEntity) ?? normalizeDepartment(checkEntity);
+    const departmentValue = normalizeDepartment(checkEntity) ?? normalizeDepartment(primaryEntity);
 
     if (usernameValue && isUsernameLike(usernameValue)) {
       addMapping(map, usernameValue, departmentValue);

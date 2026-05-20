@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import type { EChartsOption } from 'echarts';
 import ReactECharts from 'echarts-for-react';
 
@@ -20,6 +20,7 @@ interface DepartmentData {
 export function DepartmentComparison({ year }: DepartmentComparisonProps) {
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
+  const setFilters = useAppStore((s) => s.setFilters);
   const { t } = useTranslation('charts');
 
   const filteredRecords = useMemo(() => {
@@ -81,6 +82,17 @@ export function DepartmentComparison({ year }: DepartmentComparisonProps) {
 
     return Object.values(data).filter(d => d.totalDays > 0).sort((a, b) => a.totalDays - b.totalDays);
   }, [filteredRecords, year]);
+
+  const handleBarClick = useCallback((params: unknown) => {
+    const p = params as { name?: string };
+    if (!p.name) return;
+    
+    if (filters.departments.length === 1 && filters.departments[0] === p.name) {
+      setFilters({ departments: [] });
+    } else {
+      setFilters({ departments: [p.name] });
+    }
+  }, [filters.departments, setFilters]);
 
   const option: EChartsOption = useMemo(() => ({
     backgroundColor: 'transparent',
@@ -176,7 +188,11 @@ export function DepartmentComparison({ year }: DepartmentComparisonProps) {
 
   return (
     <div style={{ overflow: 'visible' }}>
-      <ReactECharts option={option} style={{ height: Math.max(120, departmentData.length * 80), width: '100%' }} />
+      <ReactECharts 
+        option={option} 
+        style={{ height: Math.max(120, departmentData.length * 80), width: '100%' }}
+        onEvents={{ click: handleBarClick }}
+      />
     </div>
   );
 }

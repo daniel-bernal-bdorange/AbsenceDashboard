@@ -46,7 +46,6 @@ export function TrendLine({ year }: TrendLineProps) {
   const { i18n, t } = useTranslation('charts');
 
   const handleChartClick = useCallback((params: unknown) => {
-    console.log('TrendLine click:', params);
     const p = params as { dataIndex?: number; seriesIndex?: number; componentType?: string; seriesName?: string };
 
     if ((p.componentType === 'xAxis' || p.componentType === 'axisLabel') && p.dataIndex !== undefined) {
