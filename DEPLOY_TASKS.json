@@ -1,0 +1,169 @@
+{
+  "project": "Absence Dashboard - Azure/SharePoint Deployment",
+  "description": "Desplegar el dashboard en Azure Static Web Apps con integracion Microsoft Graph API para leer archivos Excel de SharePoint",
+  "lastUpdated": "2026-05-20",
+  "phases": {
+    "azure_ad": {
+      "name": "Azure AD - App Registration",
+      "tasks": [
+        {
+          "id": "AD-001",
+          "name": "Registrar App en Azure AD",
+          "description": "Crear App Registration en Azure AD con tipo SPA",
+          "portal": "https://entra.microsoft.com > Azure Active Directory > App registrations > New registration",
+          "required": true,
+          "outputs": ["Client ID", "Tenant ID"]
+        },
+        {
+          "id": "AD-002",
+          "name": "Configurar redirect URI",
+          "description": "Anadir redirect URI para Azure Static Web Apps",
+          "required": true
+        },
+        {
+          "id": "AD-003",
+          "name": "Solicitar permisos de API",
+          "description": "Anadir permisos: Sites.Read.All, Files.Read.All (Application)",
+          "required": true
+        },
+        {
+          "id": "AD-004",
+          "name": "Crear secreto de cliente",
+          "description": "Para acceso daemon si se necesita",
+          "required": false
+        }
+      ]
+    },
+    "codigo": {
+      "name": "Codigo - Restaurar autenticacion y Graph API",
+      "tasks": [
+        {
+          "id": "CODE-001",
+          "name": "Restaurar msalConfig.ts",
+          "file": "src/auth/msalConfig.ts",
+          "required": true
+        },
+        {
+          "id": "CODE-002",
+          "name": "Restaurar AuthProvider.tsx",
+          "file": "src/auth/AuthProvider.tsx",
+          "required": true
+        },
+        {
+          "id": "CODE-003",
+          "name": "Crear graphClient.ts",
+          "file": "src/api/graphClient.ts",
+          "required": true
+        },
+        {
+          "id": "CODE-004",
+          "name": "Crear sharepoint.ts",
+          "file": "src/api/sharepoint.ts",
+          "required": true
+        },
+        {
+          "id": "CODE-005",
+          "name": "Actualizar App.tsx para usar AuthProvider",
+          "file": "src/App.tsx",
+          "required": true
+        },
+        {
+          "id": "CODE-006",
+          "name": "Crear pantalla AuthLoading",
+          "file": "src/components/AuthLoading.tsx",
+          "required": true
+        },
+        {
+          "id": "CODE-007",
+          "name": "Mantener FolderPicker como fallback",
+          "file": "src/components/FolderPicker.tsx",
+          "required": true
+        }
+      ]
+    },
+    "config": {
+      "name": "Configuracion - Variables de entorno",
+      "tasks": [
+        {
+          "id": "CFG-001",
+          "name": "Actualizar .env.example",
+          "file": ".env.example",
+          "required": true
+        },
+        {
+          "id": "CFG-002",
+          "name": "Configurar GitHub Secrets",
+          "required": true
+        }
+      ]
+    },
+    "azure_swa": {
+      "name": "Azure Static Web Apps - Despliegue",
+      "tasks": [
+        {
+          "id": "AZ-001",
+          "name": "Crear Static Web App",
+          "cli": "az staticwebapp create",
+          "required": true
+        },
+        {
+          "id": "AZ-002",
+          "name": "Configurar GitHub Actions",
+          "portal": "Azure Portal > Static Web Apps > Configuration",
+          "required": true
+        },
+        {
+          "id": "AZ-003",
+          "name": "Verificar despliegue automatico",
+          "required": true
+        },
+        {
+          "id": "AZ-004",
+          "name": "Verificar autenticacion SSO",
+          "required": true
+        },
+        {
+          "id": "AZ-005",
+          "name": "Verificar lectura SharePoint",
+          "required": true
+        }
+      ]
+    },
+    "testing": {
+      "name": "Testing y validacion",
+      "tasks": [
+        {
+          "id": "TEST-001",
+          "name": "Probar flujo completo",
+          "required": true
+        },
+        {
+          "id": "TEST-002",
+          "name": "Probar filtros y graficos",
+          "required": true
+        },
+        {
+          "id": "TEST-003",
+          "name": "Probar export CSV",
+          "required": true
+        },
+        {
+          "id": "TEST-004",
+          "name": "Probar en Edge y Chrome",
+          "required": false
+        }
+      ]
+    }
+  },
+  "summary": {
+    "total": 18,
+    "required": 16,
+    "optional": 2
+  },
+  "nextSteps": [
+    {"step": 1, "action": "Crear App Registration en Azure AD", "blockedBy": []},
+    {"step": 2, "action": "Restaurar codigo MSAL", "blockedBy": ["AD-001"]},
+    {"step": 3, "action": "Crear cliente Graph API", "blockedBy": ["AD-001", "CODE-001"]},
+    {"step": 4, "action": "Configurar Azure Static Web Apps", "blockedBy": ["CFG-002"]}
+  ]
+}
