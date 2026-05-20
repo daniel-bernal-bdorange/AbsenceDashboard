@@ -14,14 +14,16 @@ export function DateRangeFilter() {
             ? filters.dateRange.from.toISOString().split('T')[0]
             : ''
         }
-        onChange={(e) =>
+        onChange={(e) => {
+          const dateStr = e.target.value;
           setFilters({
             dateRange: {
               ...filters.dateRange,
-              from: e.target.value ? new Date(e.target.value) : null,
+              from: dateStr ? new Date(dateStr + 'T12:00:00') : null,
             },
-          })
-        }
+            selectedMonth: null,
+          });
+        }}
       />
       <input
         className="w-full rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-700 placeholder-gray-400 focus:border-orangeBusiness focus:outline-none"
@@ -32,14 +34,16 @@ export function DateRangeFilter() {
             ? filters.dateRange.to.toISOString().split('T')[0]
             : ''
         }
-        onChange={(e) =>
+        onChange={(e) => {
+          const dateStr = e.target.value;
           setFilters({
             dateRange: {
               ...filters.dateRange,
-              to: e.target.value ? new Date(e.target.value) : null,
+              to: dateStr ? new Date(dateStr + 'T12:00:00') : null,
             },
-          })
-        }
+            selectedMonth: null,
+          });
+        }}
       />
     </div>
   );
