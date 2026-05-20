@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ErrorBoundary, OverviewChart, TrendLine, AbsenceTypeDonut, DepartmentComparison, FolderPicker, AppShell, ToastContainer, FilterPanel } from './components';
+import { ErrorBoundary, OverviewChart, TrendLine, AbsenceTypeDonut, DepartmentComparison, FolderPicker, AppShell, ToastContainer, FilterPanel, EmployeeDetail } from './components';
 import { AbsenceTable, EmployeeSummaryTable } from './components/tables';
 import { type NavigationItem } from './components/layout/AppShell';
 import { appEnv } from './config/env';
@@ -8,7 +8,7 @@ import { useTranslation } from './i18n/useTranslation';
 import { useAppStore } from './store/useAppStore';
 
 export function App() {
-  const { selectedYear, setSelectedYear, records } = useAppStore();
+  const { selectedYear, setSelectedYear, records, selectedEmployeeDetail, setSelectedEmployeeDetail } = useAppStore();
   const [activeSection, setActiveSection] = useState('overview');
   const [absenceTableExpanded, setAbsenceTableExpanded] = useState(true);
   const [employeeSummaryExpanded, setEmployeeSummaryExpanded] = useState(true);
@@ -177,6 +177,12 @@ export function App() {
             ))}
           </div>
         </section>
+        {selectedEmployeeDetail && (
+          <EmployeeDetail 
+            username={selectedEmployeeDetail} 
+            onClose={() => setSelectedEmployeeDetail(null)} 
+          />
+        )}
       </AppShell>
     </ErrorBoundary>
   );

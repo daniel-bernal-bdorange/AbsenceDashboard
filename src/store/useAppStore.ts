@@ -11,6 +11,7 @@ type AppState = {
   folderName: string | null;
   sidebarOpen: boolean;
   filters: AbsenceFilters;
+  selectedEmployeeDetail: string | null;
   setRecords: (records: AbsenceRecord[], folderName?: string | null) => void;
   setSelectedYear: (year: number) => void;
   setSidebarOpen: (isOpen: boolean) => void;
@@ -19,6 +20,7 @@ type AppState = {
   setFilters: (filters: Partial<AbsenceFilters>) => void;
   resetFilters: () => void;
   getFilteredRecords: () => AbsenceRecord[];
+  setSelectedEmployeeDetail: (username: string | null) => void;
 };
 
 const currentYear = new Date().getFullYear();
@@ -44,6 +46,7 @@ export const useAppStore = create<AppState>()(
       folderName: null,
       sidebarOpen: true,
       filters: defaultFilters,
+      selectedEmployeeDetail: null,
       setRecords: (records, folderName = null) => set({ records, folderName }),
       clearRecords: () => set({ records: [], folderName: null }),
       setSelectedYear: (year) => set({ selectedYear: year }),
@@ -71,6 +74,7 @@ export const useAppStore = create<AppState>()(
           return true;
         });
       },
+      setSelectedEmployeeDetail: (username) => set({ selectedEmployeeDetail: username }),
     }),
     {
       name: 'absence-dashboard-storage',

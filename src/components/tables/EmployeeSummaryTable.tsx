@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from '../../i18n/useTranslation';
 import { useAppStore } from '../../store/useAppStore';
 import { NoDataState } from '../common/EmptyState';
@@ -17,35 +17,15 @@ interface EmployeeSummary {
 export function EmployeeSummaryTable() {
   const { t } = useTranslation('table');
   const records = useAppStore((s) => s.records);
-  const filters = useAppStore((s) => s.filters);
-  const setFilters = useAppStore((s) => s.setFilters);
+  const setSelectedEmployeeDetail = useAppStore((s) => s.setSelectedEmployeeDetail);
   const selectedYear = useAppStore((s) => s.selectedYear);
   const isLoading = useAppStore((s) => s.records.length === 0);
-
-  const handleRowClick = useCallback((username: string) => {
-    if (filters.employees.length === 1 && filters.employees[0] === username) {
-      setFilters({ employees: [] });
-    } else {
-      setFilters({ employees: [username] });
-    }
-  }, [filters.employees, setFilters]);
-
-  const filteredRecords = useMemo(() => {
-    return records.filter((r) => {
-      if (r.from.getFullYear() !== selectedYear) return false;
-      if (filters.departments.length && !filters.departments.includes(r.department ?? 'Unknown')) return false;
-      if (filters.employees.length && !filters.employees.includes(r.employeeUsername)) return false;
-      if (filters.categories.length && !filters.categories.includes(r.category)) return false;
-      if (filters.dateRange.from && r.from < filters.dateRange.from) return false;
-      if (filters.dateRange.to && r.till > filters.dateRange.to) return false;
-      return true;
-    });
-  }, [records, filters, selectedYear]);
 
   const employeeSummaries = useMemo(() => {
     const summaryMap: Record<string, EmployeeSummary> = {};
 
-    for (const record of filteredRecords) {
+    for (const record of records) {
+      if (record.from.getFullYear() !== selectedYear) continue;
       if (record.status !== 'Accepted') continue;
 
       if (!summaryMap[record.employeeUsername]) {
@@ -79,7 +59,7 @@ export function EmployeeSummaryTable() {
     }
 
     return Object.values(summaryMap).sort((a, b) => b.totalDays - a.totalDays);
-  }, [filteredRecords]);
+  }, [records, selectedYear]);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -120,13 +100,12 @@ export function EmployeeSummaryTable() {
           </thead>
           <tbody className="divide-y divide-gray-50">
             {employeeSummaries.map((summary) => {
-              const isSelected = filters.employees.includes(summary.username);
               const isUnknown = summary.department === 'Unknown';
               return (
               <tr
                 key={summary.username}
-                className={`transition-colors cursor-pointer ${isSelected ? 'bg-orange-50/80' : isUnknown ? 'bg-yellow-50 border-l-4 border-l-yellow-400' : 'hover:bg-gray-50/50'}`}
-                onClick={() => handleRowClick(summary.username)}
+                className={`transition-colors cursor-pointer ${isUnknown ? 'bg-yellow-50 border-l-4 border-l-yellow-400' : 'hover:bg-gray-50/50'}`}
+                onClick={() => setSelectedEmployeeDetail(summary.username)}
               >
                 <td className="px-4 py-3 text-sm font-medium text-gray-900">
                   {summary.username}

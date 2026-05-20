@@ -33,5 +33,11 @@
   "kpiEmployees": "Empleados",
   "kpiEmployeesSubtitle": "Con alguna ausencia",
   "days": "días",
-  "trendCardTitle": "Tendencias"
+  "trendCardTitle": "Tendencias",
+  "totalDays": "Total días",
+  "absences": "ausencias",
+  "timeline": "Historial",
+  "calendar": "Calendario",
+  "noRecords": "Sin registros",
+  "unknown": "Desconocido"
 }

@@ -4,7 +4,7 @@ import ReactECharts from 'echarts-for-react';
 
 import { useAppStore } from '../../store/useAppStore';
 import { useTranslation } from '../../i18n/useTranslation';
-import type { AbsenceCategory } from '../../types';
+import type { AbsenceCategory, Department } from '../../types';
 
 interface DepartmentComparisonProps {
   year: number;
@@ -90,7 +90,7 @@ export function DepartmentComparison({ year }: DepartmentComparisonProps) {
     if (filters.departments.length === 1 && filters.departments[0] === p.name) {
       setFilters({ departments: [] });
     } else {
-      setFilters({ departments: [p.name] });
+      setFilters({ departments: [p.name as Department] });
     }
   }, [filters.departments, setFilters]);
 
