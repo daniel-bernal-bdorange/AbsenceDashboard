@@ -3,6 +3,7 @@ import { useTranslation } from '../i18n/useTranslation';
 import { useAppStore } from '../store/useAppStore';
 import { chartColors } from './charts/chartColors';
 import type { AbsenceCategory } from '../types';
+import { getDayValue } from '../types';
 
 interface EmployeeDetailProps {
   username: string;
@@ -12,23 +13,32 @@ interface EmployeeDetailProps {
 export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
   const { t: tDashboard } = useTranslation('dashboard');
   const { t: tCharts } = useTranslation('charts');
+  const dailyRecords = useAppStore((s) => s.dailyRecords);
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
   const selectedYear = useAppStore((s) => s.selectedYear);
 
-  const employeeRecords = useMemo(() => {
-    return records.filter((r) => {
-      if (r.employeeUsername !== username) return false;
-      if (r.from.getFullYear() !== selectedYear) return false;
-      if (filters.categories.length && !filters.categories.includes(r.category)) return false;
-      if (filters.dateRange.from && r.from < filters.dateRange.from) return false;
-      if (filters.dateRange.to && r.till > filters.dateRange.to) return false;
+  const employeeDayRecords = useMemo(() => {
+    return dailyRecords.filter((dr) => {
+      if (dr.employeeUsername !== username) return false;
+      if (dr.date.getFullYear() !== selectedYear) return false;
+      if (filters.categories.length && !filters.categories.includes(dr.category)) return false;
+      if (filters.dateRange.from) {
+        const from = new Date(filters.dateRange.from);
+        from.setHours(0, 0, 0, 0);
+        if (dr.date < from) return false;
+      }
+      if (filters.dateRange.to) {
+        const to = new Date(filters.dateRange.to);
+        to.setHours(0, 0, 0, 0);
+        if (dr.date > to) return false;
+      }
       return true;
     });
-  }, [records, username, selectedYear, filters]);
+  }, [dailyRecords, username, selectedYear, filters]);
 
   const employeeInfo = useMemo(() => {
-    const acceptedRecords = employeeRecords.filter(r => r.status === 'Accepted');
+    const acceptedDayRecords = employeeDayRecords.filter(r => r.status === 'Accepted');
     const totals: Record<AbsenceCategory, number> = {
       Vacation: 0,
       SickLeave: 0,
@@ -36,39 +46,46 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
       Special: 0,
     };
 
-    for (const record of acceptedRecords) {
-      totals[record.category] += record.numberOfDays;
+    for (const record of acceptedDayRecords) {
+      totals[record.category] += getDayValue(record.isFullDay);
     }
 
     const totalDays = Object.values(totals).reduce((a, b) => a + b, 0);
-    const department = employeeRecords[0]?.department ?? 'Unknown';
+    const department = employeeDayRecords[0]?.department ?? 'Unknown';
 
-    return { totals, totalDays, department, count: acceptedRecords.length };
-  }, [employeeRecords]);
+    const uniqueAbsenceIds = new Set(employeeDayRecords.map(r => r.originalAbsenceId));
+
+    return { totals, totalDays, department, count: uniqueAbsenceIds.size };
+  }, [employeeDayRecords]);
 
   const departmentAverages = useMemo(() => {
-    const deptRecords = records.filter((r) => {
-      if (r.from.getFullYear() !== selectedYear) return false;
-      if (r.status !== 'Accepted') return false;
-      if (r.department !== employeeInfo.department) return false;
-      if (r.employeeUsername === username) return false;
+    const deptDayRecords = dailyRecords.filter((dr) => {
+      if (dr.date.getFullYear() !== selectedYear) return false;
+      if (dr.status !== 'Accepted') return false;
+      if (dr.department !== employeeInfo.department) return false;
+      if (dr.employeeUsername === username) return false;
       return true;
     });
 
-    const employeeCount = new Set(deptRecords.map(r => r.employeeUsername)).size || 1;
-    const totalDays = deptRecords.reduce((sum, r) => sum + r.numberOfDays, 0);
+    const employeeCount = new Set(deptDayRecords.map(r => r.employeeUsername)).size || 1;
+    const totalDays = deptDayRecords.reduce((sum, r) => sum + getDayValue(r.isFullDay), 0);
 
     return {
       avgDaysPerEmployee: totalDays / employeeCount,
       employeeCount,
     };
-  }, [records, selectedYear, employeeInfo.department, username]);
+  }, [dailyRecords, selectedYear, employeeInfo.department, username]);
 
   const timelineData = useMemo(() => {
-    return employeeRecords
-      .filter(r => r.status === 'Accepted')
+    const acceptedIds = new Set(
+      employeeDayRecords
+        .filter(r => r.status === 'Accepted')
+        .map(r => r.originalAbsenceId),
+    );
+    return records
+      .filter(r => acceptedIds.has(r.id))
       .sort((a, b) => a.from.getTime() - b.from.getTime());
-  }, [employeeRecords]);
+  }, [employeeDayRecords, records]);
 
   const categoryLabels: Record<AbsenceCategory, string> = {
     Vacation: 'vacationSeries',

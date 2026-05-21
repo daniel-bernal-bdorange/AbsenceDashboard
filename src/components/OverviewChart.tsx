@@ -5,7 +5,9 @@ import ReactECharts from 'echarts-for-react';
 import { useTranslation } from '../i18n/useTranslation';
 import { useAppStore } from '../store/useAppStore';
 import { chartColors } from './charts/chartColors';
-import type { AbsenceCategory } from '../types';
+import type { AbsenceCategory, AbsenceDayRecord } from '../types';
+import { getDayValue } from '../types';
+import { filterDayRecords } from '../utils/filterDayRecords';
 
 type OverviewChartProps = {
   year: number;
@@ -16,18 +18,18 @@ const monthLabels = (language: string, year: number) =>
     new Intl.DateTimeFormat(language, { month: 'short' }).format(new Date(year, index, 1)),
   );
 
-const buildMonthlySeries = (records: ReturnType<typeof useAppStore.getState>['records'], year: number) => {
+const buildMonthlySeries = (dailyRecords: AbsenceDayRecord[], year: number) => {
   const vacationData = Array(12).fill(0);
   const sickLeaveData = Array(12).fill(0);
   const maternityData = Array(12).fill(0);
   const specialLeaveData = Array(12).fill(0);
 
-  for (const record of records) {
-    if (record.from.getFullYear() !== year) continue;
+  for (const record of dailyRecords) {
+    if (record.date.getFullYear() !== year) continue;
     if (record.status !== 'Accepted') continue;
 
-    const monthIndex = record.from.getMonth();
-    const days = record.numberOfDays;
+    const monthIndex = record.date.getMonth();
+    const days = getDayValue(record.isFullDay);
 
     switch (record.category) {
       case 'Vacation':
@@ -57,7 +59,7 @@ const seriesIndexToCategory: Record<number, AbsenceCategory> = {
 
 export function OverviewChart({ year }: OverviewChartProps) {
   const { i18n, t } = useTranslation('charts');
-  const records = useAppStore((s) => s.records);
+  const dailyRecords = useAppStore((s) => s.dailyRecords);
   const filters = useAppStore((s) => s.filters);
   const selectedYear = useAppStore((s) => s.selectedYear);
   const setFilters = useAppStore((s) => s.setFilters);
@@ -161,26 +163,14 @@ export function OverviewChart({ year }: OverviewChartProps) {
     handleChartClick(params);
   }, [handleChartClick]);
 
-  const filteredRecords = useMemo(() => {
-    return records.filter((r) => {
-      if (r.from.getFullYear() !== selectedYear) return false;
-      if (filters.departments.length && !filters.departments.includes(r.department ?? 'Unknown')) return false;
-      if (filters.employees.length && !filters.employees.includes(r.employeeUsername)) return false;
-      if (filters.categories.length && !filters.categories.includes(r.category)) return false;
-      if (filters.dateRange.from && r.from < filters.dateRange.from) return false;
-      if (filters.dateRange.to && r.till > filters.dateRange.to) return false;
-      if (filters.selectedMonth !== null) {
-        const recordMonth = r.from.getMonth();
-        const recordEndMonth = r.till.getMonth();
-        if (recordMonth > filters.selectedMonth || recordEndMonth < filters.selectedMonth) return false;
-      }
-      return true;
-    });
-  }, [records, filters, selectedYear]);
+  const filteredDayRecords = useMemo(
+    () => filterDayRecords(dailyRecords, filters, selectedYear),
+    [dailyRecords, filters, selectedYear],
+  );
 
   const monthlySeries = useMemo(
-    () => buildMonthlySeries(filteredRecords, year),
-    [filteredRecords, year],
+    () => buildMonthlySeries(filteredDayRecords, year),
+    [filteredDayRecords, year],
   );
 
   const option: EChartsOption = {

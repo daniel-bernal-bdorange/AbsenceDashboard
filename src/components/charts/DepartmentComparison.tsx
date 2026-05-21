@@ -5,6 +5,7 @@ import ReactECharts from 'echarts-for-react';
 import { useAppStore } from '../../store/useAppStore';
 import { useTranslation } from '../../i18n/useTranslation';
 import type { AbsenceCategory, Department } from '../../types';
+import { getDayValue } from '../../types';
 
 interface DepartmentComparisonProps {
   year: number;
@@ -18,26 +19,31 @@ interface DepartmentData {
 }
 
 export function DepartmentComparison({ year }: DepartmentComparisonProps) {
-  const records = useAppStore((s) => s.records);
+  const dailyRecords = useAppStore((s) => s.dailyRecords);
   const filters = useAppStore((s) => s.filters);
   const setFilters = useAppStore((s) => s.setFilters);
   const { t } = useTranslation('charts');
 
-  const filteredRecords = useMemo(() => {
-    return records.filter((r) => {
-      if (filters.departments.length && !filters.departments.includes(r.department ?? 'Unknown')) return false;
-      if (filters.employees.length && !filters.employees.includes(r.employeeUsername)) return false;
-      if (filters.categories.length && !filters.categories.includes(r.category)) return false;
-      if (filters.dateRange.from && r.from < filters.dateRange.from) return false;
-      if (filters.dateRange.to && r.till > filters.dateRange.to) return false;
-      if (filters.selectedMonth !== null) {
-        const recordMonth = r.from.getMonth();
-        const recordEndMonth = r.till.getMonth();
-        if (recordMonth > filters.selectedMonth || recordEndMonth < filters.selectedMonth) return false;
+  const filteredDayRecords = useMemo(() => {
+    return dailyRecords.filter((dr) => {
+      if (dr.date.getFullYear() !== year) return false;
+      if (filters.departments.length && !filters.departments.includes(dr.department ?? 'Unknown')) return false;
+      if (filters.employees.length && !filters.employees.includes(dr.employeeUsername)) return false;
+      if (filters.categories.length && !filters.categories.includes(dr.category)) return false;
+      if (filters.dateRange.from) {
+        const from = new Date(filters.dateRange.from);
+        from.setHours(0, 0, 0, 0);
+        if (dr.date < from) return false;
       }
+      if (filters.dateRange.to) {
+        const to = new Date(filters.dateRange.to);
+        to.setHours(0, 0, 0, 0);
+        if (dr.date > to) return false;
+      }
+      if (filters.selectedMonth !== null && dr.date.getMonth() !== filters.selectedMonth) return false;
       return true;
     });
-  }, [records, filters]);
+  }, [dailyRecords, filters, year]);
 
   const departmentData = useMemo(() => {
     const data: Record<string, DepartmentData> = {
@@ -60,19 +66,19 @@ export function DepartmentComparison({ year }: DepartmentComparisonProps) {
       BackOffice: new Set(),
     };
 
-    for (const record of filteredRecords) {
-      if (record.from.getFullYear() !== year) continue;
+    for (const record of filteredDayRecords) {
       if (record.status !== 'Accepted') continue;
 
       const dept = record.department === 'Prod' ? 'Prod' : record.department === 'BackOffice' ? 'BackOffice' : null;
       if (!dept) continue;
 
-      data[dept].totalDays += record.numberOfDays;
-      data[dept].byCategory[record.category] += record.numberOfDays;
+      const days = getDayValue(record.isFullDay);
+      data[dept].totalDays += days;
+      data[dept].byCategory[record.category] += days;
       employeeCounts[dept].add(record.employeeUsername);
     }
 
-    const totalEmployees = new Set(filteredRecords.map(r => r.employeeUsername)).size || 1;
+    const totalEmployees = new Set(filteredDayRecords.map(r => r.employeeUsername)).size || 1;
     const prodEmployees = employeeCounts.Prod.size || Math.floor(totalEmployees * 0.6);
     const boEmployees = employeeCounts.BackOffice.size || Math.floor(totalEmployees * 0.4);
     const workingDays = 260;
@@ -81,7 +87,7 @@ export function DepartmentComparison({ year }: DepartmentComparisonProps) {
     data.BackOffice.absenteeismRate = (data.BackOffice.totalDays / (boEmployees * workingDays)) * 100;
 
     return Object.values(data).filter(d => d.totalDays > 0).sort((a, b) => a.totalDays - b.totalDays);
-  }, [filteredRecords, year]);
+  }, [filteredDayRecords]);
 
   const handleBarClick = useCallback((params: unknown) => {
     const p = params as { name?: string };

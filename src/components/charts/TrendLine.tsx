@@ -4,6 +4,8 @@ import ReactECharts from 'echarts-for-react';
 
 import { useAppStore } from '../../store/useAppStore';
 import { useTranslation } from '../../i18n/useTranslation';
+import type { AbsenceDayRecord } from '../../types';
+import { getDayValue } from '../../types';
 
 interface TrendLineProps {
   year: number;
@@ -14,19 +16,20 @@ interface MonthlyData {
   previousYear: number[];
 }
 
-const buildMonthlyData = (records: { from: Date; numberOfDays: number; status: string }[], year: number): MonthlyData => {
+const buildMonthlyData = (dailyRecords: AbsenceDayRecord[], year: number): MonthlyData => {
   const currentYear = Array(12).fill(0);
   const previousYear = Array(12).fill(0);
   
-  for (const record of records) {
+  for (const record of dailyRecords) {
     if (record.status !== 'Accepted') continue;
-    const recordYear = record.from.getFullYear();
-    const month = record.from.getMonth();
+    const recordYear = record.date.getFullYear();
+    const month = record.date.getMonth();
+    const days = getDayValue(record.isFullDay);
     
     if (recordYear === year) {
-      currentYear[month] += record.numberOfDays;
+      currentYear[month] += days;
     } else if (recordYear === year - 1) {
-      previousYear[month] += record.numberOfDays;
+      previousYear[month] += days;
     }
   }
   
@@ -40,7 +43,7 @@ const getHistoricalAverage = (data: number[], upToMonth: number): number => {
 };
 
 export function TrendLine({ year }: TrendLineProps) {
-  const records = useAppStore((s) => s.records);
+  const dailyRecords = useAppStore((s) => s.dailyRecords);
   const filters = useAppStore((s) => s.filters);
   const setFilters = useAppStore((s) => s.setFilters);
   const { i18n, t } = useTranslation('charts');
@@ -87,23 +90,27 @@ export function TrendLine({ year }: TrendLineProps) {
   click: handleChartClick
 };
 
-  const filteredRecords = useMemo(() => {
-    return records.filter((r) => {
-      if (filters.departments.length && !filters.departments.includes(r.department ?? 'Unknown')) return false;
-      if (filters.employees.length && !filters.employees.includes(r.employeeUsername)) return false;
-      if (filters.categories.length && !filters.categories.includes(r.category)) return false;
-      if (filters.dateRange.from && r.from < filters.dateRange.from) return false;
-      if (filters.dateRange.to && r.till > filters.dateRange.to) return false;
-      if (filters.selectedMonth !== null) {
-        const recordMonth = r.from.getMonth();
-        const recordEndMonth = r.till.getMonth();
-        if (recordMonth > filters.selectedMonth || recordEndMonth < filters.selectedMonth) return false;
+  const filteredDayRecords = useMemo(() => {
+    return dailyRecords.filter((dr) => {
+      if (filters.departments.length && !filters.departments.includes(dr.department ?? 'Unknown')) return false;
+      if (filters.employees.length && !filters.employees.includes(dr.employeeUsername)) return false;
+      if (filters.categories.length && !filters.categories.includes(dr.category)) return false;
+      if (filters.dateRange.from) {
+        const from = new Date(filters.dateRange.from);
+        from.setHours(0, 0, 0, 0);
+        if (dr.date < from) return false;
       }
+      if (filters.dateRange.to) {
+        const to = new Date(filters.dateRange.to);
+        to.setHours(0, 0, 0, 0);
+        if (dr.date > to) return false;
+      }
+      if (filters.selectedMonth !== null && dr.date.getMonth() !== filters.selectedMonth) return false;
       return true;
     });
-  }, [records, filters]);
+  }, [dailyRecords, filters]);
 
-  const monthlyData = useMemo(() => buildMonthlyData(filteredRecords, year), [filteredRecords, year]);
+  const monthlyData = useMemo(() => buildMonthlyData(filteredDayRecords, year), [filteredDayRecords, year]);
   
   const monthLabels = useMemo(() => {
     return Array.from({ length: 12 }, (_, i) =>

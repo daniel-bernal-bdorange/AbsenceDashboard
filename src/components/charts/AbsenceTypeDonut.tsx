@@ -6,6 +6,7 @@ import { useAppStore } from '../../store/useAppStore';
 import { useTranslation } from '../../i18n/useTranslation';
 import { chartColors } from './chartColors';
 import type { AbsenceCategory } from '../../types';
+import { getDayValue } from '../../types';
 
 interface AbsenceTypeDonutProps {
   year: number;
@@ -19,21 +20,30 @@ const categoryColors: Record<AbsenceCategory, string> = {
 };
 
 export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
-  const records = useAppStore((s) => s.records);
+  const dailyRecords = useAppStore((s) => s.dailyRecords);
   const filters = useAppStore((s) => s.filters);
   const setFilters = useAppStore((s) => s.setFilters);
   const { t } = useTranslation('charts');
 
-  const filteredRecords = useMemo(() => {
-    return records.filter((r) => {
-      if (filters.departments.length && !filters.departments.includes(r.department ?? 'Unknown')) return false;
-      if (filters.employees.length && !filters.employees.includes(r.employeeUsername)) return false;
-      if (filters.categories.length && !filters.categories.includes(r.category)) return false;
-      if (filters.dateRange.from && r.from < filters.dateRange.from) return false;
-      if (filters.dateRange.to && r.till > filters.dateRange.to) return false;
+  const filteredDayRecords = useMemo(() => {
+    return dailyRecords.filter((dr) => {
+      if (dr.date.getFullYear() !== year) return false;
+      if (filters.departments.length && !filters.departments.includes(dr.department ?? 'Unknown')) return false;
+      if (filters.employees.length && !filters.employees.includes(dr.employeeUsername)) return false;
+      if (filters.categories.length && !filters.categories.includes(dr.category)) return false;
+      if (filters.dateRange.from) {
+        const from = new Date(filters.dateRange.from);
+        from.setHours(0, 0, 0, 0);
+        if (dr.date < from) return false;
+      }
+      if (filters.dateRange.to) {
+        const to = new Date(filters.dateRange.to);
+        to.setHours(0, 0, 0, 0);
+        if (dr.date > to) return false;
+      }
       return true;
     });
-  }, [records, filters]);
+  }, [dailyRecords, filters, year]);
 
   const distribution = useMemo(() => {
     const totals: Record<AbsenceCategory, number> = {
@@ -43,10 +53,9 @@ export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
       Special: 0,
     };
 
-    for (const record of filteredRecords) {
-      if (record.from.getFullYear() !== year) continue;
+    for (const record of filteredDayRecords) {
       if (record.status !== 'Accepted') continue;
-      totals[record.category] += record.numberOfDays;
+      totals[record.category] += getDayValue(record.isFullDay);
     }
 
     return Object.entries(totals)
@@ -56,7 +65,7 @@ export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
         value,
         color: categoryColors[key as AbsenceCategory],
       }));
-  }, [filteredRecords, year]);
+  }, [filteredDayRecords]);
 
   const handleDonutClick = useCallback((params: unknown) => {
     const p = params as { dataIndex?: number };

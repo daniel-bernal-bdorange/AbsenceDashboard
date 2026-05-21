@@ -1,13 +1,16 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
-import type { AbsenceRecord } from '../types';
+import type { AbsenceRecord, AbsenceDayRecord } from '../types';
 import type { AbsenceFilters } from '../components/filters/filterTypes';
 import { defaultFilters } from '../components/filters/filterTypes';
+import { expandToDailyRecords } from '../utils/absenceExpander';
+import { filterDayRecords } from '../utils/filterDayRecords';
 
 type AppState = {
   selectedYear: number;
   records: AbsenceRecord[];
+  dailyRecords: AbsenceDayRecord[];
   folderName: string | null;
   sidebarOpen: boolean;
   filters: AbsenceFilters;
@@ -20,6 +23,7 @@ type AppState = {
   setFilters: (filters: Partial<AbsenceFilters>) => void;
   resetFilters: () => void;
   getFilteredRecords: () => AbsenceRecord[];
+  getFilteredDayRecords: () => AbsenceDayRecord[];
   setSelectedEmployeeDetail: (username: string | null) => void;
 };
 
@@ -38,17 +42,32 @@ const sessionStorageMiddleware = {
   },
 };
 
+function reviveDates(records: AbsenceRecord[]): AbsenceRecord[] {
+  return records.map((r) => ({
+    ...r,
+    from: new Date(r.from),
+    till: new Date(r.till),
+    requestDate: new Date(r.requestDate),
+  }));
+}
+
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
       selectedYear: currentYear,
       records: [],
+      dailyRecords: [],
       folderName: null,
       sidebarOpen: true,
       filters: defaultFilters,
       selectedEmployeeDetail: null,
-      setRecords: (records, folderName = null) => set({ records, folderName }),
-      clearRecords: () => set({ records: [], folderName: null }),
+      setRecords: (records, folderName = null) =>
+        set({
+          records,
+          dailyRecords: records.flatMap(expandToDailyRecords),
+          folderName,
+        }),
+      clearRecords: () => set({ records: [], dailyRecords: [], folderName: null }),
       setSelectedYear: (year) => set({ selectedYear: year }),
       setSidebarOpen: (isOpen) => set({ sidebarOpen: isOpen }),
       toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
@@ -58,21 +77,15 @@ export const useAppStore = create<AppState>()(
         })),
       resetFilters: () => set({ filters: defaultFilters }),
       getFilteredRecords: () => {
-        const { records, filters, selectedYear } = get();
-        return records.filter((r) => {
-          if (r.from.getFullYear() !== selectedYear) return false;
-          if (filters.departments.length && !filters.departments.includes(r.department ?? 'Unknown')) return false;
-          if (filters.employees.length && !filters.employees.includes(r.employeeUsername)) return false;
-          if (filters.categories.length && !filters.categories.includes(r.category)) return false;
-          if (filters.dateRange.from && r.from < filters.dateRange.from) return false;
-          if (filters.dateRange.to && r.till > filters.dateRange.to) return false;
-          if (filters.selectedMonth !== null) {
-            const recordMonth = r.from.getMonth();
-            const recordEndMonth = r.till.getMonth();
-            if (recordMonth > filters.selectedMonth || recordEndMonth < filters.selectedMonth) return false;
-          }
-          return true;
-        });
+        const { dailyRecords, records, filters, selectedYear } = get();
+        const matchingIds = new Set(
+          filterDayRecords(dailyRecords, filters, selectedYear).map((dr) => dr.originalAbsenceId),
+        );
+        return records.filter((r) => matchingIds.has(r.id));
+      },
+      getFilteredDayRecords: () => {
+        const { dailyRecords, filters, selectedYear } = get();
+        return filterDayRecords(dailyRecords, filters, selectedYear);
       },
       setSelectedEmployeeDetail: (username) => set({ selectedEmployeeDetail: username }),
     }),
@@ -84,6 +97,14 @@ export const useAppStore = create<AppState>()(
         folderName: state.folderName,
         selectedYear: state.selectedYear,
       }),
+      merge: (persisted, current) => {
+        const merged = { ...current, ...(typeof persisted === 'object' && persisted !== null ? persisted : {}) } as AppState;
+        if (merged.records?.length) {
+          merged.records = reviveDates(merged.records);
+          merged.dailyRecords = merged.records.flatMap(expandToDailyRecords);
+        }
+        return merged;
+      },
     },
   ),
 );

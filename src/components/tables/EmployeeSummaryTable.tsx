@@ -3,6 +3,7 @@ import { useTranslation } from '../../i18n/useTranslation';
 import { useAppStore } from '../../store/useAppStore';
 import { NoDataState } from '../common/EmptyState';
 import { LoadingSpinner } from '../common/LoadingSpinner';
+import { getDayValue } from '../../types';
 
 interface EmployeeSummary {
   username: string;
@@ -16,16 +17,16 @@ interface EmployeeSummary {
 
 export function EmployeeSummaryTable() {
   const { t } = useTranslation('table');
-  const records = useAppStore((s) => s.records);
+  const dailyRecords = useAppStore((s) => s.dailyRecords);
   const setSelectedEmployeeDetail = useAppStore((s) => s.setSelectedEmployeeDetail);
   const selectedYear = useAppStore((s) => s.selectedYear);
-  const isLoading = useAppStore((s) => s.records.length === 0);
+  const isLoading = useAppStore((s) => s.dailyRecords.length === 0);
 
   const employeeSummaries = useMemo(() => {
     const summaryMap: Record<string, EmployeeSummary> = {};
 
-    for (const record of records) {
-      if (record.from.getFullYear() !== selectedYear) continue;
+    for (const record of dailyRecords) {
+      if (record.date.getFullYear() !== selectedYear) continue;
       if (record.status !== 'Accepted') continue;
 
       if (!summaryMap[record.employeeUsername]) {
@@ -41,25 +42,26 @@ export function EmployeeSummaryTable() {
       }
 
       const summary = summaryMap[record.employeeUsername];
-      summary.totalDays += record.numberOfDays;
+      const days = getDayValue(record.isFullDay);
+      summary.totalDays += days;
       summary.absenceCount += 1;
 
       switch (record.category) {
         case 'Vacation':
-          summary.vacationDays += record.numberOfDays;
+          summary.vacationDays += days;
           break;
         case 'SickLeave':
-          summary.sickDays += record.numberOfDays;
+          summary.sickDays += days;
           break;
         case 'Maternity':
         case 'Special':
-          summary.specialDays += record.numberOfDays;
+          summary.specialDays += days;
           break;
       }
     }
 
     return Object.values(summaryMap).sort((a, b) => b.totalDays - a.totalDays);
-  }, [records, selectedYear]);
+  }, [dailyRecords, selectedYear]);
 
   if (isLoading) {
     return <LoadingSpinner />;

@@ -72,3 +72,25 @@ export interface AbsenceRecord {
   validationStatus: string;
   sourceFile: string;
 }
+
+export interface AbsenceDayRecord {
+  id: string;
+  originalAbsenceId: string;
+  date: Date;
+  isFullDay: boolean;
+  employeeCode: string;
+  employeeUsername: string;
+  department: Department | undefined;
+  type: AbsenceType;
+  category: AbsenceCategory;
+  status: AbsenceStatus;
+  validationStatus: string;
+  sourceFile: string;
+}
+
+export const DAY_RECORD_FULL = 1;
+export const DAY_RECORD_HALF = 0.5;
+
+export function getDayValue(isFullDay: boolean): number {
+  return isFullDay ? DAY_RECORD_FULL : DAY_RECORD_HALF;
+}

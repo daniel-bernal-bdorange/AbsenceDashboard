@@ -1,4 +1,4 @@
-import { type AbsenceRecord, AbsenceStatus } from '../../types';
+import { type AbsenceDayRecord, AbsenceStatus, getDayValue } from '../../types';
 
 const LABOR_DAYS_PER_YEAR = 248;
 
@@ -10,13 +10,13 @@ export interface AbsenteeismRateResult {
 }
 
 export function calcAbsenteeismRate(
-  records: AbsenceRecord[],
+  records: AbsenceDayRecord[],
   year: number,
 ): AbsenteeismRateResult {
   const acceptedRecords = records.filter(
     (r) =>
       r.status === AbsenceStatus.ACCEPTED &&
-      r.from.getFullYear() === year,
+      r.date.getFullYear() === year,
   );
 
   const uniqueEmployees = new Set(
@@ -24,7 +24,7 @@ export function calcAbsenteeismRate(
   );
 
   const totalAbsenceDays = acceptedRecords.reduce(
-    (sum, r) => sum + r.numberOfDays,
+    (sum, r) => sum + getDayValue(r.isFullDay),
     0,
   );
 
@@ -42,45 +42,49 @@ export function calcAbsenteeismRate(
 }
 
 export function calcTotalAbsenceDays(
-  records: AbsenceRecord[],
+  records: AbsenceDayRecord[],
   year: number,
 ): number {
   return records
     .filter(
       (r) =>
         r.status === AbsenceStatus.ACCEPTED &&
-        r.from.getFullYear() === year,
+        r.date.getFullYear() === year,
     )
-    .reduce((sum, r) => sum + r.numberOfDays, 0);
+    .reduce((sum, r) => sum + getDayValue(r.isFullDay), 0);
 }
 
-export function calcEmployeesCurrentlyOut(records: AbsenceRecord[]): number {
+export function calcEmployeesCurrentlyOut(records: AbsenceDayRecord[]): number {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  return records.filter((r) => {
-    const from = new Date(r.from);
-    const till = new Date(r.till);
-    from.setHours(0, 0, 0, 0);
-    till.setHours(0, 0, 0, 0);
-    return r.status === AbsenceStatus.ACCEPTED && from <= today && today <= till;
-  }).length;
+  const employeeIds = new Set(
+    records
+      .filter((r) => {
+        const date = new Date(r.date);
+        date.setHours(0, 0, 0, 0);
+        return r.status === AbsenceStatus.ACCEPTED && +date === +today;
+      })
+      .map((r) => r.employeeUsername),
+  );
+
+  return employeeIds.size;
 }
 
-export function calcTopEmployee(records: AbsenceRecord[], year: number): {
+export function calcTopEmployee(records: AbsenceDayRecord[], year: number): {
   username: string;
   days: number;
 } | null {
   const acceptedRecords = records.filter(
     (r) =>
       r.status === AbsenceStatus.ACCEPTED &&
-      r.from.getFullYear() === year,
+      r.date.getFullYear() === year,
   );
 
   const employeeDays: Record<string, number> = {};
   for (const r of acceptedRecords) {
     employeeDays[r.employeeUsername] =
-      (employeeDays[r.employeeUsername] || 0) + r.numberOfDays;
+      (employeeDays[r.employeeUsername] || 0) + getDayValue(r.isFullDay);
   }
 
   let topUsername: string | null = null;
@@ -97,13 +101,13 @@ export function calcTopEmployee(records: AbsenceRecord[], year: number): {
 }
 
 export function calcMostFrequentAbsenceType(
-  records: AbsenceRecord[],
+  records: AbsenceDayRecord[],
   year: number,
 ): string | null {
   const acceptedRecords = records.filter(
     (r) =>
       r.status === AbsenceStatus.ACCEPTED &&
-      r.from.getFullYear() === year,
+      r.date.getFullYear() === year,
   );
 
   const typeCount: Record<string, number> = {};
@@ -125,7 +129,7 @@ export function calcMostFrequentAbsenceType(
 }
 
 export function calcAbsenteeismRateComparison(
-  records: AbsenceRecord[],
+  records: AbsenceDayRecord[],
   currentYear: number,
 ): { rate: number; delta: number; direction: 'up' | 'down' | 'neutral' } {
   const current = calcAbsenteeismRate(records, currentYear);

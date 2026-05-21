@@ -6,30 +6,22 @@ import { NoDataState } from '../common/EmptyState';
 import { LoadingSpinner } from '../common/LoadingSpinner';
 import { exportCSV } from '../../utils/exportCSV';
 import { formatDate } from '../../utils/dateUtils';
+import { filterDayRecords } from '../../utils/filterDayRecords';
 
 export function AbsenceTable() {
   const { t } = useTranslation('table');
+  const dailyRecords = useAppStore((s) => s.dailyRecords);
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
   const selectedYear = useAppStore((s) => s.selectedYear);
   const isLoading = useAppStore((s) => s.records.length === 0);
 
   const filteredRecords = useMemo(() => {
-    return records.filter((r) => {
-      if (r.from.getFullYear() !== selectedYear) return false;
-      if (filters.departments.length && !filters.departments.includes(r.department ?? 'Unknown')) return false;
-      if (filters.employees.length && !filters.employees.includes(r.employeeUsername)) return false;
-      if (filters.categories.length && !filters.categories.includes(r.category)) return false;
-      if (filters.dateRange.from && r.from < filters.dateRange.from) return false;
-      if (filters.dateRange.to && r.till > filters.dateRange.to) return false;
-      if (filters.selectedMonth !== null) {
-        const recordMonth = r.from.getMonth();
-        const recordEndMonth = r.till.getMonth();
-        if (recordMonth > filters.selectedMonth || recordEndMonth < filters.selectedMonth) return false;
-      }
-      return true;
-    });
-  }, [records, filters, selectedYear]);
+    const matchingIds = new Set(
+      filterDayRecords(dailyRecords, filters, selectedYear).map((dr) => dr.originalAbsenceId),
+    );
+    return records.filter((r) => matchingIds.has(r.id));
+  }, [dailyRecords, records, filters, selectedYear]);
 
   const handleExport = () => {
     exportCSV(filteredRecords, `ausencias_${new Date().toISOString().split('T')[0]}.csv`);

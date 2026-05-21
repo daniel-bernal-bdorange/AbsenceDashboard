@@ -12,19 +12,20 @@ import { useAppStore } from '../../store/useAppStore';
 import { useTranslation } from '../../i18n/useTranslation';
 
 export function KPIBar() {
-  const { records, selectedYear } = useAppStore();
+  const dailyRecords = useAppStore((s) => s.dailyRecords);
+  const selectedYear = useAppStore((s) => s.selectedYear);
   const { t: tDashboard } = useTranslation('dashboard');
 
   const kpis = useMemo(() => {
-    const totalDays = calcTotalAbsenceDays(records, selectedYear);
-    const currentlyOut = calcEmployeesCurrentlyOut(records);
-    const topEmployee = calcTopEmployee(records, selectedYear);
-    const mostFrequent = calcMostFrequentAbsenceType(records, selectedYear);
-    const comparison = calcAbsenteeismRateComparison(records, selectedYear);
+    const totalDays = calcTotalAbsenceDays(dailyRecords, selectedYear);
+    const currentlyOut = calcEmployeesCurrentlyOut(dailyRecords);
+    const topEmployee = calcTopEmployee(dailyRecords, selectedYear);
+    const mostFrequent = calcMostFrequentAbsenceType(dailyRecords, selectedYear);
+    const comparison = calcAbsenteeismRateComparison(dailyRecords, selectedYear);
 
     const uniqueEmployees = new Set(
-      records
-        .filter((r) => r.from.getFullYear() === selectedYear)
+      dailyRecords
+        .filter((r) => r.date.getFullYear() === selectedYear)
         .map((r) => r.employeeUsername),
     ).size;
 
@@ -38,7 +39,7 @@ export function KPIBar() {
       absenteeismDelta: comparison.delta,
       absenteeismDirection: comparison.direction,
     };
-  }, [records, selectedYear]);
+  }, [dailyRecords, selectedYear]);
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
