@@ -7,6 +7,7 @@ import { LoadingSpinner } from '../common/LoadingSpinner';
 import { exportCSV } from '../../utils/exportCSV';
 import { formatDate } from '../../utils/dateUtils';
 import { filterDayRecords } from '../../utils/filterDayRecords';
+import { useSort } from '../../hooks/useSort';
 
 export function AbsenceTable() {
   const { t } = useTranslation('table');
@@ -21,6 +22,32 @@ export function AbsenceTable() {
     );
     return records.filter((r) => matchingIds.has(r.id));
   }, [dailyRecords, records, filters]);
+
+  const { sortConfig, handleSort, getSortIndicator } = useSort();
+
+  const sortedRecords = useMemo(() => {
+    if (!sortConfig) return filteredRecords;
+    const { key, direction } = sortConfig;
+    const mult = direction === 'asc' ? 1 : -1;
+    return [...filteredRecords].sort((a, b) => {
+      switch (key) {
+        case 'employee':
+          return a.employeeUsername.localeCompare(b.employeeUsername) * mult;
+        case 'type':
+          return a.type.localeCompare(b.type) * mult;
+        case 'from':
+          return (a.from.getTime() - b.from.getTime()) * mult;
+        case 'till':
+          return (a.till.getTime() - b.till.getTime()) * mult;
+        case 'days':
+          return (a.numberOfDays - b.numberOfDays) * mult;
+        case 'status':
+          return a.status.localeCompare(b.status) * mult;
+        default:
+          return 0;
+      }
+    });
+  }, [filteredRecords, sortConfig]);
 
   const handleExport = () => {
     exportCSV(filteredRecords, `ausencias_${new Date().toISOString().split('T')[0]}.csv`);
@@ -50,28 +77,46 @@ export function AbsenceTable() {
         <table className="w-full border-collapse">
           <thead className="sticky top-0 z-10 border-b border-gray-100 bg-gray-50/50">
             <tr>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">
-                {t('employee')}
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('employee')}
+              >
+                {t('employee')}{getSortIndicator('employee')}
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">
-                {t('type')}
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('type')}
+              >
+                {t('type')}{getSortIndicator('type')}
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">
-                {t('from')}
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('from')}
+              >
+                {t('from')}{getSortIndicator('from')}
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">
-                {t('till')}
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('till')}
+              >
+                {t('till')}{getSortIndicator('till')}
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400">
-                {t('days')}
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('days')}
+              >
+                {t('days')}{getSortIndicator('days')}
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">
-                {t('status')}
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('status')}
+              >
+                {t('status')}{getSortIndicator('status')}
               </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
-            {filteredRecords.map((record) => (
+            {sortedRecords.map((record) => (
               <tr
                 key={record.id}
                 className="transition-colors hover:bg-gray-50/50"
@@ -104,7 +149,7 @@ export function AbsenceTable() {
       </div>
 
       <div className="text-xs text-gray-500 text-right">
-        {filteredRecords.length} registros
+        {sortedRecords.length} registros
       </div>
     </div>
   );

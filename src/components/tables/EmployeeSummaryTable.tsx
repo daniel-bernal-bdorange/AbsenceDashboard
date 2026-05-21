@@ -4,6 +4,7 @@ import { useAppStore } from '../../store/useAppStore';
 import { NoDataState } from '../common/EmptyState';
 import { LoadingSpinner } from '../common/LoadingSpinner';
 import { getDayValue } from '../../types';
+import { useSort } from '../../hooks/useSort';
 
 interface EmployeeSummary {
   username: string;
@@ -58,8 +59,36 @@ export function EmployeeSummaryTable() {
       }
     }
 
-    return Object.values(summaryMap).sort((a, b) => b.totalDays - a.totalDays);
+    return Object.values(summaryMap);
   }, [dailyRecords]);
+
+  const { sortConfig, handleSort, getSortIndicator } = useSort({ key: 'days', direction: 'desc' });
+
+  const sortedSummaries = useMemo(() => {
+    if (!sortConfig) return employeeSummaries;
+    const { key, direction } = sortConfig;
+    const mult = direction === 'asc' ? 1 : -1;
+    return [...employeeSummaries].sort((a, b) => {
+      switch (key) {
+        case 'employee':
+          return a.username.localeCompare(b.username) * mult;
+        case 'department':
+          return a.department.localeCompare(b.department) * mult;
+        case 'days':
+          return (a.totalDays - b.totalDays) * mult;
+        case 'vacationDays':
+          return (a.vacationDays - b.vacationDays) * mult;
+        case 'sickDays':
+          return (a.sickDays - b.sickDays) * mult;
+        case 'specialDays':
+          return (a.specialDays - b.specialDays) * mult;
+        case 'absenceCount':
+          return (a.absenceCount - b.absenceCount) * mult;
+        default:
+          return 0;
+      }
+    });
+  }, [employeeSummaries, sortConfig]);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -75,31 +104,52 @@ export function EmployeeSummaryTable() {
         <table className="w-full border-collapse">
           <thead className="sticky top-0 z-10 border-b border-gray-100 bg-gray-50/50">
             <tr>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">
-                {t('employee')}
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('employee')}
+              >
+                {t('employee')}{getSortIndicator('employee')}
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">
-                Dept.
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('department')}
+              >
+                Dept.{getSortIndicator('department')}
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400">
-                {t('days')}
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('days')}
+              >
+                {t('days')}{getSortIndicator('days')}
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400">
-                Vacaciones
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('vacationDays')}
+              >
+                Vacaciones{getSortIndicator('vacationDays')}
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400">
-                Baja
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('sickDays')}
+              >
+                Baja{getSortIndicator('sickDays')}
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400">
-                Especial
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('specialDays')}
+              >
+                Especial{getSortIndicator('specialDays')}
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400">
-                Ausencias
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('absenceCount')}
+              >
+                Ausencias{getSortIndicator('absenceCount')}
               </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
-            {employeeSummaries.map((summary) => {
+            {sortedSummaries.map((summary) => {
               const isUnknown = summary.department === 'Unknown';
               return (
               <tr
@@ -136,7 +186,7 @@ export function EmployeeSummaryTable() {
       </div>
 
       <div className="text-xs text-gray-500 text-right">
-        {employeeSummaries.length} empleados
+        {sortedSummaries.length} empleados
       </div>
     </div>
   );
