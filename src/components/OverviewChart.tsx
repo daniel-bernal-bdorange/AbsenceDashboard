@@ -269,7 +269,7 @@ export function OverviewChart() {
         <select
           value={chartYear}
           onChange={(e) => setChartYear(Number(e.target.value))}
-          className="absolute top-2 right-2 z-50 bg-white border border-gray-200 rounded-lg px-2 py-1 font-semibold text-gray-900 cursor-pointer text-xs shadow-sm"
+          className="absolute top-2 right-2 z-0 bg-white border border-gray-200 rounded-lg px-2 py-1 font-semibold text-gray-900 cursor-pointer text-xs shadow-sm"
         >
           {availableYears.map((y) => (
             <option key={y} value={y}>{y}</option>
