@@ -7,10 +7,6 @@ import { useTranslation } from '../../i18n/useTranslation';
 import type { AbsenceCategory, Department } from '../../types';
 import { getDayValue } from '../../types';
 
-interface DepartmentComparisonProps {
-  year: number;
-}
-
 interface DepartmentData {
   department: string;
   totalDays: number;
@@ -18,7 +14,7 @@ interface DepartmentData {
   byCategory: Record<AbsenceCategory, number>;
 }
 
-export function DepartmentComparison({ year }: DepartmentComparisonProps) {
+export function DepartmentComparison() {
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const filters = useAppStore((s) => s.filters);
   const setFilters = useAppStore((s) => s.setFilters);
@@ -26,7 +22,6 @@ export function DepartmentComparison({ year }: DepartmentComparisonProps) {
 
   const filteredDayRecords = useMemo(() => {
     return dailyRecords.filter((dr) => {
-      if (dr.date.getFullYear() !== year) return false;
       if (filters.departments.length && !filters.departments.includes(dr.department ?? 'Unknown')) return false;
       if (filters.employees.length && !filters.employees.includes(dr.employeeUsername)) return false;
       if (filters.categories.length && !filters.categories.includes(dr.category)) return false;
@@ -43,7 +38,7 @@ export function DepartmentComparison({ year }: DepartmentComparisonProps) {
       if (filters.selectedMonth !== null && dr.date.getMonth() !== filters.selectedMonth) return false;
       return true;
     });
-  }, [dailyRecords, filters, year]);
+  }, [dailyRecords, filters]);
 
   const departmentData = useMemo(() => {
     const data: Record<string, DepartmentData> = {

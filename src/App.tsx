@@ -8,7 +8,7 @@ import { useTranslation } from './i18n/useTranslation';
 import { useAppStore } from './store/useAppStore';
 
 export function App() {
-  const { selectedYear, setSelectedYear, records, selectedEmployeeDetail, setSelectedEmployeeDetail } = useAppStore();
+  const { records, selectedEmployeeDetail, setSelectedEmployeeDetail } = useAppStore();
   const [activeSection, setActiveSection] = useState('overview');
   const [absenceTableExpanded, setAbsenceTableExpanded] = useState(true);
   const [employeeSummaryExpanded, setEmployeeSummaryExpanded] = useState(true);
@@ -34,8 +34,6 @@ export function App() {
     { id: 'tables', label: tDashboard('navTables'), shortLabel: 'TB' },
   ];
 
-  const decadeYears = [selectedYear - 1, selectedYear, selectedYear + 1];
-
   return (
     <ErrorBoundary>
       <ToastContainer />
@@ -60,18 +58,6 @@ export function App() {
               </p>
             </div>
 
-            <label className="flex items-center gap-2 self-start text-sm text-gray-500 lg:self-auto">
-              <span className="font-medium">{tDashboard('selectedYear')}</span>
-              <select
-                className="bg-transparent font-bold text-gray-900 outline-none cursor-pointer"
-                value={selectedYear}
-                onChange={(event) => setSelectedYear(Number(event.target.value))}
-              >
-                {decadeYears.map((year) => (
-                  <option key={year} value={year}>{year}</option>
-                ))}
-              </select>
-            </label>
           </div>
 
           <div className="mb-8">
@@ -84,7 +70,7 @@ export function App() {
             <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
               {tDashboard('overviewTitle')}
             </p>
-            <OverviewChart year={selectedYear} />
+            <OverviewChart />
           </div>
 
           <hr className="border-gray-100" />
@@ -94,14 +80,14 @@ export function App() {
               <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
                 {tCharts('trendTitle')}
               </p>
-              <TrendLine year={selectedYear} />
+              <TrendLine />
             </div>
 
             <div>
               <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
                 {tCharts('donutTitle')}
               </p>
-              <AbsenceTypeDonut year={selectedYear} />
+              <AbsenceTypeDonut />
             </div>
           </div>
 
@@ -111,7 +97,7 @@ export function App() {
             <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
               {tCharts('departmentComparison')}
             </p>
-            <DepartmentComparison year={selectedYear} />
+            <DepartmentComparison />
           </div>
 
           <hr className="border-gray-100" />

@@ -8,10 +8,6 @@ import { chartColors } from './chartColors';
 import type { AbsenceCategory } from '../../types';
 import { getDayValue } from '../../types';
 
-interface AbsenceTypeDonutProps {
-  year: number;
-}
-
 const categoryColors: Record<AbsenceCategory, string> = {
   Vacation: chartColors.vacation,
   SickLeave: chartColors.sickLeave,
@@ -19,7 +15,7 @@ const categoryColors: Record<AbsenceCategory, string> = {
   Special: chartColors.special,
 };
 
-export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
+export function AbsenceTypeDonut() {
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const filters = useAppStore((s) => s.filters);
   const setFilters = useAppStore((s) => s.setFilters);
@@ -27,7 +23,6 @@ export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
 
   const filteredDayRecords = useMemo(() => {
     return dailyRecords.filter((dr) => {
-      if (dr.date.getFullYear() !== year) return false;
       if (filters.departments.length && !filters.departments.includes(dr.department ?? 'Unknown')) return false;
       if (filters.employees.length && !filters.employees.includes(dr.employeeUsername)) return false;
       if (filters.categories.length && !filters.categories.includes(dr.category)) return false;
@@ -43,7 +38,7 @@ export function AbsenceTypeDonut({ year }: AbsenceTypeDonutProps) {
       }
       return true;
     });
-  }, [dailyRecords, filters, year]);
+  }, [dailyRecords, filters]);
 
   const distribution = useMemo(() => {
     const totals: Record<AbsenceCategory, number> = {

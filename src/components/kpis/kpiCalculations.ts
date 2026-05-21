@@ -11,12 +11,12 @@ export interface AbsenteeismRateResult {
 
 export function calcAbsenteeismRate(
   records: AbsenceDayRecord[],
-  year: number,
+  year?: number,
 ): AbsenteeismRateResult {
   const acceptedRecords = records.filter(
     (r) =>
       r.status === AbsenceStatus.ACCEPTED &&
-      r.date.getFullYear() === year,
+      (year === undefined || r.date.getFullYear() === year),
   );
 
   const uniqueEmployees = new Set(
@@ -43,13 +43,13 @@ export function calcAbsenteeismRate(
 
 export function calcTotalAbsenceDays(
   records: AbsenceDayRecord[],
-  year: number,
+  year?: number,
 ): number {
   return records
     .filter(
       (r) =>
         r.status === AbsenceStatus.ACCEPTED &&
-        r.date.getFullYear() === year,
+        (year === undefined || r.date.getFullYear() === year),
     )
     .reduce((sum, r) => sum + getDayValue(r.isFullDay), 0);
 }
@@ -71,14 +71,14 @@ export function calcEmployeesCurrentlyOut(records: AbsenceDayRecord[]): number {
   return employeeIds.size;
 }
 
-export function calcTopEmployee(records: AbsenceDayRecord[], year: number): {
+export function calcTopEmployee(records: AbsenceDayRecord[], year?: number): {
   username: string;
   days: number;
 } | null {
   const acceptedRecords = records.filter(
     (r) =>
       r.status === AbsenceStatus.ACCEPTED &&
-      r.date.getFullYear() === year,
+      (year === undefined || r.date.getFullYear() === year),
   );
 
   const employeeDays: Record<string, number> = {};
@@ -102,12 +102,12 @@ export function calcTopEmployee(records: AbsenceDayRecord[], year: number): {
 
 export function calcMostFrequentAbsenceType(
   records: AbsenceDayRecord[],
-  year: number,
+  year?: number,
 ): string | null {
   const acceptedRecords = records.filter(
     (r) =>
       r.status === AbsenceStatus.ACCEPTED &&
-      r.date.getFullYear() === year,
+      (year === undefined || r.date.getFullYear() === year),
   );
 
   const typeCount: Record<string, number> = {};
@@ -128,22 +128,4 @@ export function calcMostFrequentAbsenceType(
   return mostFrequent;
 }
 
-export function calcAbsenteeismRateComparison(
-  records: AbsenceDayRecord[],
-  currentYear: number,
-): { rate: number; delta: number; direction: 'up' | 'down' | 'neutral' } {
-  const current = calcAbsenteeismRate(records, currentYear);
-  const previous = calcAbsenteeismRate(records, currentYear - 1);
 
-  const delta = current.rate - previous.rate;
-
-  let direction: 'up' | 'down' | 'neutral' = 'neutral';
-  if (delta > 0.01) direction = 'up';
-  else if (delta < -0.01) direction = 'down';
-
-  return {
-    rate: current.rate,
-    delta: Math.round(delta * 100) / 100,
-    direction,
-  };
-}

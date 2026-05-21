@@ -8,10 +8,10 @@ function normalizeDate(d: Date): Date {
 export function filterDayRecords(
   dailyRecords: AbsenceDayRecord[],
   filters: AbsenceFilters,
-  selectedYear: number,
+  selectedYear?: number,
 ): AbsenceDayRecord[] {
   return dailyRecords.filter((dr) => {
-    if (dr.date.getFullYear() !== selectedYear) return false;
+    if (selectedYear !== undefined && dr.date.getFullYear() !== selectedYear) return false;
     if (filters.departments.length && !filters.departments.includes(dr.department ?? 'Unknown')) return false;
     if (filters.employees.length && !filters.employees.includes(dr.employeeUsername)) return false;
     if (filters.categories.length && !filters.categories.includes(dr.category)) return false;

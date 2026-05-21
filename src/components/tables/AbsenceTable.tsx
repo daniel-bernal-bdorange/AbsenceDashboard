@@ -13,15 +13,14 @@ export function AbsenceTable() {
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
-  const selectedYear = useAppStore((s) => s.selectedYear);
   const isLoading = useAppStore((s) => s.records.length === 0);
 
   const filteredRecords = useMemo(() => {
     const matchingIds = new Set(
-      filterDayRecords(dailyRecords, filters, selectedYear).map((dr) => dr.originalAbsenceId),
+      filterDayRecords(dailyRecords, filters).map((dr) => dr.originalAbsenceId),
     );
     return records.filter((r) => matchingIds.has(r.id));
-  }, [dailyRecords, records, filters, selectedYear]);
+  }, [dailyRecords, records, filters]);
 
   const handleExport = () => {
     exportCSV(filteredRecords, `ausencias_${new Date().toISOString().split('T')[0]}.csv`);

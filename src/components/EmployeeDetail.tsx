@@ -16,12 +16,10 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
-  const selectedYear = useAppStore((s) => s.selectedYear);
 
   const employeeDayRecords = useMemo(() => {
     return dailyRecords.filter((dr) => {
       if (dr.employeeUsername !== username) return false;
-      if (dr.date.getFullYear() !== selectedYear) return false;
       if (filters.categories.length && !filters.categories.includes(dr.category)) return false;
       if (filters.dateRange.from) {
         const from = new Date(filters.dateRange.from);
@@ -35,7 +33,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
       }
       return true;
     });
-  }, [dailyRecords, username, selectedYear, filters]);
+  }, [dailyRecords, username, filters]);
 
   const employeeInfo = useMemo(() => {
     const acceptedDayRecords = employeeDayRecords.filter(r => r.status === 'Accepted');
@@ -60,7 +58,6 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
 
   const departmentAverages = useMemo(() => {
     const deptDayRecords = dailyRecords.filter((dr) => {
-      if (dr.date.getFullYear() !== selectedYear) return false;
       if (dr.status !== 'Accepted') return false;
       if (dr.department !== employeeInfo.department) return false;
       if (dr.employeeUsername === username) return false;
@@ -74,7 +71,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
       avgDaysPerEmployee: totalDays / employeeCount,
       employeeCount,
     };
-  }, [dailyRecords, selectedYear, employeeInfo.department, username]);
+  }, [dailyRecords, employeeInfo.department, username]);
 
   const timelineData = useMemo(() => {
     const acceptedIds = new Set(
@@ -116,7 +113,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
           <div>
             <h2 className="text-2xl font-bold text-gray-900">{username}</h2>
             <p className="text-sm text-gray-500 mt-1">
-              {employeeInfo.department === 'Unknown' ? tDashboard('unknown') : employeeInfo.department} • {selectedYear}
+              {employeeInfo.department === 'Unknown' ? tDashboard('unknown') : employeeInfo.department}
             </p>
           </div>
           <button

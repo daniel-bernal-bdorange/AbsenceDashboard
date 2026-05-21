@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useState, useEffect } from 'react';
 import type { EChartsOption } from 'echarts';
 import ReactECharts from 'echarts-for-react';
 
@@ -8,10 +8,6 @@ import { chartColors } from './charts/chartColors';
 import type { AbsenceCategory, AbsenceDayRecord } from '../types';
 import { getDayValue } from '../types';
 import { filterDayRecords } from '../utils/filterDayRecords';
-
-type OverviewChartProps = {
-  year: number;
-};
 
 const monthLabels = (language: string, year: number) =>
   Array.from({ length: 12 }, (_, index) =>
@@ -57,12 +53,27 @@ const seriesIndexToCategory: Record<number, AbsenceCategory> = {
   3: 'Special',
 };
 
-export function OverviewChart({ year }: OverviewChartProps) {
+export function OverviewChart() {
   const { i18n, t } = useTranslation('charts');
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const filters = useAppStore((s) => s.filters);
-  const selectedYear = useAppStore((s) => s.selectedYear);
   const setFilters = useAppStore((s) => s.setFilters);
+
+  const availableYears = useMemo(() => {
+    const years = new Set(dailyRecords.map(r => r.date.getFullYear()));
+    return Array.from(years).sort((a, b) => a - b);
+  }, [dailyRecords]);
+
+  const [chartYear, setChartYear] = useState<number>(() => {
+    const currentYear = new Date().getFullYear();
+    return currentYear;
+  });
+
+  useEffect(() => {
+    if (availableYears.length > 0 && !availableYears.includes(chartYear)) {
+      setChartYear(Math.max(...availableYears));
+    }
+  }, [availableYears, chartYear]);
 
   const handleChartClick = useCallback((params: unknown) => {
     const p = params as { dataIndex?: number; seriesIndex?: number; name?: string; event?: unknown; componentType?: string; value?: string | number };
@@ -103,8 +114,8 @@ export function OverviewChart({ year }: OverviewChartProps) {
     
     if ((p.componentType === 'xAxis' || p.componentType === 'axisLabel') && p.dataIndex !== undefined) {
       const month = p.dataIndex;
-      const fromDate = new Date(year, month, 1);
-      const toDate = new Date(year, month + 1, 0);
+      const fromDate = new Date(chartYear, month, 1);
+      const toDate = new Date(chartYear, month + 1, 0);
       
       if (filters.selectedMonth === month) {
         setFilters({ selectedMonth: null, dateRange: { from: null, to: null } });
@@ -119,8 +130,8 @@ export function OverviewChart({ year }: OverviewChartProps) {
     
     if (p.seriesIndex !== undefined && p.dataIndex !== undefined) {
       const month = p.dataIndex;
-      const fromDate = new Date(year, month, 1);
-      const toDate = new Date(year, month + 1, 0);
+      const fromDate = new Date(chartYear, month, 1);
+      const toDate = new Date(chartYear, month + 1, 0);
       
       if (filters.selectedMonth === month && filters.categories.length === 1 && category && filters.categories.includes(category)) {
         setFilters({ selectedMonth: null, dateRange: { from: null, to: null }, categories: [] });
@@ -133,8 +144,8 @@ export function OverviewChart({ year }: OverviewChartProps) {
       }
     } else if (p.dataIndex !== undefined && p.seriesIndex === undefined) {
       const month = p.dataIndex;
-      const fromDate = new Date(year, month, 1);
-      const toDate = new Date(year, month + 1, 0);
+      const fromDate = new Date(chartYear, month, 1);
+      const toDate = new Date(chartYear, month + 1, 0);
       
       if (filters.selectedMonth === month) {
         setFilters({ selectedMonth: null, dateRange: { from: null, to: null } });
@@ -145,7 +156,7 @@ export function OverviewChart({ year }: OverviewChartProps) {
         });
       }
     }
-  }, [filters.selectedMonth, filters.categories, setFilters, year, t]);
+  }, [filters.selectedMonth, filters.categories, setFilters, chartYear, t]);
 
   const handleLegendSelect = useCallback((params: unknown) => {
     const p = params as { selected: Record<string, boolean> };
@@ -164,13 +175,13 @@ export function OverviewChart({ year }: OverviewChartProps) {
   }, [handleChartClick]);
 
   const filteredDayRecords = useMemo(
-    () => filterDayRecords(dailyRecords, filters, selectedYear),
-    [dailyRecords, filters, selectedYear],
+    () => filterDayRecords(dailyRecords, filters, chartYear),
+    [dailyRecords, filters, chartYear],
   );
 
   const monthlySeries = useMemo(
-    () => buildMonthlySeries(filteredDayRecords, year),
-    [filteredDayRecords, year],
+    () => buildMonthlySeries(filteredDayRecords, chartYear),
+    [filteredDayRecords, chartYear],
   );
 
   const option: EChartsOption = {
@@ -204,7 +215,7 @@ export function OverviewChart({ year }: OverviewChartProps) {
     },
     xAxis: {
       type: 'category',
-      data: monthLabels(i18n.resolvedLanguage ?? 'es', year),
+      data: monthLabels(i18n.resolvedLanguage ?? 'es', chartYear),
       axisLine: { lineStyle: { color: '#e5e5e5' } },
       axisTick: { show: false },
       axisLabel: { color: '#666666', fontSize: 11, interval: 0 },
@@ -253,7 +264,18 @@ export function OverviewChart({ year }: OverviewChartProps) {
   };
 
   return (
-    <div style={{ overflow: 'visible' }}>
+    <div style={{ position: 'relative', overflow: 'visible' }}>
+      {availableYears.length > 0 && (
+        <select
+          value={chartYear}
+          onChange={(e) => setChartYear(Number(e.target.value))}
+          className="absolute top-2 right-2 z-50 bg-white border border-gray-200 rounded-lg px-2 py-1 font-semibold text-gray-900 cursor-pointer text-xs shadow-sm"
+        >
+          {availableYears.map((y) => (
+            <option key={y} value={y}>{y}</option>
+          ))}
+        </select>
+      )}
       <ReactECharts 
         option={option} 
         style={{ height: 320, width: '100%' }}

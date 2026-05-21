@@ -8,7 +8,6 @@ import { expandToDailyRecords } from '../utils/absenceExpander';
 import { filterDayRecords } from '../utils/filterDayRecords';
 
 type AppState = {
-  selectedYear: number;
   records: AbsenceRecord[];
   dailyRecords: AbsenceDayRecord[];
   folderName: string | null;
@@ -16,7 +15,6 @@ type AppState = {
   filters: AbsenceFilters;
   selectedEmployeeDetail: string | null;
   setRecords: (records: AbsenceRecord[], folderName?: string | null) => void;
-  setSelectedYear: (year: number) => void;
   setSidebarOpen: (isOpen: boolean) => void;
   clearRecords: () => void;
   toggleSidebar: () => void;
@@ -26,8 +24,6 @@ type AppState = {
   getFilteredDayRecords: () => AbsenceDayRecord[];
   setSelectedEmployeeDetail: (username: string | null) => void;
 };
-
-const currentYear = new Date().getFullYear();
 
 const sessionStorageMiddleware = {
   getItem: (name: string) => {
@@ -54,7 +50,6 @@ function reviveDates(records: AbsenceRecord[]): AbsenceRecord[] {
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
-      selectedYear: currentYear,
       records: [],
       dailyRecords: [],
       folderName: null,
@@ -68,7 +63,6 @@ export const useAppStore = create<AppState>()(
           folderName,
         }),
       clearRecords: () => set({ records: [], dailyRecords: [], folderName: null }),
-      setSelectedYear: (year) => set({ selectedYear: year }),
       setSidebarOpen: (isOpen) => set({ sidebarOpen: isOpen }),
       toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
       setFilters: (newFilters) =>
@@ -77,15 +71,15 @@ export const useAppStore = create<AppState>()(
         })),
       resetFilters: () => set({ filters: defaultFilters }),
       getFilteredRecords: () => {
-        const { dailyRecords, records, filters, selectedYear } = get();
+        const { dailyRecords, records, filters } = get();
         const matchingIds = new Set(
-          filterDayRecords(dailyRecords, filters, selectedYear).map((dr) => dr.originalAbsenceId),
+          filterDayRecords(dailyRecords, filters).map((dr) => dr.originalAbsenceId),
         );
         return records.filter((r) => matchingIds.has(r.id));
       },
       getFilteredDayRecords: () => {
-        const { dailyRecords, filters, selectedYear } = get();
-        return filterDayRecords(dailyRecords, filters, selectedYear);
+        const { dailyRecords, filters } = get();
+        return filterDayRecords(dailyRecords, filters);
       },
       setSelectedEmployeeDetail: (username) => set({ selectedEmployeeDetail: username }),
     }),
@@ -95,7 +89,6 @@ export const useAppStore = create<AppState>()(
       partialize: (state) => ({
         records: state.records,
         folderName: state.folderName,
-        selectedYear: state.selectedYear,
       }),
       merge: (persisted, current) => {
         const merged = { ...current, ...(typeof persisted === 'object' && persisted !== null ? persisted : {}) } as AppState;

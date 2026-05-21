@@ -19,14 +19,12 @@ export function EmployeeSummaryTable() {
   const { t } = useTranslation('table');
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const setSelectedEmployeeDetail = useAppStore((s) => s.setSelectedEmployeeDetail);
-  const selectedYear = useAppStore((s) => s.selectedYear);
   const isLoading = useAppStore((s) => s.dailyRecords.length === 0);
 
   const employeeSummaries = useMemo(() => {
     const summaryMap: Record<string, EmployeeSummary> = {};
 
     for (const record of dailyRecords) {
-      if (record.date.getFullYear() !== selectedYear) continue;
       if (record.status !== 'Accepted') continue;
 
       if (!summaryMap[record.employeeUsername]) {
@@ -61,7 +59,7 @@ export function EmployeeSummaryTable() {
     }
 
     return Object.values(summaryMap).sort((a, b) => b.totalDays - a.totalDays);
-  }, [dailyRecords, selectedYear]);
+  }, [dailyRecords]);
 
   if (isLoading) {
     return <LoadingSpinner />;

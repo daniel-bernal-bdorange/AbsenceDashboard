@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { KPICard } from './KPICard';
 import {
-  calcAbsenteeismRateComparison,
+  calcAbsenteeismRate,
   calcEmployeesCurrentlyOut,
   calcMostFrequentAbsenceType,
   calcTopEmployee,
@@ -13,20 +13,17 @@ import { useTranslation } from '../../i18n/useTranslation';
 
 export function KPIBar() {
   const dailyRecords = useAppStore((s) => s.dailyRecords);
-  const selectedYear = useAppStore((s) => s.selectedYear);
   const { t: tDashboard } = useTranslation('dashboard');
 
   const kpis = useMemo(() => {
-    const totalDays = calcTotalAbsenceDays(dailyRecords, selectedYear);
+    const totalDays = calcTotalAbsenceDays(dailyRecords);
     const currentlyOut = calcEmployeesCurrentlyOut(dailyRecords);
-    const topEmployee = calcTopEmployee(dailyRecords, selectedYear);
-    const mostFrequent = calcMostFrequentAbsenceType(dailyRecords, selectedYear);
-    const comparison = calcAbsenteeismRateComparison(dailyRecords, selectedYear);
+    const topEmployee = calcTopEmployee(dailyRecords);
+    const mostFrequent = calcMostFrequentAbsenceType(dailyRecords);
+    const absenteeismRate = calcAbsenteeismRate(dailyRecords);
 
     const uniqueEmployees = new Set(
-      dailyRecords
-        .filter((r) => r.date.getFullYear() === selectedYear)
-        .map((r) => r.employeeUsername),
+      dailyRecords.map((r) => r.employeeUsername),
     ).size;
 
     return {
@@ -35,11 +32,11 @@ export function KPIBar() {
       uniqueEmployees,
       topEmployee,
       mostFrequent,
-      absenteeismRate: comparison.rate,
-      absenteeismDelta: comparison.delta,
-      absenteeismDirection: comparison.direction,
+      absenteeismRate: absenteeismRate.rate,
+      absenteeismDelta: 0,
+      absenteeismDirection: 'neutral' as const,
     };
-  }, [dailyRecords, selectedYear]);
+  }, [dailyRecords]);
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
