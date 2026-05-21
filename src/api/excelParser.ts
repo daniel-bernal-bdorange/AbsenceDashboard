@@ -14,7 +14,7 @@ const SHEET_NAME = 'Export ASA';
 
 const typeToCategory: Record<AbsenceType, AbsenceCategory> = {
   [AbsenceType.VACATION]: 'Vacation',
-  [AbsenceType.VACATION_PREV_YEAR]: 'Vacation',
+  [AbsenceType.VACATION_PREV_YEAR]: 'VacationPreviousYear',
   [AbsenceType.SICK_LEAVE]: 'SickLeave',
   [AbsenceType.MATERNITY_PATERNITY]: 'Maternity',
   [AbsenceType.SPECIAL_FAMILY_ILLNESS]: 'Special',

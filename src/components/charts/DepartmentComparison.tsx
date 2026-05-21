@@ -46,13 +46,13 @@ export function DepartmentComparison() {
         department: 'Prod',
         totalDays: 0,
         absenteeismRate: 0,
-        byCategory: { Vacation: 0, SickLeave: 0, Maternity: 0, Special: 0 },
+        byCategory: { Vacation: 0, VacationPreviousYear: 0, SickLeave: 0, Maternity: 0, Special: 0 },
       },
       BackOffice: {
         department: 'BackOffice',
         totalDays: 0,
         absenteeismRate: 0,
-        byCategory: { Vacation: 0, SickLeave: 0, Maternity: 0, Special: 0 },
+        byCategory: { Vacation: 0, VacationPreviousYear: 0, SickLeave: 0, Maternity: 0, Special: 0 },
       },
     };
 
@@ -124,6 +124,7 @@ export function DepartmentComparison() {
             </div>
             <div style="border-top:1px solid #333;margin-top:6px;padding-top:6px">
               <div style="display:flex;justify-content:space-between"><span style="color:#FF7900">●</span><span>${t('vacationSeries')}</span><strong>${data.byCategory.Vacation.toFixed(0)}</strong></div>
+              <div style="display:flex;justify-content:space-between"><span style="color:#FFB366">●</span><span>${t('vacationPrevYearSeries')}</span><strong>${data.byCategory.VacationPreviousYear.toFixed(0)}</strong></div>
               <div style="display:flex;justify-content:space-between"><span style="color:#C62828">●</span><span>${t('sickLeaveSeries')}</span><strong>${data.byCategory.SickLeave.toFixed(0)}</strong></div>
               <div style="display:flex;justify-content:space-between"><span style="color:#2E7D32">●</span><span>${t('specialSeries')}</span><strong>${(data.byCategory.Special + data.byCategory.Maternity).toFixed(0)}</strong></div>
             </div>

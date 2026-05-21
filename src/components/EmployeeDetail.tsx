@@ -39,6 +39,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
     const acceptedDayRecords = employeeDayRecords.filter(r => r.status === 'Accepted');
     const totals: Record<AbsenceCategory, number> = {
       Vacation: 0,
+      VacationPreviousYear: 0,
       SickLeave: 0,
       Maternity: 0,
       Special: 0,
@@ -86,6 +87,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
 
   const categoryLabels: Record<AbsenceCategory, string> = {
     Vacation: 'vacationSeries',
+    VacationPreviousYear: 'vacationPrevYearSeries',
     SickLeave: 'sickLeaveSeries',
     Maternity: 'maternitySeries',
     Special: 'specialSeries',
@@ -93,6 +95,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
 
   const categoryColors: Record<AbsenceCategory, string> = {
     Vacation: chartColors.vacation,
+    VacationPreviousYear: chartColors.vacationPrevYear,
     SickLeave: chartColors.sickLeave,
     Maternity: chartColors.maternity,
     Special: chartColors.special,
@@ -135,13 +138,13 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
               </div>
             </div>
             <div className="col-span-3 grid grid-cols-4 gap-3">
-              {(['Vacation', 'SickLeave', 'Maternity', 'Special'] as AbsenceCategory[]).map((cat) => (
+              {(['Vacation', 'VacationPreviousYear', 'SickLeave', 'Maternity', 'Special'] as AbsenceCategory[]).map((cat) => (
                 <div key={cat} className="bg-gray-50 rounded-xl p-3 text-center">
                   <div className="text-xl font-bold" style={{ color: categoryColors[cat] }}>
                     {employeeInfo.totals[cat].toFixed(0)}
                   </div>
                   <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 truncate">
-                    {tCharts(categoryLabels[cat] as 'vacationSeries' | 'sickLeaveSeries' | 'maternitySeries' | 'specialSeries')}
+                    {tCharts(categoryLabels[cat] as 'vacationSeries' | 'vacationPrevYearSeries' | 'sickLeaveSeries' | 'maternitySeries' | 'specialSeries')}
                   </div>
                 </div>
               ))}
@@ -201,7 +204,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
                   <div className="flex-1 pb-6">
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-gray-900">
-                        {tCharts(categoryLabels[record.category] as 'vacationSeries' | 'sickLeaveSeries' | 'maternitySeries' | 'specialSeries')}
+                        {tCharts(categoryLabels[record.category] as 'vacationSeries' | 'vacationPrevYearSeries' | 'sickLeaveSeries' | 'maternitySeries' | 'specialSeries')}
                       </span>
                       <span className="text-sm text-gray-500">
                         {record.from.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })} - {record.till.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })}

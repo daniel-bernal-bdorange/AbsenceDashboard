@@ -16,6 +16,7 @@ const monthLabels = (language: string, year: number) =>
 
 const buildMonthlySeries = (dailyRecords: AbsenceDayRecord[], year: number) => {
   const vacationData = Array(12).fill(0);
+  const vacationPrevYearData = Array(12).fill(0);
   const sickLeaveData = Array(12).fill(0);
   const maternityData = Array(12).fill(0);
   const specialLeaveData = Array(12).fill(0);
@@ -31,6 +32,9 @@ const buildMonthlySeries = (dailyRecords: AbsenceDayRecord[], year: number) => {
       case 'Vacation':
         vacationData[monthIndex] += days;
         break;
+      case 'VacationPreviousYear':
+        vacationPrevYearData[monthIndex] += days;
+        break;
       case 'SickLeave':
         sickLeaveData[monthIndex] += days;
         break;
@@ -43,14 +47,15 @@ const buildMonthlySeries = (dailyRecords: AbsenceDayRecord[], year: number) => {
     }
   }
 
-  return { vacationData, sickLeaveData, maternityData, specialLeaveData };
+  return { vacationData, vacationPrevYearData, sickLeaveData, maternityData, specialLeaveData };
 };
 
 const seriesIndexToCategory: Record<number, AbsenceCategory> = {
   0: 'Vacation',
-  1: 'SickLeave',
-  2: 'Maternity',
-  3: 'Special',
+  1: 'VacationPreviousYear',
+  2: 'SickLeave',
+  3: 'Maternity',
+  4: 'Special',
 };
 
 export function OverviewChart() {
@@ -84,6 +89,7 @@ export function OverviewChart() {
       if (selected) {
         const selectedCategories: AbsenceCategory[] = [];
         if (selected[t('vacationSeries')]) selectedCategories.push('Vacation');
+        if (selected[t('vacationPrevYearSeries')]) selectedCategories.push('VacationPreviousYear');
         if (selected[t('sickLeaveSeries')]) selectedCategories.push('SickLeave');
         if (selected[t('specialSeries')]) selectedCategories.push('Special');
         setFilters({ categories: selectedCategories });
@@ -94,6 +100,7 @@ export function OverviewChart() {
     if (p.componentType === 'legend' && p.name) {
       const nameToCategory: Record<string, AbsenceCategory> = {
         [t('vacationSeries')]: 'Vacation',
+        [t('vacationPrevYearSeries')]: 'VacationPreviousYear',
         [t('sickLeaveSeries')]: 'SickLeave',
         [t('specialSeries')]: 'Special',
       };
@@ -164,6 +171,7 @@ export function OverviewChart() {
     
     const selectedCategories: AbsenceCategory[] = [];
     if (selected[t('vacationSeries')]) selectedCategories.push('Vacation');
+    if (selected[t('vacationPrevYearSeries')]) selectedCategories.push('VacationPreviousYear');
     if (selected[t('sickLeaveSeries')]) selectedCategories.push('SickLeave');
     if (selected[t('specialSeries')]) selectedCategories.push('Special');
     
@@ -186,7 +194,7 @@ export function OverviewChart() {
 
   const option: EChartsOption = {
     backgroundColor: 'transparent',
-    color: [chartColors.vacation, chartColors.sickLeave, chartColors.maternity, chartColors.special],
+    color: [chartColors.vacation, chartColors.vacationPrevYear, chartColors.sickLeave, chartColors.maternity, chartColors.special],
     tooltip: {
       trigger: 'axis',
       axisPointer: {
@@ -235,6 +243,14 @@ export function OverviewChart() {
         barWidth: 20,
         emphasis: { focus: 'series' },
         data: monthlySeries.vacationData,
+      },
+      {
+        name: t('vacationPrevYearSeries'),
+        type: 'bar',
+        stack: 'absences',
+        barWidth: 20,
+        emphasis: { focus: 'series' },
+        data: monthlySeries.vacationPrevYearData,
       },
       {
         name: t('sickLeaveSeries'),

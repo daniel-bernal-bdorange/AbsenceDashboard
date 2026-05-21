@@ -1,4 +1,4 @@
-export type AbsenceCategory = 'Vacation' | 'SickLeave' | 'Maternity' | 'Special';
+export type AbsenceCategory = 'Vacation' | 'VacationPreviousYear' | 'SickLeave' | 'Maternity' | 'Special';
 
 export type Department = 'Prod' | 'BackOffice' | 'Unknown';
 

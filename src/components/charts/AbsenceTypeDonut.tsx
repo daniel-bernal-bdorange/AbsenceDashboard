@@ -10,6 +10,7 @@ import { getDayValue } from '../../types';
 
 const categoryColors: Record<AbsenceCategory, string> = {
   Vacation: chartColors.vacation,
+  VacationPreviousYear: chartColors.vacationPrevYear,
   SickLeave: chartColors.sickLeave,
   Maternity: chartColors.maternity,
   Special: chartColors.special,
@@ -43,6 +44,7 @@ export function AbsenceTypeDonut() {
   const distribution = useMemo(() => {
     const totals: Record<AbsenceCategory, number> = {
       Vacation: 0,
+      VacationPreviousYear: 0,
       SickLeave: 0,
       Maternity: 0,
       Special: 0,
@@ -94,6 +96,7 @@ export function AbsenceTypeDonut() {
         const p = params as { name: string; value: number; percent: number; color: string };
         const nameKeyMap: Record<string, string> = {
           Vacation: 'vacationSeries',
+          VacationPreviousYear: 'vacationPrevYearSeries',
           SickLeave: 'sickLeaveSeries',
           Maternity: 'maternitySeries',
           Special: 'specialSeries',
@@ -131,6 +134,7 @@ export function AbsenceTypeDonut() {
       formatter: (name: string) => {
         const keyMap: Record<string, string> = {
           Vacation: 'vacationSeries',
+          VacationPreviousYear: 'vacationPrevYearSeries',
           SickLeave: 'sickLeaveSeries',
           Maternity: 'maternitySeries',
           Special: 'specialSeries',

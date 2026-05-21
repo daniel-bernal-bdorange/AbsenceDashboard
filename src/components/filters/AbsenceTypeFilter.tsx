@@ -5,6 +5,7 @@ import { chartColors } from '../charts/chartColors';
 
 const CATEGORIES: { key: AbsenceCategory; color: string }[] = [
   { key: 'Vacation', color: chartColors.vacation },
+  { key: 'VacationPreviousYear', color: chartColors.vacationPrevYear },
   { key: 'SickLeave', color: chartColors.sickLeave },
   { key: 'Special', color: chartColors.special },
   { key: 'Maternity', color: chartColors.maternity },
@@ -24,6 +25,7 @@ export function AbsenceTypeFilter() {
 
   const labelMap: Record<AbsenceCategory, string> = {
     Vacation: t('vacationSeries'),
+    VacationPreviousYear: t('vacationPrevYearSeries'),
     SickLeave: t('sickLeaveSeries'),
     Special: t('specialSeries'),
     Maternity: t('maternitySeries'),

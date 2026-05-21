@@ -11,6 +11,7 @@ interface EmployeeSummary {
   department: string;
   totalDays: number;
   vacationDays: number;
+  vacationPrevYearDays: number;
   sickDays: number;
   specialDays: number;
   absenceCount: number;
@@ -34,6 +35,7 @@ export function EmployeeSummaryTable() {
           department: record.department ?? 'Unknown',
           totalDays: 0,
           vacationDays: 0,
+          vacationPrevYearDays: 0,
           sickDays: 0,
           specialDays: 0,
           absenceCount: 0,
@@ -48,6 +50,9 @@ export function EmployeeSummaryTable() {
       switch (record.category) {
         case 'Vacation':
           summary.vacationDays += days;
+          break;
+        case 'VacationPreviousYear':
+          summary.vacationPrevYearDays += days;
           break;
         case 'SickLeave':
           summary.sickDays += days;
@@ -78,6 +83,8 @@ export function EmployeeSummaryTable() {
           return (a.totalDays - b.totalDays) * mult;
         case 'vacationDays':
           return (a.vacationDays - b.vacationDays) * mult;
+        case 'vacationPrevYearDays':
+          return (a.vacationPrevYearDays - b.vacationPrevYearDays) * mult;
         case 'sickDays':
           return (a.sickDays - b.sickDays) * mult;
         case 'specialDays':
@@ -130,6 +137,12 @@ export function EmployeeSummaryTable() {
               </th>
               <th
                 className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('vacationPrevYearDays')}
+              >
+                Vac. ant.{getSortIndicator('vacationPrevYearDays')}
+              </th>
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
                 onClick={() => handleSort('sickDays')}
               >
                 Baja{getSortIndicator('sickDays')}
@@ -168,6 +181,9 @@ export function EmployeeSummaryTable() {
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-orangeBusiness">
                   {summary.vacationDays}
+                </td>
+                <td className="px-4 py-3 text-right text-sm" style={{ color: '#FFB366' }}>
+                  {summary.vacationPrevYearDays}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-error">
                   {summary.sickDays}
