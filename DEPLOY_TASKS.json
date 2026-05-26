@@ -1,169 +1,198 @@
 {
-  "project": "Absence Dashboard - Azure/SharePoint Deployment",
-  "description": "Desplegar el dashboard en Azure Static Web Apps con integracion Microsoft Graph API para leer archivos Excel de SharePoint",
-  "lastUpdated": "2026-05-20",
+  "project": "Absence Dashboard - SharePoint Framework (SPFx) Deployment",
+  "description": "Migrar el dashboard de Vite+React a un Web Part de SharePoint Framework. Sin Azure AD, sin Graph API. Los archivos se leen desde la misma biblioteca del site via SPHttpClient.",
+  "lastUpdated": "2026-05-26",
+
+  "note": "Azure NO es necesaria. El web part usa SPHttpClient con la sesion de SharePoint. Site privado, solo 2 usuarios. Los archivos .xlsx estan en una biblioteca del mismo site.",
+
   "phases": {
-    "azure_ad": {
-      "name": "Azure AD - App Registration",
+    "setup": {
+      "name": "Fase 0 - Preparar entorno SPFx",
       "tasks": [
         {
-          "id": "AD-001",
-          "name": "Registrar App en Azure AD",
-          "description": "Crear App Registration en Azure AD con tipo SPA",
-          "portal": "https://entra.microsoft.com > Azure Active Directory > App registrations > New registration",
+          "id": "SPFX-000",
+          "name": "Instalar dependencias globales SPFx",
+          "description": "npm install -g @microsoft/generator-sharepoint yo gulp",
+          "required": true
+        },
+        {
+          "id": "SPFX-001",
+          "name": "Generar proyecto SPFx",
+          "description": "yo @microsoft/sharepoint --component-type webpart --framework react --environment sharepointonline",
           "required": true,
-          "outputs": ["Client ID", "Tenant ID"]
+          "outputs": ["Estructura SPFx con gulpfile.js, config/, src/webparts/"]
         },
         {
-          "id": "AD-002",
-          "name": "Configurar redirect URI",
-          "description": "Anadir redirect URI para Azure Static Web Apps",
-          "required": true
-        },
-        {
-          "id": "AD-003",
-          "name": "Solicitar permisos de API",
-          "description": "Anadir permisos: Sites.Read.All, Files.Read.All (Application)",
-          "required": true
-        },
-        {
-          "id": "AD-004",
-          "name": "Crear secreto de cliente",
-          "description": "Para acceso daemon si se necesita",
-          "required": false
-        }
-      ]
-    },
-    "codigo": {
-      "name": "Codigo - Restaurar autenticacion y Graph API",
-      "tasks": [
-        {
-          "id": "CODE-001",
-          "name": "Restaurar msalConfig.ts",
-          "file": "src/auth/msalConfig.ts",
-          "required": true
-        },
-        {
-          "id": "CODE-002",
-          "name": "Restaurar AuthProvider.tsx",
-          "file": "src/auth/AuthProvider.tsx",
-          "required": true
-        },
-        {
-          "id": "CODE-003",
-          "name": "Crear graphClient.ts",
-          "file": "src/api/graphClient.ts",
-          "required": true
-        },
-        {
-          "id": "CODE-004",
-          "name": "Crear sharepoint.ts",
-          "file": "src/api/sharepoint.ts",
-          "required": true
-        },
-        {
-          "id": "CODE-005",
-          "name": "Actualizar App.tsx para usar AuthProvider",
-          "file": "src/App.tsx",
-          "required": true
-        },
-        {
-          "id": "CODE-006",
-          "name": "Crear pantalla AuthLoading",
-          "file": "src/components/AuthLoading.tsx",
-          "required": true
-        },
-        {
-          "id": "CODE-007",
-          "name": "Mantener FolderPicker como fallback",
-          "file": "src/components/FolderPicker.tsx",
+          "id": "SPFX-002",
+          "name": "Configurar trust localhost cert",
+          "description": "gulp trust-dev-cert (para desarrollo local)",
           "required": true
         }
       ]
     },
-    "config": {
-      "name": "Configuracion - Variables de entorno",
+    "refactor": {
+      "name": "Fase 1 - Refactorizar codigo a SPFx",
       "tasks": [
         {
-          "id": "CFG-001",
-          "name": "Actualizar .env.example",
-          "file": ".env.example",
+          "id": "MIG-001",
+          "name": "Copiar componentes compatibles",
+          "description": "Copiar components/, hooks/, i18n/, store/, types/, utils/, api/ a src/webparts/absenceDashboard/. Convertir imports @/ a relativos.",
           "required": true
         },
         {
-          "id": "CFG-002",
-          "name": "Configurar GitHub Secrets",
+          "id": "MIG-002",
+          "name": "Crear AbsenceDashboardWebPart.ts",
+          "description": "onInit() inicializa i18n. render() monta React en this.domElement. Importa CSS de Tailwind compilado.",
+          "required": true
+        },
+        {
+          "id": "MIG-003",
+          "name": "Crear useSharePointData.ts",
+          "description": "Reemplaza a useFolderPicker.ts. Sin picker: al cargar, usa SPHttpClient para listar y descargar .xlsx desde la biblioteca configurada, los pasa a excelParser.ts.",
+          "file": "src/webparts/absenceDashboard/fileSystem/useSharePointData.ts",
+          "required": true
+        },
+        {
+          "id": "MIG-004",
+          "name": "Reescribir departmentMapper.ts",
+          "description": "Misma logica de mapeo pero usando SPHttpClient para leer el roster desde la biblioteca.",
+          "file": "src/webparts/absenceDashboard/fileSystem/departmentMapper.ts",
+          "required": true
+        },
+        {
+          "id": "MIG-005",
+          "name": "Simplificar App.tsx",
+          "description": "Quitar FolderPicker. La condicion records.length === 0 muestra loading en vez del picker. La carga es automatica al montar.",
+          "file": "src/webparts/absenceDashboard/App.tsx",
+          "required": true
+        },
+        {
+          "id": "MIG-006",
+          "name": "Configurar PropertyPane",
+          "description": "Propiedades: Library (nombre biblioteca), FolderPath (ruta opcional), RosterFile (opcional), Title.",
+          "required": true
+        },
+        {
+          "id": "MIG-007",
+          "name": "Configurar Web Part manifest",
+          "description": "Editar .manifest.json: icono, titulo, descripcion.",
+          "required": true
+        },
+        {
+          "id": "MIG-008",
+          "name": "Eliminar archivos legacy",
+          "description": "Eliminar vite.config.ts, index.html, src/main.tsx, src/vite-env.d.ts, src/config/env.ts, src/fileSystem/useFolderPicker.ts, src/components/FolderPicker.tsx",
           "required": true
         }
       ]
     },
-    "azure_swa": {
-      "name": "Azure Static Web Apps - Despliegue",
+    "tailwind": {
+      "name": "Fase 1b - Build de Tailwind para SPFx",
       "tasks": [
         {
-          "id": "AZ-001",
-          "name": "Crear Static Web App",
-          "cli": "az staticwebapp create",
+          "id": "TW-001",
+          "name": "Configurar build separado de Tailwind",
+          "description": "Agregar script build:css. Ejecutar antes de gulp bundle.",
           "required": true
         },
         {
-          "id": "AZ-002",
-          "name": "Configurar GitHub Actions",
-          "portal": "Azure Portal > Static Web Apps > Configuration",
-          "required": true
-        },
-        {
-          "id": "AZ-003",
-          "name": "Verificar despliegue automatico",
-          "required": true
-        },
-        {
-          "id": "AZ-004",
-          "name": "Verificar autenticacion SSO",
-          "required": true
-        },
-        {
-          "id": "AZ-005",
-          "name": "Verificar lectura SharePoint",
+          "id": "TW-002",
+          "name": "Importar CSS en web part",
+          "description": "Web part importa el CSS compilado en onInit() o render().",
           "required": true
         }
       ]
     },
-    "testing": {
-      "name": "Testing y validacion",
+    "deploy": {
+      "name": "Fase 2 - Empaquetar y desplegar",
       "tasks": [
         {
-          "id": "TEST-001",
-          "name": "Probar flujo completo",
+          "id": "DEP-001",
+          "name": "Build production",
+          "description": "npm run build:css && gulp bundle --ship && gulp package-solution --ship",
+          "required": true,
+          "outputs": ["sharepoint/solution/absence-dashboard.sppkg"]
+        },
+        {
+          "id": "DEP-002",
+          "name": "Subir .sppkg al App Catalog",
+          "description": "SharePoint Admin Center > Apps > App Catalog. Requiere Admin SharePoint para subir y confiar.",
+          "portal": "SharePoint Admin Center -> Apps -> App Catalog",
           "required": true
         },
         {
-          "id": "TEST-002",
-          "name": "Probar filtros y graficos",
+          "id": "DEP-003",
+          "name": "Agregar web part a pagina",
+          "description": "Editar pagina > Web Parts > Ausencia Dashboard > Configurar biblioteca y ruta.",
+          "required": true
+        }
+      ]
+    },
+    "verify": {
+      "name": "Fase 3 - Verificacion",
+      "tasks": [
+        {
+          "id": "VER-001",
+          "name": "Verificar carga de archivos",
+          "description": "El web part carga los .xlsx desde la biblioteca configurada sin interaccion del usuario.",
           "required": true
         },
         {
-          "id": "TEST-003",
-          "name": "Probar export CSV",
+          "id": "VER-002",
+          "name": "Verificar dashboard completo",
+          "description": "Graficos, filtros, tablas y KPIs funcionan con datos de SharePoint.",
           "required": true
         },
         {
-          "id": "TEST-004",
-          "name": "Probar en Edge y Chrome",
-          "required": false
+          "id": "VER-003",
+          "name": "Probar permisos",
+          "description": "Usuarios sin acceso al site ven error de SharePoint. Solo los 2 usuarios autorizados pueden ver datos.",
+          "required": true
         }
       ]
     }
   },
+
   "summary": {
     "total": 18,
-    "required": 16,
-    "optional": 2
+    "required": 18,
+    "optional": 0
   },
+
   "nextSteps": [
-    {"step": 1, "action": "Crear App Registration en Azure AD", "blockedBy": []},
-    {"step": 2, "action": "Restaurar codigo MSAL", "blockedBy": ["AD-001"]},
-    {"step": 3, "action": "Crear cliente Graph API", "blockedBy": ["AD-001", "CODE-001"]},
-    {"step": 4, "action": "Configurar Azure Static Web Apps", "blockedBy": ["CFG-002"]}
-  ]
+    {"step": 1, "action": "Instalar tooling SPFx global", "blockedBy": []},
+    {"step": 2, "action": "Generar proyecto SPFx con Yo", "blockedBy": ["SPFX-000"]},
+    {"step": 3, "action": "Copiar 45 archivos compatibles y crear web part class", "blockedBy": ["SPFX-001"]},
+    {"step": 4, "action": "Reescribir useSharePointData.ts + departmentMapper.ts", "blockedBy": ["MIG-001"]},
+    {"step": 5, "action": "Configurar PropertyPane + build Tailwind", "blockedBy": ["MIG-005"]},
+    {"step": 6, "action": "Empaquetar .sppkg y desplegar", "blockedBy": ["MIG-008", "TW-002"]}
+  ],
+
+  "risks": [
+    {
+      "risk": "Tailwind JIT incompatible con Webpack de SPFx",
+      "mitigation": "Build separado con PostCSS CLI en vez de plugin Webpack."
+    },
+    {
+      "risk": "Version de React incompatible con SPFx",
+      "mitigation": "SPFx 1.18+ soporta React 18. Verificar version del generator."
+    },
+    {
+      "risk": "Sin acceso al App Catalog",
+      "mitigation": "Solicitar a Admin SharePoint que suba el .sppkg (1 minuto)."
+    },
+    {
+      "risk": "Echarts no renderiza bien en iframe de SharePoint",
+      "mitigation": "Probar en pagina moderna. Si falla, usar refs en vez de echarts-for-react."
+    },
+    {
+      "risk": "Custom scripts bloqueados por politicas de empresa",
+      "mitigation": "Solicitar Set-SPOSite -DenyAddAndCustomizePages 0 al admin."
+    }
+  ],
+
+  "dependencies": {
+    "note": "No requiere Azure AD, Graph API ni servicios externos. Solo SharePoint + SPFx.",
+    "sequence": ["setup → refactor → (tailwind + deploy) → verify"]
+  }
 }
