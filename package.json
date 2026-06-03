@@ -7,10 +7,13 @@
   },
   "scripts": {
     "build": "heft test --clean --production && heft package-solution --production",
-    "build:css": "npx tailwindcss -i ./src/index.css -o ./lib/webparts/absenceDashboard/absenceDashboard.css --minify",
+    "build:css": "tailwindcss -i ./src/webparts/absenceDashboard/index.css -o ./src/webparts/absenceDashboard/styles/absenceDashboard.css --minify",
+    "watch:css": "tailwindcss -i ./src/webparts/absenceDashboard/index.css -o ./src/webparts/absenceDashboard/styles/absenceDashboard.css --watch",
     "clean": "heft clean",
     "eject-webpack": "heft eject-webpack",
+    "prestart": "npm run build:css",
     "start": "heft start --clean",
+    "prebuild": "npm run build:css",
     "lint": "eslint ."
   },
   "dependencies": {

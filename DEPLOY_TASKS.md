@@ -1,5 +1,9 @@
 # Plan de Despliegue: Absence Dashboard en SharePoint (SPFx)
 
+> **Nota (jun 2026):** la migración Vite → SPFx (Fases 0–1) ya está completada en el código.
+> El proyecto usa **Heft** (no Yeoman/Gulp). Para arrancar en local ver `README.md → Run locally`.
+> Este documento queda como referencia histórica y para las fases 2 (empaquetado) y 3 (verificación).
+
 ## Enfoque
 
 Web Part de SharePoint Framework desplegado directamente en SharePoint Online.  
