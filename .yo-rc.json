@@ -1,0 +1,22 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "whichFolder": "subdir",
+    "solutionName": "absence-dashboard",
+    "environment": "spo",
+    "skipFeatureDeployment": true,
+    "useGulp": false,
+    "componentType": "webpart",
+    "template": "react",
+    "componentName": "AbsenceDashboard",
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "22.14.0",
+    "sdksVersions": {},
+    "version": "1.23.0",
+    "libraryName": "absence-dashboard",
+    "libraryId": "da9908c6-0fea-44bf-adfc-2e22294fd92f",
+    "packageManager": "npm",
+    "solutionShortDescription": "absence-dashboard description",
+    "isDomainIsolated": false
+  }
+}

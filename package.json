@@ -1,47 +1,65 @@
 {
   "name": "absence-dashboard",
-  "private": true,
   "version": "0.1.0",
-  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.14.0 < 23.0.0"
+  },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit && vite build",
-    "preview": "vite preview",
-    "lint": "eslint .",
-    "format": "prettier . --check",
-    "format:write": "prettier . --write"
+    "build": "heft test --clean --production && heft package-solution --production",
+    "build:css": "npx tailwindcss -i ./src/index.css -o ./lib/webparts/absenceDashboard/absenceDashboard.css --minify",
+    "clean": "heft clean",
+    "eject-webpack": "heft eject-webpack",
+    "start": "heft start --clean",
+    "lint": "eslint ."
   },
   "dependencies": {
+    "@fluentui/react": "^8.106.4",
+    "@microsoft/sp-component-base": "1.23.0",
+    "@microsoft/sp-core-library": "1.23.0",
+    "@microsoft/sp-http": "1.23.0",
+    "@microsoft/sp-lodash-subset": "1.23.0",
+    "@microsoft/sp-office-ui-fabric-core": "1.23.0",
+    "@microsoft/sp-property-pane": "1.23.0",
+    "@microsoft/sp-webpart-base": "1.23.0",
     "date-fns": "^4.2.1",
     "echarts": "^5.6.0",
     "echarts-for-react": "^3.0.2",
     "exceljs": "^4.4.0",
     "i18next": "^24.2.0",
     "i18next-browser-languagedetector": "^8.0.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
     "react-i18next": "^15.4.0",
+    "tslib": "2.3.1",
     "xlsx": "^0.18.5",
-    "zustand": "^5.0.8"
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.30.0",
-    "@types/react": "^18.3.23",
-    "@types/react-dom": "^18.3.7",
-    "@typescript-eslint/eslint-plugin": "^8.36.0",
-    "@typescript-eslint/parser": "^8.36.0",
-    "@vitejs/plugin-react": "^4.5.0",
+    "@microsoft/eslint-config-spfx": "1.23.0",
+    "@microsoft/eslint-plugin-spfx": "1.23.0",
+    "@microsoft/sp-module-interfaces": "1.23.0",
+    "@microsoft/spfx-heft-plugins": "1.23.0",
+    "@microsoft/spfx-web-build-rig": "1.23.0",
+    "@rushstack/heft": "1.2.17",
+    "@types/jest": "30.0.0",
+    "@types/react": "17.0.45",
+    "@types/react-dom": "17.0.17",
+    "@types/webpack-env": "~1.15.2",
     "autoprefixer": "^10.4.21",
-    "eslint": "^9.30.0",
-    "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^15.15.0",
+    "css-loader": "~7.1.2",
+    "eslint": "9.37.0",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "eslint-plugin-react-refresh": "^0.5.2",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.9.2",
-    "vite": "^5.4.19",
-    "xmldom": "^0.6.0"
+    "typescript": "~5.8.0"
+  },
+  "overrides": {
+    "@rushstack/heft": "1.2.17"
+  },
+  "resolutions": {
+    "@types/react": "17.0.45"
   }
 }
