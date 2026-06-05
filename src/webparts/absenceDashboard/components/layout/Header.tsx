@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 
 import { useTranslation } from '../../i18n/useTranslation';
-import { useAppStore } from '../../store/useAppStore';
 
 type HeaderProps = {
   appName: string;
@@ -20,10 +19,9 @@ export function Header({
 }: HeaderProps) {
   const { t: tCommon } = useTranslation('common');
   const { t: tDashboard } = useTranslation('dashboard');
-  const { folderName, clearRecords } = useAppStore();
 
   return (
-    <header className="sticky top-0 z-10 border-b border-gray-100 bg-white px-8 py-5">
+    <header className="border-b border-gray-100 bg-white px-8 py-5">
       <div className="flex items-start justify-between gap-8">
         <div className="flex items-center gap-5">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center bg-orangeBusiness text-xl font-black text-white">
@@ -51,18 +49,6 @@ export function Header({
           </button>
 
           {languageSwitcher}
-
-          <button
-            className="bg-orangeBusiness px-5 py-2 text-sm font-medium text-white hover:bg-orangeBusiness-dark"
-            type="button"
-            onClick={clearRecords}
-          >
-            {tDashboard('changeFolder')}
-          </button>
-
-          <span className="hidden text-sm text-gray-400 md:block">
-            {folderName ?? '—'}
-          </span>
         </div>
       </div>
     </header>

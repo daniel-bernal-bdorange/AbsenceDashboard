@@ -42,7 +42,7 @@ export function FilterPanel() {
         setIsFixed(past);
         setAutoCollapsed(past);
       },
-      { threshold: 0, rootMargin: '-110px 0px 0px 0px' }
+      { threshold: 0, rootMargin: '-60px 0px 0px 0px' }
     );
 
     observer.observe(sentinel);
@@ -71,7 +71,7 @@ export function FilterPanel() {
         }`}
         style={
           isFixed && rect
-            ? { position: 'fixed', top: 110, left: rect.left, width: rect.width, zIndex: 40 }
+            ? { position: 'fixed', top: 60, left: rect.left, width: rect.width, zIndex: 40 }
             : undefined
         }
       >
