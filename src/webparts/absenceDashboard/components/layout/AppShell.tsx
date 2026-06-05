@@ -42,7 +42,7 @@ export function AppShell({
 
   return (
     <main className="min-h-screen bg-white text-gray-900">
-      <div className="mx-auto max-w-screen-xl">
+      <div className="mx-auto w-full">
         <Header
           appName={appName}
           appSubtitle={appSubtitle}

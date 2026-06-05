@@ -9,7 +9,7 @@ import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { setAppConfig, setSpContext } from './config/env';
 
 import { App } from './App';
-import './index.css';
+import './styles/absenceDashboard.css';
 
 export interface IAbsenceDashboardWebPartProps {
   libraryName: string;

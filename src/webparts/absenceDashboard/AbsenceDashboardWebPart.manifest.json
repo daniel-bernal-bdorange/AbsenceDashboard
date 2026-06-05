@@ -14,15 +14,16 @@
   "requiresCustomScript": false,
   "supportedHosts": ["SharePointWebPart", "TeamsPersonalApp", "TeamsTab", "SharePointFullPage"],
   "supportsThemeVariants": true,
+  "supportsFullBleed": true,
 
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Advanced
     "group": { "default": "Advanced" },
-    "title": { "default": "AbsenceDashboard" },
-    "description": { "default": "AbsenceDashboard description" },
+    "title": { "default": "Absence Dashboard" },
+    "description": { "default": "Panel de ausencias del equipo basado en ficheros Excel de una biblioteca de SharePoint." },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "AbsenceDashboard"
+      "description": "Absence Dashboard"
     }
   }]
 }

@@ -73,6 +73,10 @@ export function App() {
         onNavigate={handleNavigate}
       >
         <div id="overview" className="px-8 py-12">
+          <div className="mb-8">
+            <FilterPanel />
+          </div>
+
           <div className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="text-xs font-medium uppercase tracking-widest text-gray-400">
@@ -86,10 +90,6 @@ export function App() {
               </p>
             </div>
 
-          </div>
-
-          <div className="mb-8">
-            <FilterPanel />
           </div>
 
           <KPIBar />

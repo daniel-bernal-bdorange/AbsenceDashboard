@@ -40,18 +40,42 @@ Short summary on functionality and used technologies.
 
 ---
 
-## Minimal Path to Awesome
+## Run locally (hosted workbench)
 
-- Clone this repository
-- Ensure that you are at the solution folder
-- in the command-line run:
-  - `npm install -g @rushstack/heft`
-  - `npm install`
-  - `heft start`
+Requisitos:
+- Node 22 LTS (gestionado con `fnm`; ver `tools/use-spfx-node.ps1`).
+- Acceso al site `https://bdbelux1.sharepoint.com/teams/AbsenceDashboard/`.
+- Certificado de desarrollo SPFx confiado (una sola vez por máquina):
+  `npx office-addin-dev-certs install`
 
-> Include any additional steps as needed.
+Arranque:
 
-Other build commands can be listed using `heft --help`.
+```powershell
+# 1) Activar Node 22 en la sesión actual
+.\tools\use-spfx-node.ps1
+
+# 2) Dependencias (primera vez)
+npm ci
+
+# 3) Servir el web part en el workbench hosted
+npm start
+```
+
+`npm start` ejecuta `prestart` → compila Tailwind (`build:css`) → arranca `heft start`. El workbench abrirá en `https://bdbelux1.sharepoint.com/teams/AbsenceDashboard/_layouts/15/workbench.aspx`.
+
+En el workbench:
+1. Añadir el web part **Absence Dashboard**.
+2. Configurar el property pane:
+   - **Nombre de la biblioteca**: `Shared Documents`
+   - **Ruta de carpeta**: `Data`
+   - **Archivo de empleados (roster)**: `OBD Spain_employee list_2026.xlsx`
+   - **Título**: `Absence Dashboard`
+
+Otros comandos:
+- `npm run build:css` — recompila Tailwind a `src/webparts/absenceDashboard/styles/absenceDashboard.css` (ignorado en git).
+- `npm run watch:css` — modo watch.
+- `npm run lint` — ESLint.
+- `npm run build` — bundle de producción (`heft test --production && heft package-solution --production`) → genera `.sppkg`.
 
 ## Features
 

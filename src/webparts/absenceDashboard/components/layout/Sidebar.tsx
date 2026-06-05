@@ -10,7 +10,7 @@ type SidebarProps = {
 export function Sidebar({ activeSection, isOpen, navigationItems, onNavigate }: SidebarProps) {
   return (
     <aside
-      className={`sticky top-[97px] hidden h-[calc(100vh-97px)] w-48 flex-shrink-0 flex-col border-r border-gray-100 lg:flex ${isOpen ? '' : ''}`}
+      className={`sticky top-0 hidden h-screen w-48 flex-shrink-0 flex-col border-r border-gray-100 lg:flex ${isOpen ? '' : ''}`}
     >
       <nav className="flex flex-col gap-1 py-4">
         {navigationItems.map((item) => {
