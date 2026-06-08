@@ -3,7 +3,12 @@ import { SPHttpClient } from '@microsoft/sp-http';
 import * as XLSX from 'xlsx';
 
 import { parseExcelFile, parseSpreadsheetXmlFile, parseRegulFile } from '../api/excelParser';
-import { loadDepartmentMap, loadFocusRoster } from './departmentMapper';
+import {
+  loadDepartmentMap,
+  loadRosterFile,
+  isRosterExcelFile,
+  isRosterJsonFile,
+} from './departmentMapper';
 import { deduplicateRecords } from '../utils/deduplicateRecords';
 import { computeVacationStats } from '../utils/vacationEntitlement';
 import { useAppStore } from '../store/useAppStore';
@@ -67,6 +72,7 @@ export function useSharePointData(): UseSharePointDataReturn {
   const setRecords = useAppStore((state) => state.setRecords);
   const setRegulRecords = useAppStore((state) => state.setRegulRecords);
   const setVacationStats = useAppStore((state) => state.setVacationStats);
+  const setProcessedFileNotes = useAppStore((state) => state.setProcessedFileNotes);
 
   const loadData = useCallback(async () => {
     const client = getSpHttpClient();
@@ -75,7 +81,6 @@ export function useSharePointData(): UseSharePointDataReturn {
     const ausenciasUrl = appEnv.ausenciasLibraryUrl;
     const regulUrl = appEnv.regulLibraryUrl;
     const rosterUrl = appEnv.rosterLibraryUrl;
-    const rosterFileName = appEnv.rosterFileName;
 
     if (!ausenciasUrl) {
       setError('Library URL not configured');
@@ -86,22 +91,70 @@ export function useSharePointData(): UseSharePointDataReturn {
     setError(null);
 
     try {
-      // --- Roster: OBD (department map) + FOCUS (arrival dates) ---
-      let departmentMap = new Map<string, Department>();
-      let arrivalDates = new Map<string, Date>();
+      const processedFileNotes: string[] = [];
+
+      // --- Roster folder: procesa TODOS los ficheros y mergea por Code ---
+      // Excel: extrae departamento + arrival date escaneando todas las hojas.
+      // JSON: extrae sólo mappings de departamento (legacy).
+      // Las filas sin `Arrival date` se ignoran para entitlement; el primer
+      // valor encontrado por code prevalece sobre los siguientes.
+      const departmentMap = new Map<string, Department>();
+      const arrivalDates = new Map<string, Date>();
 
       if (rosterUrl) {
         const rosterFiles = await listFolderFiles(client, siteAbsUrl, siteRelUrl, rosterUrl);
 
-        const obdFile = rosterFiles.find((f) => f.name === rosterFileName);
-        if (obdFile) {
-          departmentMap = await loadDepartmentMap(client, siteAbsUrl, obdFile.serverRelativeUrl);
+        for (const file of rosterFiles) {
+          if (isRosterJsonFile(file.name)) {
+            const deptOnly = await loadDepartmentMap(client, siteAbsUrl, file.serverRelativeUrl);
+            let added = 0;
+            deptOnly.forEach((v, k) => {
+              if (!departmentMap.has(k)) {
+                departmentMap.set(k, v);
+                added += 1;
+              }
+            });
+            processedFileNotes.push(
+              `Roster JSON: ${file.name} -> +${added} departamentos`,
+            );
+            continue;
+          }
+
+          if (!isRosterExcelFile(file.name)) continue;
+
+          try {
+            const { departments, arrivals } = await loadRosterFile(
+              client,
+              siteAbsUrl,
+              file.serverRelativeUrl,
+            );
+
+            let deptAdded = 0;
+            let arrAdded = 0;
+            departments.forEach((v, k) => {
+              if (!departmentMap.has(k)) {
+                departmentMap.set(k, v);
+                deptAdded += 1;
+              }
+            });
+            arrivals.forEach((v, k) => {
+              if (!arrivalDates.has(k)) {
+                arrivalDates.set(k, v);
+                arrAdded += 1;
+              }
+            });
+
+            processedFileNotes.push(
+              `Roster Excel: ${file.name} -> +${deptAdded} dept, +${arrAdded} arrival`,
+            );
+          } catch (err) {
+            console.error('Error parsing roster file', file.name, ':', err);
+          }
         }
 
-        const focusFile = rosterFiles.find((f) => /focus/i.test(f.name) && isExcelFile(f.name));
-        if (focusFile) {
-          arrivalDates = await loadFocusRoster(client, siteAbsUrl, focusFile.serverRelativeUrl);
-        }
+        processedFileNotes.push(
+          `Roster total: ${departmentMap.size} departamentos, ${arrivalDates.size} arrival dates`,
+        );
       }
 
       // --- Ausencias ---
@@ -123,6 +176,8 @@ export function useSharePointData(): UseSharePointDataReturn {
             const workbook = XLSX.read(buffer, { type: 'array' });
             rawRecords.push(...parseExcelFile(workbook, file.name));
           }
+
+          processedFileNotes.push(`Ausencias: ${file.name} -> parseExcelFile/parseSpreadsheetXmlFile y dedup por code|type|from|till`);
         } catch (err) {
           console.error('Error parsing absence file', file.name, ':', err);
         }
@@ -151,6 +206,7 @@ export function useSharePointData(): UseSharePointDataReturn {
 
             const workbook = XLSX.read(buffer, { type: 'array', cellDates: true });
             regulRecords.push(...parseRegulFile(workbook, file.name));
+            processedFileNotes.push(`Regularizaciones: ${file.name} -> parseRegulFile; solo row types de ausencias conocidas`);
           } catch (err) {
             console.error('Error parsing regul file', file.name, ':', err);
           }
@@ -158,6 +214,7 @@ export function useSharePointData(): UseSharePointDataReturn {
       }
 
       setRegulRecords(regulRecords);
+      setProcessedFileNotes(processedFileNotes);
 
       // --- Vacation stats ---
       const currentYear = new Date().getFullYear();

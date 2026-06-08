@@ -6,6 +6,7 @@ import { useSort } from '../../hooks/useSort';
 
 interface VacationRow {
   code: string;
+  username: string;
   department: string;
   entitlementY: number;
   usedY: number;
@@ -20,30 +21,37 @@ interface VacationRow {
 const currentYear = new Date().getFullYear();
 const prevYear = currentYear - 1;
 
-export function VacationStatsTable(): React.JSX.Element {
+export function VacationStatsTable(): React.ReactElement {
   const vacationStats = useAppStore((s) => s.vacationStats);
   const records = useAppStore((s) => s.records);
 
-  // Build code → department map from records
-  const deptByCode = useMemo(() => {
-    const map = new Map<string, string>();
+  // Build code → { username, department } map from records (same source as other tables)
+  const infoByCode = useMemo(() => {
+    const map = new Map<string, { username: string; department: string }>();
     for (const r of records) {
       if (r.employeeCode && !map.has(r.employeeCode.toLowerCase())) {
-        map.set(r.employeeCode.toLowerCase(), r.department ?? 'Unknown');
+        map.set(r.employeeCode.toLowerCase(), {
+          username: r.employeeUsername ?? r.employeeCode,
+          department: r.department ?? 'Unknown',
+        });
       }
     }
     return map;
   }, [records]);
 
   const rows = useMemo<VacationRow[]>(() => {
-    return Object.entries(vacationStats).map(([code, stats]) => ({
-      code,
-      department: deptByCode.get(code) ?? 'Unknown',
-      ...stats,
-    }));
-  }, [vacationStats, deptByCode]);
+    return Object.entries(vacationStats).map(([code, stats]) => {
+      const info = infoByCode.get(code);
+      return {
+        code,
+        username: info?.username ?? code,
+        department: info?.department ?? 'Unknown',
+        ...stats,
+      };
+    });
+  }, [vacationStats, infoByCode]);
 
-  const { sortConfig, handleSort, getSortIndicator } = useSort({ key: 'code', direction: 'asc' });
+  const { sortConfig, handleSort, getSortIndicator } = useSort({ key: 'employee', direction: 'asc' });
 
   const sorted = useMemo(() => {
     if (!sortConfig) return rows;
@@ -51,7 +59,7 @@ export function VacationStatsTable(): React.JSX.Element {
     const mult = direction === 'asc' ? 1 : -1;
     return [...rows].sort((a, b) => {
       switch (key) {
-        case 'code': return a.code.localeCompare(b.code) * mult;
+        case 'employee': return a.username.localeCompare(b.username) * mult;
         case 'department': return a.department.localeCompare(b.department) * mult;
         case 'usedY': return (a.usedY - b.usedY) * mult;
         case 'remainingY': return (a.remainingY - b.remainingY) * mult;
@@ -78,8 +86,8 @@ export function VacationStatsTable(): React.JSX.Element {
         <table className="w-full border-collapse">
           <thead className="sticky top-0 z-10 border-b border-gray-100 bg-gray-50/50">
             <tr>
-              <th className={thClass} onClick={() => handleSort('code')}>
-                Empleado{getSortIndicator('code')}
+              <th className={thClass} onClick={() => handleSort('employee')}>
+                Empleado{getSortIndicator('employee')}
               </th>
               <th className={thClass} onClick={() => handleSort('department')}>
                 Dept.{getSortIndicator('department')}
@@ -99,7 +107,7 @@ export function VacationStatsTable(): React.JSX.Element {
           <tbody>
             {sorted.map((row) => (
               <tr key={row.code} className="border-b border-gray-50 hover:bg-orange-50/40 transition-colors">
-                <td className="px-4 py-2.5 text-sm font-medium text-gray-800">{row.code}</td>
+                <td className="px-4 py-2.5 text-sm font-medium text-gray-800">{row.username}</td>
                 <td className="px-4 py-2.5 text-sm text-gray-500">{row.department}</td>
                 <td className="px-4 py-2.5 text-right text-sm text-gray-700">
                   {row.usedY} / {row.entitlementY}

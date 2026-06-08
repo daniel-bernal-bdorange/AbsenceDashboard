@@ -76,14 +76,16 @@ export function computeVacationStats(
       .filter((r) => r.employeeCode.toLowerCase() === code && r.type === AbsenceType.VACATION && r.from.getFullYear() === prevYear)
       .reduce((sum, r) => sum + r.numberOfDays, 0);
 
-    // Carry-over: "Vacaciones año anterior" accepted in year Y (enjoyed before 31/01/Y)
+    // Carry-over: "Vacaciones año anterior" accepted in year Y.
+    // Cuentan TODOS los días disfrutados en Y como consumo del entitlement Y-1,
+    // sin limitar a la fecha tope de carry-over (la regla de caducidad se evalúa
+    // aparte sobre `remainingPrev`).
     const usedCarryover = vacationAccepted
       .filter(
         (r) =>
           r.employeeCode.toLowerCase() === code &&
           r.type === AbsenceType.VACATION_PREV_YEAR &&
-          r.from.getFullYear() === year &&
-          r.from <= carryoverDeadline,
+          r.from.getFullYear() === year,
       )
       .reduce((sum, r) => sum + r.numberOfDays, 0);
 

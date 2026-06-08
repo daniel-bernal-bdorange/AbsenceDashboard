@@ -10,7 +10,8 @@ type JsonDepartmentMapping = {
 const isExcelFile = (fileName: string) => /\.(xlsx|xls)$/i.test(fileName);
 const isJsonFile = (fileName: string) => /\.json$/i.test(fileName);
 
-const toText = (value: unknown) => String(value ?? '').trim();
+export const isRosterExcelFile = isExcelFile;
+export const isRosterJsonFile = isJsonFile;const toText = (value: unknown) => String(value ?? '').trim();
 
 const normalizeDepartment = (value: unknown): Department | null => {
   const text = toText(value).toLowerCase();
@@ -184,5 +185,73 @@ export async function loadFocusRoster(
     return loadFocusRosterFromBuffer(buffer);
   } catch {
     return new Map<string, Date>();
+  }
+}
+
+// Generic roster extractor: scans ALL sheets of a workbook and pulls out
+// department + arrival data from any row that has a usable `Code`.
+// Rows without an `Arrival date` column/value are simply ignored for arrivals.
+export const extractRosterDataFromBuffer = (
+  buffer: ArrayBuffer,
+): { departments: Map<string, Department>; arrivals: Map<string, Date> } => {
+  const workbook = XLSX.read(buffer, { type: 'array', cellDates: true });
+  const departments = new Map<string, Department>();
+  const arrivals = new Map<string, Date>();
+
+  for (const sheetName of workbook.SheetNames) {
+    const ws = workbook.Sheets[sheetName];
+    if (!ws) continue;
+
+    const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(ws, { defval: '' });
+
+    for (const row of rows) {
+      const code = toText(row.Code).toLowerCase();
+      if (!code || !isUsernameLike(code)) continue;
+
+      // Arrival date: only set if the column is present AND parseable.
+      const arrivalRaw = row['Arrival date'];
+      if (arrivalRaw !== undefined && arrivalRaw !== null && arrivalRaw !== '') {
+        const date = arrivalRaw instanceof Date ? arrivalRaw : new Date(String(arrivalRaw));
+        if (!isNaN(date.getTime()) && !arrivals.has(code)) {
+          arrivals.set(code, date);
+        }
+      }
+
+      // Department: `Check` takes priority over `Primary entity`.
+      const dept =
+        normalizeDepartment(row.Check) ?? normalizeDepartment(row['Primary entity']);
+      if (dept && !departments.has(code)) {
+        departments.set(code, dept);
+      }
+    }
+  }
+
+  return { departments, arrivals };
+};
+
+export async function loadRosterFile(
+  client: SPHttpClient,
+  siteUrl: string,
+  fileServerRelativeUrl: string,
+): Promise<{ departments: Map<string, Department>; arrivals: Map<string, Date> }> {
+  const empty = {
+    departments: new Map<string, Department>(),
+    arrivals: new Map<string, Date>(),
+  };
+
+  if (!isExcelFile(fileServerRelativeUrl)) return empty;
+
+  try {
+    const response = await client.get(
+      `${siteUrl}/_api/web/GetFileByServerRelativeUrl('${encodeURIComponent(fileServerRelativeUrl)}')/$value`,
+      SPHttpClient.configurations.v1,
+    );
+
+    if (!response.ok) return empty;
+
+    const buffer = await response.arrayBuffer();
+    return extractRosterDataFromBuffer(buffer);
+  } catch {
+    return empty;
   }
 }

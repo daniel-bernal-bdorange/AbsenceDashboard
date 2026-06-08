@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 
 import { LanguageSwitcher } from '../LanguageSwitcher';
+import { ProcessedFilesTooltip } from '../common/ProcessedFilesTooltip';
 
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
@@ -63,6 +64,8 @@ export function AppShell({
             <div>{children}</div>
           </div>
         </div>
+
+        <ProcessedFilesTooltip />
       </div>
     </main>
   );
