@@ -94,3 +94,32 @@ export const DAY_RECORD_HALF = 0.5;
 export function getDayValue(isFullDay: boolean): number {
   return isFullDay ? DAY_RECORD_FULL : DAY_RECORD_HALF;
 }
+
+export interface RegulRecord {
+  date: Date;
+  rowType: string;
+  employeeCode: string;
+  title: string;
+  expenditureQuantity: number;
+  dateToRegularise: Date;
+  validationStatus: string;
+  sourceFile: string;
+}
+
+export interface FocusRosterRow {
+  Code: string;
+  'Last name': string;
+  'First name': string;
+  'Arrival date': string | Date;
+}
+
+export interface VacationStats {
+  entitlementY: number;
+  usedY: number;
+  remainingY: number;
+  entitlementPrev: number;
+  usedPrev: number;
+  usedCarryover: number;
+  remainingPrev: number;
+  expiredPrev: boolean;
+}

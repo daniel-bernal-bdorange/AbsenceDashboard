@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
-import type { AbsenceRecord, AbsenceDayRecord } from '../types';
+import type { AbsenceRecord, AbsenceDayRecord, RegulRecord, VacationStats } from '../types';
 import type { AbsenceFilters } from '../components/filters/filterTypes';
 import { defaultFilters } from '../components/filters/filterTypes';
 import { expandToDailyRecords } from '../utils/absenceExpander';
@@ -10,11 +10,15 @@ import { filterDayRecords } from '../utils/filterDayRecords';
 type AppState = {
   records: AbsenceRecord[];
   dailyRecords: AbsenceDayRecord[];
+  regulRecords: RegulRecord[];
+  vacationStats: Record<string, VacationStats>;
   folderName: string | null;
   sidebarOpen: boolean;
   filters: AbsenceFilters;
   selectedEmployeeDetail: string | null;
   setRecords: (records: AbsenceRecord[], folderName?: string | null) => void;
+  setRegulRecords: (records: RegulRecord[]) => void;
+  setVacationStats: (stats: Record<string, VacationStats>) => void;
   setSidebarOpen: (isOpen: boolean) => void;
   clearRecords: () => void;
   toggleSidebar: () => void;
@@ -47,11 +51,21 @@ function reviveDates(records: AbsenceRecord[]): AbsenceRecord[] {
   }));
 }
 
+function reviveRegulDates(records: RegulRecord[]): RegulRecord[] {
+  return records.map((r) => ({
+    ...r,
+    date: new Date(r.date),
+    dateToRegularise: new Date(r.dateToRegularise),
+  }));
+}
+
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
       records: [],
       dailyRecords: [],
+      regulRecords: [],
+      vacationStats: {},
       folderName: null,
       sidebarOpen: true,
       filters: defaultFilters,
@@ -62,7 +76,9 @@ export const useAppStore = create<AppState>()(
           dailyRecords: records.flatMap(expandToDailyRecords),
           folderName,
         }),
-      clearRecords: () => set({ records: [], dailyRecords: [], folderName: null }),
+      setRegulRecords: (records) => set({ regulRecords: records }),
+      setVacationStats: (stats) => set({ vacationStats: stats }),
+      clearRecords: () => set({ records: [], dailyRecords: [], folderName: null, regulRecords: [], vacationStats: {} }),
       setSidebarOpen: (isOpen) => set({ sidebarOpen: isOpen }),
       toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
       setFilters: (newFilters) =>
@@ -88,6 +104,8 @@ export const useAppStore = create<AppState>()(
       storage: createJSONStorage(() => sessionStorageMiddleware),
       partialize: (state) => ({
         records: state.records,
+        regulRecords: state.regulRecords,
+        vacationStats: state.vacationStats,
         folderName: state.folderName,
       }),
       merge: (persisted, current) => {
@@ -95,6 +113,9 @@ export const useAppStore = create<AppState>()(
         if (merged.records?.length) {
           merged.records = reviveDates(merged.records);
           merged.dailyRecords = merged.records.flatMap(expandToDailyRecords);
+        }
+        if (merged.regulRecords?.length) {
+          merged.regulRecords = reviveRegulDates(merged.regulRecords);
         }
         return merged;
       },

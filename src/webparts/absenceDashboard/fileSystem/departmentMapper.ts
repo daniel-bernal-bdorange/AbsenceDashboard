@@ -1,7 +1,7 @@
 import { SPHttpClient } from '@microsoft/sp-http';
 import * as XLSX from 'xlsx';
 
-import type { Department, EmployeeRosterRow } from '../types';
+import type { Department, EmployeeRosterRow, FocusRosterRow } from '../types';
 
 type JsonDepartmentMapping = {
   mappings?: Array<{ username?: string; department?: Department | string }>;
@@ -130,4 +130,59 @@ export async function loadDepartmentMap(
   }
 
   return new Map<string, Department>();
+}
+
+const loadFocusRosterFromBuffer = (buffer: ArrayBuffer): Map<string, Date> => {
+  const workbook = XLSX.read(buffer, { type: 'array', cellDates: true });
+  const worksheet = workbook.Sheets['SX'] ?? workbook.Sheets[workbook.SheetNames[0]];
+  const map = new Map<string, Date>();
+
+  if (!worksheet) {
+    return map;
+  }
+
+  const rows = XLSX.utils.sheet_to_json<FocusRosterRow>(worksheet, { defval: '' });
+
+  for (const row of rows) {
+    const code = toText(row.Code);
+
+    if (!code || !isUsernameLike(code)) {
+      continue;
+    }
+
+    const raw = row['Arrival date'];
+    const date = raw instanceof Date ? raw : raw ? new Date(String(raw)) : null;
+
+    if (date && !isNaN(date.getTime())) {
+      map.set(code.toLowerCase(), date);
+    }
+  }
+
+  return map;
+};
+
+export async function loadFocusRoster(
+  client: SPHttpClient,
+  siteUrl: string,
+  fileServerRelativeUrl: string,
+): Promise<Map<string, Date>> {
+  if (!isExcelFile(fileServerRelativeUrl)) {
+    return new Map<string, Date>();
+  }
+
+  try {
+    const response = await client.get(
+      `${siteUrl}/_api/web/GetFileByServerRelativeUrl('${encodeURIComponent(fileServerRelativeUrl)}')/$value`,
+      SPHttpClient.configurations.v1,
+    );
+
+    if (!response.ok) {
+      return new Map<string, Date>();
+    }
+
+    const buffer = await response.arrayBuffer();
+    return loadFocusRosterFromBuffer(buffer);
+  } catch {
+    return new Map<string, Date>();
+  }
 }

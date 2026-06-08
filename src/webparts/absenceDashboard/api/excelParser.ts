@@ -6,11 +6,12 @@ import {
   type AbsenceCategory,
   type AbsenceRecord,
   type EverwinAbsenceRow,
+  type RegulRecord,
 } from '../types';
 
 import type { WorkBook } from 'xlsx';
 
-const SHEET_NAME = 'Export ASA';
+const SHEET_NAMES = ['Export ASA', 'SX'];
 
 const typeToCategory: Record<AbsenceType, AbsenceCategory> = {
   [AbsenceType.VACATION]: 'Vacation',
@@ -83,15 +84,17 @@ const parseBoundaryDate = (value: unknown, fieldName: string, sourceFile: string
     }
   }
 
-  const match = text.match(/^([0-3]\d)\/([0-1]\d)\/(\d{4})\s+(Morning|Noon|End of the day)$/);
+  const match = text.match(/^([0-3]\d)\/([0-1]\d)\/(\d{4})\s+(Morning|Noon|End of the day|Evening)$/);
 
   if (!match) {
     throw new Error(`Campo ${fieldName} invalido en ${sourceFile}`);
   }
 
   const [, day, month, year, boundary] = match;
-  const hours = boundary === 'Morning' ? 0 : boundary === 'Noon' ? 12 : 23;
-  const minutes = boundary === 'Morning' ? 0 : boundary === 'Noon' ? 0 : 59;
+  // Evening is an alias for End of the day
+  const normalizedBoundary = boundary === 'Evening' ? 'End of the day' : boundary;
+  const hours = normalizedBoundary === 'Morning' ? 0 : normalizedBoundary === 'Noon' ? 12 : 23;
+  const minutes = normalizedBoundary === 'Morning' ? 0 : normalizedBoundary === 'Noon' ? 0 : 59;
   const parsed = new Date(Number(year), Number(month) - 1, Number(day), hours, minutes, 0, 0);
 
   if (Number.isNaN(parsed.getTime())) {
@@ -111,8 +114,14 @@ const parseAbsenceType = (value: unknown, sourceFile: string) => {
   return text as AbsenceType;
 };
 
+const normalizeStatusText = (raw: string): string => {
+  if (raw === 'Cancelled') return 'Canceled';
+  if (raw === 'In progress') return 'Running';
+  return raw;
+};
+
 const parseAbsenceStatus = (value: unknown, sourceFile: string) => {
-  const text = parseRequiredText(value, 'Status', sourceFile);
+  const text = normalizeStatusText(parseRequiredText(value, 'Status', sourceFile));
 
   if (!absenceStatusValues.has(text)) {
     throw new Error(`Estado desconocido en ${sourceFile}: ${text}`);
@@ -181,13 +190,14 @@ const parseSpreadsheetXml = (xmlText: string, sourceFile: string): EverwinAbsenc
   }
 
   const worksheet = Array.from(document.getElementsByTagName('Worksheet')).find((node) => {
-    return node.getAttribute('ss:Name') === SHEET_NAME || node.getAttribute('Name') === SHEET_NAME;
+    const name = node.getAttribute('ss:Name') ?? node.getAttribute('Name') ?? '';
+    return SHEET_NAMES.includes(name);
   });
 
   const table = worksheet?.getElementsByTagName('Table')[0];
 
   if (!table) {
-    throw new Error(`No existe hoja ${SHEET_NAME} en ${sourceFile}`);
+    throw new Error(`No existe hoja ${SHEET_NAMES.join(' / ')} en ${sourceFile}`);
   }
 
   const rows = Array.from(table.getElementsByTagName('Row'));
@@ -224,11 +234,13 @@ const parseSpreadsheetXml = (xmlText: string, sourceFile: string): EverwinAbsenc
 };
 
 export function parseExcelFile(workbook: WorkBook, sourceFile: string): AbsenceRecord[] {
-  const worksheet = workbook.Sheets[SHEET_NAME];
+  const sheetName = SHEET_NAMES.find((n) => workbook.Sheets[n]);
 
-  if (!worksheet) {
-    throw new Error(`No existe hoja ${SHEET_NAME} en ${sourceFile}`);
+  if (!sheetName) {
+    throw new Error(`No existe hoja ${SHEET_NAMES.join(' / ')} en ${sourceFile}`);
   }
+
+  const worksheet = workbook.Sheets[sheetName];
 
   const rows = XLSX.utils.sheet_to_json<EverwinAbsenceRow>(worksheet, { defval: '' });
 
@@ -237,4 +249,28 @@ export function parseExcelFile(workbook: WorkBook, sourceFile: string): AbsenceR
 
 export function parseSpreadsheetXmlFile(xmlText: string, sourceFile: string): AbsenceRecord[] {
   return parseAbsenceRows(parseSpreadsheetXml(xmlText, sourceFile), sourceFile);
+}
+
+export function parseRegulFile(workbook: WorkBook, sourceFile: string): RegulRecord[] {
+  const sheetName = SHEET_NAMES.find((n) => workbook.Sheets[n]);
+
+  if (!sheetName) {
+    throw new Error(`No existe hoja ${SHEET_NAMES.join(' / ')} en ${sourceFile}`);
+  }
+
+  const worksheet = workbook.Sheets[sheetName];
+  const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(worksheet, { defval: '' });
+
+  return rows
+    .filter((row) => absenceTypeValues.has(asText(row['Row type'])))
+    .map((row) => ({
+      date: parseDateTime(row['Date'], 'Date', sourceFile),
+      rowType: asText(row['Row type']),
+      employeeCode: parseRequiredText(row['Employee'], 'Employee', sourceFile),
+      title: asText(row['Title']),
+      expenditureQuantity: parseNumber(row['Expenditure quantity'], 'Expenditure quantity', sourceFile),
+      dateToRegularise: parseDateTime(row['Date to regularise'], 'Date to regularise', sourceFile),
+      validationStatus: asText(row['Validation status']),
+      sourceFile,
+    }));
 }
