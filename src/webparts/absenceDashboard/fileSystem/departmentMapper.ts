@@ -134,7 +134,7 @@ export async function loadDepartmentMap(
 
 const loadFocusRosterFromBuffer = (buffer: ArrayBuffer): Map<string, Date> => {
   const workbook = XLSX.read(buffer, { type: 'array', cellDates: true });
-  const worksheet = workbook.Sheets['SX'] ?? workbook.Sheets[workbook.SheetNames[0]];
+  const worksheet = workbook.Sheets.SX ?? workbook.Sheets[workbook.SheetNames[0]];
   const map = new Map<string, Date>();
 
   if (!worksheet) {

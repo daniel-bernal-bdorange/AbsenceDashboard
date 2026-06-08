@@ -264,10 +264,10 @@ export function parseRegulFile(workbook: WorkBook, sourceFile: string): RegulRec
   return rows
     .filter((row) => absenceTypeValues.has(asText(row['Row type'])))
     .map((row) => ({
-      date: parseDateTime(row['Date'], 'Date', sourceFile),
+      date: parseDateTime(row.Date, 'Date', sourceFile),
       rowType: asText(row['Row type']),
-      employeeCode: parseRequiredText(row['Employee'], 'Employee', sourceFile),
-      title: asText(row['Title']),
+      employeeCode: parseRequiredText(row.Employee, 'Employee', sourceFile),
+      title: asText(row.Title),
       expenditureQuantity: parseNumber(row['Expenditure quantity'], 'Expenditure quantity', sourceFile),
       dateToRegularise: parseDateTime(row['Date to regularise'], 'Date to regularise', sourceFile),
       validationStatus: asText(row['Validation status']),

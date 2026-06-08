@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { useMemo } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { NoDataState } from '../common/EmptyState';
@@ -19,7 +20,7 @@ interface VacationRow {
 const currentYear = new Date().getFullYear();
 const prevYear = currentYear - 1;
 
-export function VacationStatsTable() {
+export function VacationStatsTable(): React.JSX.Element {
   const vacationStats = useAppStore((s) => s.vacationStats);
   const records = useAppStore((s) => s.records);
 

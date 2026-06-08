@@ -23,7 +23,13 @@
     "description": { "default": "Panel de ausencias del equipo basado en ficheros Excel de una biblioteca de SharePoint." },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "Absence Dashboard"
+      "libraryName": "Shared Documents",
+      "folderPath": "Data/Ausencias",
+      "ausenciasFolder": "Data/Ausencias",
+      "regulFolder": "Data/Regularizaciones",
+      "rosterFolder": "Data/Roster",
+      "rosterFileName": "OBD Spain_employee list_2026.xlsx",
+      "appTitle": "Absence Dashboard"
     }
   }]
 }

@@ -14,6 +14,9 @@ import './styles/absenceDashboard.css';
 export interface IAbsenceDashboardWebPartProps {
   libraryName: string;
   folderPath: string;
+  ausenciasFolder: string;
+  regulFolder: string;
+  rosterFolder: string;
   rosterFileName: string;
   appTitle: string;
 }
@@ -21,11 +24,22 @@ export interface IAbsenceDashboardWebPartProps {
 export default class AbsenceDashboardWebPart extends BaseClientSideWebPart<IAbsenceDashboardWebPartProps> {
 
   public render(): void {
+    const lib = this.properties.libraryName ?? 'Shared Documents';
+    const buildPath = (folder: string): string =>
+      folder ? `${lib}/${folder.replace(/^\/+|\/+$/g, '')}` : '';
+
     setAppConfig({
       appTitle: this.properties.appTitle,
+      // New three-folder config
+      ausenciasLibraryUrl: this.properties.ausenciasFolder
+        ? buildPath(this.properties.ausenciasFolder)
+        : buildPath(this.properties.folderPath),
+      regulLibraryUrl: buildPath(this.properties.regulFolder),
+      rosterLibraryUrl: buildPath(this.properties.rosterFolder),
+      // Legacy backward compat
       libraryUrl: this.properties.folderPath
-        ? `${this.properties.libraryName}/${this.properties.folderPath}`
-        : this.properties.libraryName,
+        ? `${lib}/${this.properties.folderPath}`
+        : lib,
       rosterFileName: this.properties.rosterFileName,
     });
 
@@ -63,17 +77,35 @@ export default class AbsenceDashboardWebPart extends BaseClientSideWebPart<IAbse
               groupFields: [
                 PropertyPaneTextField('libraryName', {
                   label: 'Nombre de la biblioteca',
-                  placeholder: 'Ej: Ausencias',
-                  value: 'Ausencias',
+                  placeholder: 'Shared Documents',
+                  value: 'Shared Documents',
                 }),
-                PropertyPaneTextField('folderPath', {
-                  label: 'Ruta de carpeta (opcional)',
-                  placeholder: 'Ej: Exportaciones/2026',
+              ],
+            },
+            {
+              groupName: 'Carpetas (relativas a la biblioteca)',
+              groupFields: [
+                PropertyPaneTextField('ausenciasFolder', {
+                  label: 'Carpeta Ausencias',
+                  placeholder: 'Data/Ausencias',
+                }),
+                PropertyPaneTextField('regulFolder', {
+                  label: 'Carpeta Regularizaciones',
+                  placeholder: 'Data/Regularizaciones',
+                }),
+                PropertyPaneTextField('rosterFolder', {
+                  label: 'Carpeta Roster',
+                  placeholder: 'Data/Roster',
                 }),
                 PropertyPaneTextField('rosterFileName', {
-                  label: 'Archivo de empleados (JSON)',
-                  placeholder: 'employee-departments.json',
+                  label: 'Archivo OBD (roster principal)',
+                  placeholder: 'OBD Spain_employee list_2026.xlsx',
                 }),
+              ],
+            },
+            {
+              groupName: 'General',
+              groupFields: [
                 PropertyPaneTextField('appTitle', {
                   label: 'Título del dashboard',
                   placeholder: 'Absence Dashboard',
