@@ -29,6 +29,11 @@ const absenceStatusValues = new Set<string>(Object.values(AbsenceStatus));
 
 const asText = (value: unknown) => String(value ?? '').trim();
 
+// Everwin Codes en ficheros de ausencias vienen como `<stem>-NNN` (un
+// counter por registro/empleado). El roster (OBD/FOCUS) usa sólo el stem,
+// así que hay que quitar el sufijo para que el join funcione.
+const normalizeEmployeeCode = (raw: unknown) => asText(raw).replace(/-\d+$/, '');
+
 const parseRequiredText = (value: unknown, fieldName: string, sourceFile: string) => {
   const text = asText(value);
 
@@ -143,9 +148,11 @@ const parseAbsenceRows = (rows: EverwinAbsenceRow[], sourceFile: string): Absenc
     .map((row) => {
     const type = parseAbsenceType(row.Type, sourceFile);
 
+    const rawCode = parseRequiredText(row.Code, 'Code', sourceFile);
+
     return {
       id: crypto.randomUUID(),
-      employeeCode: parseRequiredText(row.Code, 'Code', sourceFile),
+      employeeCode: normalizeEmployeeCode(rawCode),
       employeeUsername: parseRequiredText(row.Employee, 'Employee', sourceFile),
       type,
       category: getAbsenceCategory(type),
@@ -266,7 +273,7 @@ export function parseRegulFile(workbook: WorkBook, sourceFile: string): RegulRec
     .map((row) => ({
       date: parseDateTime(row.Date, 'Date', sourceFile),
       rowType: asText(row['Row type']),
-      employeeCode: parseRequiredText(row.Employee, 'Employee', sourceFile),
+      employeeCode: normalizeEmployeeCode(parseRequiredText(row.Employee, 'Employee', sourceFile)),
       title: asText(row.Title),
       expenditureQuantity: parseNumber(row['Expenditure quantity'], 'Expenditure quantity', sourceFile),
       dateToRegularise: parseDateTime(row['Date to regularise'], 'Date to regularise', sourceFile),
