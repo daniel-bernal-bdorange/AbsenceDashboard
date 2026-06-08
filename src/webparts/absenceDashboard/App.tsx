@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { ErrorBoundary, OverviewChart, TrendLine, AbsenceTypeDonut, DepartmentComparison, AppShell, ToastContainer, FilterPanel, EmployeeDetail, KPIBar } from './components';
-import { AbsenceTable, EmployeeSummaryTable } from './components/tables';
+import { AbsenceTable, EmployeeSummaryTable, VacationStatsTable } from './components/tables';
 import { type NavigationItem } from './components/layout/AppShell';
 import { appEnv } from './config/env';
 import { useTranslation } from './i18n/useTranslation';
@@ -60,6 +60,7 @@ export function App() {
     { id: 'overview', label: tDashboard('navOverview'), shortLabel: 'DB' },
     { id: 'charts', label: tDashboard('navCharts'), shortLabel: 'GR' },
     { id: 'tables', label: tDashboard('navTables'), shortLabel: 'TB' },
+    { id: 'vacations', label: 'Vacaciones', shortLabel: 'VC' },
   ];
 
   return (
@@ -156,6 +157,15 @@ export function App() {
               </span>
             </button>
             {employeeSummaryExpanded && <EmployeeSummaryTable />}
+          </div>
+
+          <hr className="border-gray-100" />
+
+          <div id="vacations" className="py-10">
+            <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
+              Vacaciones y entitlement
+            </p>
+            <VacationStatsTable />
           </div>
         </div>
         {selectedEmployeeDetail && (

@@ -12,6 +12,7 @@ type AppState = {
   dailyRecords: AbsenceDayRecord[];
   regulRecords: RegulRecord[];
   vacationStats: Record<string, VacationStats>;
+  processedFileNotes: string[];
   folderName: string | null;
   sidebarOpen: boolean;
   filters: AbsenceFilters;
@@ -19,6 +20,7 @@ type AppState = {
   setRecords: (records: AbsenceRecord[], folderName?: string | null) => void;
   setRegulRecords: (records: RegulRecord[]) => void;
   setVacationStats: (stats: Record<string, VacationStats>) => void;
+  setProcessedFileNotes: (notes: string[]) => void;
   setSidebarOpen: (isOpen: boolean) => void;
   clearRecords: () => void;
   toggleSidebar: () => void;
@@ -66,6 +68,7 @@ export const useAppStore = create<AppState>()(
       dailyRecords: [],
       regulRecords: [],
       vacationStats: {},
+      processedFileNotes: [],
       folderName: null,
       sidebarOpen: true,
       filters: defaultFilters,
@@ -78,7 +81,8 @@ export const useAppStore = create<AppState>()(
         }),
       setRegulRecords: (records) => set({ regulRecords: records }),
       setVacationStats: (stats) => set({ vacationStats: stats }),
-      clearRecords: () => set({ records: [], dailyRecords: [], folderName: null, regulRecords: [], vacationStats: {} }),
+      setProcessedFileNotes: (notes) => set({ processedFileNotes: notes }),
+      clearRecords: () => set({ records: [], dailyRecords: [], folderName: null, regulRecords: [], vacationStats: {}, processedFileNotes: [] }),
       setSidebarOpen: (isOpen) => set({ sidebarOpen: isOpen }),
       toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
       setFilters: (newFilters) =>

@@ -67,6 +67,7 @@ export function useSharePointData(): UseSharePointDataReturn {
   const setRecords = useAppStore((state) => state.setRecords);
   const setRegulRecords = useAppStore((state) => state.setRegulRecords);
   const setVacationStats = useAppStore((state) => state.setVacationStats);
+  const setProcessedFileNotes = useAppStore((state) => state.setProcessedFileNotes);
 
   const loadData = useCallback(async () => {
     const client = getSpHttpClient();
@@ -86,6 +87,8 @@ export function useSharePointData(): UseSharePointDataReturn {
     setError(null);
 
     try {
+      const processedFileNotes: string[] = [];
+
       // --- Roster: OBD (department map) + FOCUS (arrival dates) ---
       let departmentMap = new Map<string, Department>();
       let arrivalDates = new Map<string, Date>();
@@ -96,11 +99,13 @@ export function useSharePointData(): UseSharePointDataReturn {
         const obdFile = rosterFiles.find((f) => f.name === rosterFileName);
         if (obdFile) {
           departmentMap = await loadDepartmentMap(client, siteAbsUrl, obdFile.serverRelativeUrl);
+          processedFileNotes.push(`Roster OBD: ${obdFile.name} -> Code/Department map (${departmentMap.size} empleados)`);
         }
 
         const focusFile = rosterFiles.find((f) => /focus/i.test(f.name) && isExcelFile(f.name));
         if (focusFile) {
           arrivalDates = await loadFocusRoster(client, siteAbsUrl, focusFile.serverRelativeUrl);
+          processedFileNotes.push(`Roster FOCUS: ${focusFile.name} -> Code/Arrival date para entitlement (${arrivalDates.size} empleados)`);
         }
       }
 
@@ -123,6 +128,8 @@ export function useSharePointData(): UseSharePointDataReturn {
             const workbook = XLSX.read(buffer, { type: 'array' });
             rawRecords.push(...parseExcelFile(workbook, file.name));
           }
+
+          processedFileNotes.push(`Ausencias: ${file.name} -> parseExcelFile/parseSpreadsheetXmlFile y dedup por code|type|from|till`);
         } catch (err) {
           console.error('Error parsing absence file', file.name, ':', err);
         }
@@ -151,6 +158,7 @@ export function useSharePointData(): UseSharePointDataReturn {
 
             const workbook = XLSX.read(buffer, { type: 'array', cellDates: true });
             regulRecords.push(...parseRegulFile(workbook, file.name));
+            processedFileNotes.push(`Regularizaciones: ${file.name} -> parseRegulFile; solo row types de ausencias conocidas`);
           } catch (err) {
             console.error('Error parsing regul file', file.name, ':', err);
           }
@@ -158,6 +166,7 @@ export function useSharePointData(): UseSharePointDataReturn {
       }
 
       setRegulRecords(regulRecords);
+      setProcessedFileNotes(processedFileNotes);
 
       // --- Vacation stats ---
       const currentYear = new Date().getFullYear();

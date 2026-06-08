@@ -20,7 +20,7 @@ interface VacationRow {
 const currentYear = new Date().getFullYear();
 const prevYear = currentYear - 1;
 
-export function VacationStatsTable(): React.JSX.Element {
+export function VacationStatsTable(): React.ReactElement {
   const vacationStats = useAppStore((s) => s.vacationStats);
   const records = useAppStore((s) => s.records);
 
