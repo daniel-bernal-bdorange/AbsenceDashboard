@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
+import { useTranslation } from '../../i18n/useTranslation';
 import { useAppStore } from '../../store/useAppStore';
 
 export function DateRangeFilter() {
+  const { t } = useTranslation('filters');
   const { filters, setFilters, records } = useAppStore();
 
   const { minDate, maxDate } = useMemo(() => {
@@ -25,7 +27,7 @@ export function DateRangeFilter() {
     <div className="flex flex-col gap-1.5">
       <input
         className="w-full rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-700 placeholder-gray-400 focus:border-orangeBusiness focus:outline-none"
-        placeholder="Desde"
+        placeholder={t('from')}
         type="date"
         min={minDate}
         max={filters.dateRange.to ? filters.dateRange.to.toISOString().split('T')[0] : maxDate}
@@ -47,7 +49,7 @@ export function DateRangeFilter() {
       />
       <input
         className="w-full rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-700 placeholder-gray-400 focus:border-orangeBusiness focus:outline-none"
-        placeholder="Hasta"
+        placeholder={t('to')}
         type="date"
         min={filters.dateRange.from ? filters.dateRange.from.toISOString().split('T')[0] : minDate}
         max={maxDate}

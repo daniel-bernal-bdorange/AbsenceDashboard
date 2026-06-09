@@ -1,8 +1,10 @@
 import { useState, type ReactElement } from 'react';
 
+import { useTranslation } from '../../i18n/useTranslation';
 import { useAppStore } from '../../store/useAppStore';
 
 export function ProcessedFilesTooltip(): ReactElement | null {
+  const { t } = useTranslation('common');
   const processedFileNotes = useAppStore((state) => state.processedFileNotes);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -15,7 +17,7 @@ export function ProcessedFilesTooltip(): ReactElement | null {
       <div className="group relative">
         <button
           type="button"
-          aria-label="Ver archivos procesados"
+          aria-label={t('viewProcessedFiles')}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((value) => !value)}
           className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white/95 text-xs font-semibold text-gray-500 shadow-sm backdrop-blur transition hover:border-orangeBusiness/40 hover:text-orangeBusiness focus:outline-none focus:ring-2 focus:ring-orangeBusiness/30"
@@ -29,7 +31,7 @@ export function ProcessedFilesTooltip(): ReactElement | null {
           }`}
         >
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-400">
-            Archivos procesados
+            {t('processedFilesTitle')}
           </p>
           <ul className="mt-3 space-y-2 text-xs leading-5 text-gray-600">
             {processedFileNotes.map((note) => (
@@ -39,7 +41,7 @@ export function ProcessedFilesTooltip(): ReactElement | null {
             ))}
           </ul>
           <p className="mt-3 text-[11px] text-gray-400">
-            Pulsa el icono para fijarlo en pantalla.
+            {t('processedFilesHint')}
           </p>
         </div>
       </div>

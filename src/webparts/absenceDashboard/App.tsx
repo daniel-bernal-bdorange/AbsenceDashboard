@@ -60,7 +60,7 @@ export function App() {
     { id: 'overview', label: tDashboard('navOverview'), shortLabel: 'DB' },
     { id: 'charts', label: tDashboard('navCharts'), shortLabel: 'GR' },
     { id: 'tables', label: tDashboard('navTables'), shortLabel: 'TB' },
-    { id: 'vacations', label: 'Vacaciones', shortLabel: 'VC' },
+    { id: 'vacations', label: tDashboard('navVacations'), shortLabel: 'VC' },
   ];
 
   return (
@@ -163,7 +163,7 @@ export function App() {
 
           <div id="vacations" className="py-10">
             <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
-              Vacaciones y entitlement
+              {tDashboard('vacationSectionTitle')}
             </p>
             <VacationStatsTable />
           </div>

@@ -81,7 +81,7 @@ export function FilterPanel() {
           type="button"
         >
           <div className="flex items-center gap-3">
-            <span className="text-sm font-semibold text-gray-700">Filtros</span>
+            <span className="text-sm font-semibold text-gray-700">{t('title')}</span>
             {activeCount > 0 && (
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orangeBusiness text-xs font-medium text-white">
                 {activeCount}
@@ -129,25 +129,25 @@ export function FilterPanel() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-5">
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-medium uppercase tracking-wide text-gray-400">
-                  Dept.
+                  {t('department')}
                 </label>
                 <DepartmentFilter />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-medium uppercase tracking-wide text-gray-400">
-                  Tipo
+                  {t('type')}
                 </label>
                 <AbsenceTypeFilter />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-medium uppercase tracking-wide text-gray-400">
-                  Empleado
+                  {t('employee')}
                 </label>
                 <EmployeeFilter />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-medium uppercase tracking-wide text-gray-400">
-                  Fechas
+                  {t('dates')}
                 </label>
                 <DateRangeFilter />
               </div>

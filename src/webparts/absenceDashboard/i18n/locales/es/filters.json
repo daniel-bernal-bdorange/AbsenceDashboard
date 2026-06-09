@@ -8,5 +8,13 @@
   "clear": "Limpiar filtros",
   "apply": "Aplicar filtros",
   "activeFilters": "filtros activos",
-  "noActiveFilters": "Sin filtros activos"
+  "noActiveFilters": "Sin filtros activos",
+  "title": "Filtros",
+  "department": "Dept.",
+  "type": "Tipo",
+  "employee": "Empleado",
+  "dates": "Fechas",
+  "from": "Desde",
+  "to": "Hasta",
+  "searchEmployees": "Buscar empleado..."
 }

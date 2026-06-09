@@ -7,5 +7,10 @@
   "language": "Language",
   "spanish": "Spanish",
   "english": "English",
-  "loading": "Loading"
+  "loading": "Loading",
+  "processedFilesTitle": "Processed files",
+  "processedFilesHint": "Click the icon to pin it to the screen.",
+  "viewProcessedFiles": "View processed files",
+  "noRecordsFiltered": "No records to show with the current filters.",
+  "emptyTitle": "No data"
 }

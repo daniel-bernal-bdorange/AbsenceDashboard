@@ -153,16 +153,16 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
 
           <div className="mb-8">
             <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4 truncate">
-              Comparativa vs {employeeInfo.department === 'Unknown' ? tDashboard('unknown') : employeeInfo.department}
+              {tDashboard('comparisonVs')} {employeeInfo.department === 'Unknown' ? tDashboard('unknown') : employeeInfo.department}
             </h3>
             <div className="flex items-center gap-8 p-6 bg-gray-50 rounded-xl">
               <div className="flex-1">
-                <div className="text-sm text-gray-500 mb-1">Media departamento</div>
+                <div className="text-sm text-gray-500 mb-1">{tDashboard('departmentAverage')}</div>
                 <div className="text-2xl font-bold text-gray-900">
                   {departmentAverages.avgDaysPerEmployee.toFixed(1)} {tDashboard('days').toLowerCase()}
                 </div>
                 <div className="text-xs text-gray-400 mt-1">
-                  {departmentAverages.employeeCount} empleados
+                  {departmentAverages.employeeCount} {tDashboard('employees')}
                 </div>
               </div>
               <div className="text-center px-6">

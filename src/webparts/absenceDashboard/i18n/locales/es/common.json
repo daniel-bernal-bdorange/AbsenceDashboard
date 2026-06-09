@@ -7,5 +7,10 @@
   "language": "Idioma",
   "spanish": "Español",
   "english": "Inglés",
-  "loading": "Cargando"
+  "loading": "Cargando",
+  "processedFilesTitle": "Archivos procesados",
+  "processedFilesHint": "Pulsa el icono para fijarlo en pantalla.",
+  "viewProcessedFiles": "Ver archivos procesados",
+  "noRecordsFiltered": "No hay registros que mostrar con los filtros actuales.",
+  "emptyTitle": "Sin datos"
 }

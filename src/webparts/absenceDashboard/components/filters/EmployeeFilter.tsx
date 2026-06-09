@@ -1,7 +1,9 @@
 import { useState, useMemo } from 'react';
+import { useTranslation } from '../../i18n/useTranslation';
 import { useAppStore } from '../../store/useAppStore';
 
 export function EmployeeFilter() {
+  const { t } = useTranslation('filters');
   const { records, filters, setFilters } = useAppStore();
   const [search, setSearch] = useState('');
 
@@ -34,7 +36,7 @@ export function EmployeeFilter() {
     <div className="relative">
       <input
         className="w-full rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-700 placeholder-gray-400 focus:border-orangeBusiness focus:outline-none"
-        placeholder="Buscar empleado..."
+        placeholder={t('searchEmployees')}
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}

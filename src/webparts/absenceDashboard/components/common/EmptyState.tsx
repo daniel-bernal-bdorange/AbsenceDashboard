@@ -1,3 +1,5 @@
+import { useTranslation } from '../../i18n/useTranslation';
+
 interface EmptyStateProps {
   title: string;
   description?: string;
@@ -29,10 +31,11 @@ export function EmptyState({ title, description, icon = '📭', action }: EmptyS
 }
 
 export function NoDataState({ message }: { message?: string }) {
+  const { t: tCommon } = useTranslation('common');
   return (
     <EmptyState
-      title={message || 'Sin datos'}
-      description="No hay registros que mostrar con los filtros actuales."
+      title={message || tCommon('emptyTitle')}
+      description={tCommon('noRecordsFiltered')}
       icon="📊"
     />
   );
@@ -45,12 +48,13 @@ export function ErrorState({
   message: string;
   onRetry?: () => void;
 }) {
+  const { t: tErrors } = useTranslation('errors');
   return (
     <EmptyState
-      title="Error"
+      title={tErrors('errorTitle')}
       description={message}
       icon="⚠️"
-      action={onRetry ? { label: 'Reintentar', onClick: onRetry } : undefined}
+      action={onRetry ? { label: tErrors('retryButton'), onClick: onRetry } : undefined}
     />
   );
 }

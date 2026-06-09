@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 import { useTranslation } from '../../i18n/useTranslation';
+import orangeBusinessLogo from '../../assets/Orange_Business_RGB_Master_Logo_Black_Text.png';
 
 type HeaderProps = {
   appName: string;
@@ -24,9 +25,11 @@ export function Header({
     <header className="border-b border-gray-100 bg-white px-8 py-5">
       <div className="flex items-start justify-between gap-8">
         <div className="flex items-center gap-5">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center bg-orangeBusiness text-xl font-black text-white">
-            OB
-          </div>
+          <img
+            src={orangeBusinessLogo}
+            alt={appName}
+            className="h-12 w-auto shrink-0 object-contain"
+          />
           <div>
             <p className="text-xs uppercase tracking-widest text-orangeBusiness font-medium">
               {appName}

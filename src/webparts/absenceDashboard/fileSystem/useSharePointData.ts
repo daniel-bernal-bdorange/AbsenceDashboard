@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { SPHttpClient } from '@microsoft/sp-http';
 import * as XLSX from 'xlsx';
 
+import { useTranslation } from '../i18n/useTranslation';
 import { parseExcelFile, parseSpreadsheetXmlFile, parseRegulFile } from '../api/excelParser';
 import {
   loadDepartmentMap,
@@ -66,6 +67,7 @@ const enrichWithDepartment = (
   }));
 
 export function useSharePointData(): UseSharePointDataReturn {
+  const { t: tErrors } = useTranslation('errors');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -83,7 +85,7 @@ export function useSharePointData(): UseSharePointDataReturn {
     const rosterUrl = appEnv.rosterLibraryUrl;
 
     if (!ausenciasUrl) {
-      setError('Library URL not configured');
+      setError(tErrors('libUrlNotConfigured'));
       return;
     }
 
@@ -114,9 +116,8 @@ export function useSharePointData(): UseSharePointDataReturn {
                 added += 1;
               }
             });
-            processedFileNotes.push(
-              `Roster JSON: ${file.name} -> +${added} departamentos`,
-            );
+            processedFileNotes.push(file.name);
+            console.debug(`[Roster JSON] ${file.name} -> +${added} departments`);
             continue;
           }
 
@@ -144,16 +145,17 @@ export function useSharePointData(): UseSharePointDataReturn {
               }
             });
 
-            processedFileNotes.push(
-              `Roster Excel: ${file.name} -> +${deptAdded} dept, +${arrAdded} arrival`,
+            processedFileNotes.push(file.name);
+            console.debug(
+              `[Roster Excel] ${file.name} -> +${deptAdded} dept, +${arrAdded} arrival`,
             );
           } catch (err) {
             console.error('Error parsing roster file', file.name, ':', err);
           }
         }
 
-        processedFileNotes.push(
-          `Roster total: ${departmentMap.size} departamentos, ${arrivalDates.size} arrival dates`,
+        console.debug(
+          `[Roster total] ${departmentMap.size} departments, ${arrivalDates.size} arrival dates`,
         );
       }
 
@@ -177,14 +179,15 @@ export function useSharePointData(): UseSharePointDataReturn {
             rawRecords.push(...parseExcelFile(workbook, file.name));
           }
 
-          processedFileNotes.push(`Ausencias: ${file.name} -> parseExcelFile/parseSpreadsheetXmlFile y dedup por code|type|from|till`);
+          processedFileNotes.push(file.name);
+          console.debug(`[Absences] ${file.name} -> parseExcelFile/parseSpreadsheetXmlFile + dedup by code|type|from|till`);
         } catch (err) {
           console.error('Error parsing absence file', file.name, ':', err);
         }
       }
 
       if (rawRecords.length === 0) {
-        throw new Error('No se encontraron ficheros Excel válidos en Ausencias.');
+        throw new Error(tErrors('noValidAbsenceFiles'));
       }
 
       const dedupedRecords = deduplicateRecords(rawRecords);
@@ -206,7 +209,8 @@ export function useSharePointData(): UseSharePointDataReturn {
 
             const workbook = XLSX.read(buffer, { type: 'array', cellDates: true });
             regulRecords.push(...parseRegulFile(workbook, file.name));
-            processedFileNotes.push(`Regularizaciones: ${file.name} -> parseRegulFile; solo row types de ausencias conocidas`);
+            processedFileNotes.push(file.name);
+            console.debug(`[Regul] ${file.name} -> parseRegulFile; only known absence row types`);
           } catch (err) {
             console.error('Error parsing regul file', file.name, ':', err);
           }
@@ -225,12 +229,12 @@ export function useSharePointData(): UseSharePointDataReturn {
 
       setDataLoaded(true);
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Error desconocido';
+      const message = err instanceof Error ? err.message : tErrors('unknownError');
       setError(message);
     } finally {
       setIsLoading(false);
     }
-  }, [setRecords, setRegulRecords, setVacationStats]);
+  }, [setRecords, setRegulRecords, setVacationStats, setProcessedFileNotes, tErrors]);
 
   useEffect(() => {
     loadData().catch(() => { /* Error handled by state */ });

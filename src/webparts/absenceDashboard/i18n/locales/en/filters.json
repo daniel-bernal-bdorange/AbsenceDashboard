@@ -8,5 +8,13 @@
   "clear": "Clear filters",
   "apply": "Apply filters",
   "activeFilters": "active filters",
-  "noActiveFilters": "No active filters"
+  "noActiveFilters": "No active filters",
+  "title": "Filters",
+  "department": "Dept.",
+  "type": "Type",
+  "employee": "Employee",
+  "dates": "Dates",
+  "from": "From",
+  "to": "To",
+  "searchEmployees": "Search employee..."
 }

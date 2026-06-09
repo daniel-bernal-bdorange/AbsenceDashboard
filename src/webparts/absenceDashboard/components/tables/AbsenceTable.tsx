@@ -11,6 +11,7 @@ import { useSort } from '../../hooks/useSort';
 
 export function AbsenceTable() {
   const { t } = useTranslation('table');
+  const { t: tDashboard } = useTranslation('dashboard');
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
@@ -149,7 +150,7 @@ export function AbsenceTable() {
       </div>
 
       <div className="text-xs text-gray-500 text-right">
-        {sortedRecords.length} registros
+        {sortedRecords.length} {tDashboard('records')}
       </div>
     </div>
   );

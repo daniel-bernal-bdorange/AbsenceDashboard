@@ -6,5 +6,8 @@
   "previewFailed": "The preview could not be opened.",
   "errorTitle": "Something went wrong",
   "errorMessage": "Unexpected error",
-  "retryButton": "Retry"
+  "retryButton": "Retry",
+  "libUrlNotConfigured": "Library URL is not configured.",
+  "noValidAbsenceFiles": "No valid Excel files were found in Absences.",
+  "unknownError": "Unknown error"
 }

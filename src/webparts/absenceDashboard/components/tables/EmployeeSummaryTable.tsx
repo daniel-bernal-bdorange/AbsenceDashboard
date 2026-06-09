@@ -5,7 +5,6 @@ import { NoDataState } from '../common/EmptyState';
 import { LoadingSpinner } from '../common/LoadingSpinner';
 import { getDayValue } from '../../types';
 import { useSort } from '../../hooks/useSort';
-
 interface EmployeeSummary {
   username: string;
   department: string;
@@ -19,6 +18,8 @@ interface EmployeeSummary {
 
 export function EmployeeSummaryTable() {
   const { t } = useTranslation('table');
+  const { t: tCharts } = useTranslation('charts');
+  const { t: tDashboard } = useTranslation('dashboard');
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const setSelectedEmployeeDetail = useAppStore((s) => s.setSelectedEmployeeDetail);
   const isLoading = useAppStore((s) => s.dailyRecords.length === 0);
@@ -121,7 +122,7 @@ export function EmployeeSummaryTable() {
                 className="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
                 onClick={() => handleSort('department')}
               >
-                Dept.{getSortIndicator('department')}
+                {tDashboard('colDepartment')}{getSortIndicator('department')}
               </th>
               <th
                 className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
@@ -133,31 +134,31 @@ export function EmployeeSummaryTable() {
                 className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
                 onClick={() => handleSort('vacationDays')}
               >
-                Vacaciones{getSortIndicator('vacationDays')}
+                {tCharts('vacationSeries')}{getSortIndicator('vacationDays')}
               </th>
               <th
                 className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
                 onClick={() => handleSort('vacationPrevYearDays')}
               >
-                Vac. ant.{getSortIndicator('vacationPrevYearDays')}
+                {tCharts('vacationPrevYearSeries')}{getSortIndicator('vacationPrevYearDays')}
               </th>
               <th
                 className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
                 onClick={() => handleSort('sickDays')}
               >
-                Baja{getSortIndicator('sickDays')}
+                {tCharts('sickLeaveSeries')}{getSortIndicator('sickDays')}
               </th>
               <th
                 className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
                 onClick={() => handleSort('specialDays')}
               >
-                Especial{getSortIndicator('specialDays')}
+                {tCharts('specialSeries')}{getSortIndicator('specialDays')}
               </th>
               <th
                 className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
                 onClick={() => handleSort('absenceCount')}
               >
-                Ausencias{getSortIndicator('absenceCount')}
+                {tDashboard('absences')}{getSortIndicator('absenceCount')}
               </th>
             </tr>
           </thead>
@@ -202,7 +203,7 @@ export function EmployeeSummaryTable() {
       </div>
 
       <div className="text-xs text-gray-500 text-right">
-        {sortedSummaries.length} empleados
+        {sortedSummaries.length} {tDashboard('employees')}
       </div>
     </div>
   );

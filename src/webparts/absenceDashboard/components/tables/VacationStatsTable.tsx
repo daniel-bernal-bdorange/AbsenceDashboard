@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useMemo } from 'react';
+import { useTranslation } from '../../i18n/useTranslation';
 import { useAppStore } from '../../store/useAppStore';
 import { NoDataState } from '../common/EmptyState';
 import { useSort } from '../../hooks/useSort';
@@ -22,6 +23,7 @@ const currentYear = new Date().getFullYear();
 const prevYear = currentYear - 1;
 
 export function VacationStatsTable(): React.ReactElement {
+  const { t } = useTranslation('dashboard');
   const vacationStats = useAppStore((s) => s.vacationStats);
   const records = useAppStore((s) => s.records);
 
@@ -70,7 +72,7 @@ export function VacationStatsTable(): React.ReactElement {
   }, [rows, sortConfig]);
 
   if (rows.length === 0) {
-    return <NoDataState message="No hay datos de entitlement vacacional." />;
+    return <NoDataState message={t('vacationNoData')} />;
   }
 
   const thClass =
@@ -80,28 +82,28 @@ export function VacationStatsTable(): React.ReactElement {
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-sm font-semibold text-gray-700">
-        Vacaciones {currentYear} / {prevYear}
+        {t('vacationTitle', { currentYear, prevYear })}
       </h3>
       <div className="max-h-[420px] overflow-y-auto rounded-xl border border-gray-200 bg-white">
         <table className="w-full border-collapse">
           <thead className="sticky top-0 z-10 border-b border-gray-100 bg-gray-50/50">
             <tr>
               <th className={thClass} onClick={() => handleSort('employee')}>
-                Empleado{getSortIndicator('employee')}
+                {t('kpiEmployees')}{getSortIndicator('employee')}
               </th>
               <th className={thClass} onClick={() => handleSort('department')}>
-                Dept.{getSortIndicator('department')}
+                {t('colDepartment')}{getSortIndicator('department')}
               </th>
               <th className={thRightClass} onClick={() => handleSort('usedY')}>
-                Vacac. {currentYear}{getSortIndicator('usedY')}
+                {t('vacationUsedYear', { year: currentYear })}{getSortIndicator('usedY')}
               </th>
               <th className={thRightClass} onClick={() => handleSort('remainingY')}>
-                Rest. {currentYear}{getSortIndicator('remainingY')}
+                {t('vacationRemainingYear', { year: currentYear })}{getSortIndicator('remainingY')}
               </th>
               <th className={thRightClass} onClick={() => handleSort('remainingPrev')}>
-                Rest. {prevYear}{getSortIndicator('remainingPrev')}
+                {t('vacationRemainingYear', { year: prevYear })}{getSortIndicator('remainingPrev')}
               </th>
-              <th className={thClass}>Estado {prevYear}</th>
+              <th className={thClass}>{t('vacationStatusYear', { year: prevYear })}</th>
             </tr>
           </thead>
           <tbody>
@@ -119,15 +121,15 @@ export function VacationStatsTable(): React.ReactElement {
                 <td className="px-4 py-2.5">
                   {row.expiredPrev ? (
                     <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
-                      ⚠ {row.remainingPrev}d caducados
+                      ⚠ {row.remainingPrev}d {t('vacationExpired')}
                     </span>
                   ) : row.remainingPrev <= 0 ? (
                     <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
-                      ✓ Consumidos
+                      ✓ {t('vacationConsumed')}
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
-                      {row.remainingPrev}d pendientes
+                      {row.remainingPrev}d {t('vacationPending')}
                     </span>
                   )}
                 </td>

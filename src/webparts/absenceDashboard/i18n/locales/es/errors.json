@@ -6,5 +6,8 @@
   "previewFailed": "No se ha podido abrir la vista previa.",
   "errorTitle": "Algo salió mal",
   "errorMessage": "Error inesperado",
-  "retryButton": "Reintentar"
+  "retryButton": "Reintentar",
+  "libUrlNotConfigured": "La URL de la biblioteca no está configurada.",
+  "noValidAbsenceFiles": "No se encontraron ficheros Excel válidos en Ausencias.",
+  "unknownError": "Error desconocido"
 }
