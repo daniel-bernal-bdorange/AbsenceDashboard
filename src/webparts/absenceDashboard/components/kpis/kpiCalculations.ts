@@ -54,21 +54,25 @@ export function calcTotalAbsenceDays(
     .reduce((sum, r) => sum + getDayValue(r.isFullDay), 0);
 }
 
-export function calcEmployeesCurrentlyOut(records: AbsenceDayRecord[]): number {
+export function calcCurrentlyOutUsernames(records: AbsenceDayRecord[]): string[] {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const employeeIds = new Set(
-    records
-      .filter((r) => {
-        const date = new Date(r.date);
-        date.setHours(0, 0, 0, 0);
-        return r.status === AbsenceStatus.ACCEPTED && +date === +today;
-      })
-      .map((r) => r.employeeUsername),
+  return Array.from(
+    new Set(
+      records
+        .filter((r) => {
+          const date = new Date(r.date);
+          date.setHours(0, 0, 0, 0);
+          return r.status === AbsenceStatus.ACCEPTED && +date === +today;
+        })
+        .map((r) => r.employeeUsername),
+    ),
   );
+}
 
-  return employeeIds.size;
+export function calcEmployeesCurrentlyOut(records: AbsenceDayRecord[]): number {
+  return calcCurrentlyOutUsernames(records).length;
 }
 
 export function calcTopEmployee(records: AbsenceDayRecord[], year?: number): {

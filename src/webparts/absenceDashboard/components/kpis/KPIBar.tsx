@@ -1,36 +1,41 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { KPICard } from './KPICard';
 import {
   calcAbsenteeismRate,
+  calcCurrentlyOutUsernames,
   calcEmployeesCurrentlyOut,
   calcMostFrequentAbsenceType,
-  calcTopEmployee,
   calcTotalAbsenceDays,
 } from './kpiCalculations';
 import { useAppStore } from '../../store/useAppStore';
 import { useTranslation } from '../../i18n/useTranslation';
 
 export function KPIBar() {
-  const dailyRecords = useAppStore((s) => s.dailyRecords);
+  const dailyRecords = useAppStore((s) => s.getFilteredDayRecords());
+  const setFilters = useAppStore((s) => s.setFilters);
+  const filters = useAppStore((s) => s.filters);
   const { t: tDashboard } = useTranslation('dashboard');
+
+  const handleCurrentlyOutClick = useCallback(() => {
+    const usernames = calcCurrentlyOutUsernames(dailyRecords);
+    if (usernames.length === 0) return;
+    // Toggle: if already filtering by these exact employees, reset
+    const isSameFilter =
+      filters.employees.length === usernames.length &&
+      usernames.every((u) => filters.employees.includes(u));
+    setFilters({ employees: isSameFilter ? [] : usernames });
+  }, [dailyRecords, filters.employees, setFilters]);
 
   const kpis = useMemo(() => {
     const totalDays = calcTotalAbsenceDays(dailyRecords);
     const currentlyOut = calcEmployeesCurrentlyOut(dailyRecords);
-    const topEmployee = calcTopEmployee(dailyRecords);
     const mostFrequent = calcMostFrequentAbsenceType(dailyRecords);
     const absenteeismRate = calcAbsenteeismRate(dailyRecords);
-
-    const uniqueEmployees = new Set(
-      dailyRecords.map((r) => r.employeeUsername),
-    ).size;
 
     return {
       totalDays,
       currentlyOut,
-      uniqueEmployees,
-      topEmployee,
       mostFrequent,
       absenteeismRate: absenteeismRate.rate,
       absenteeismDelta: 0,
@@ -39,7 +44,7 @@ export function KPIBar() {
   }, [dailyRecords]);
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       <KPICard
         title={tDashboard('kpiTotalDays')}
         value={kpis.totalDays.toFixed(1)}
@@ -50,6 +55,7 @@ export function KPIBar() {
         title={tDashboard('kpiCurrentlyOut')}
         value={kpis.currentlyOut}
         subtitle={tDashboard('kpiCurrentlyOutSubtitle')}
+        onClick={handleCurrentlyOutClick}
       />
 
       <KPICard
@@ -64,16 +70,6 @@ export function KPIBar() {
             : undefined
         }
         subtitle={tDashboard('kpiAbsenteeismRateSubtitle')}
-      />
-
-      <KPICard
-        title={kpis.topEmployee ? tDashboard('kpiTopEmployee') : tDashboard('kpiEmployees')}
-        value={kpis.topEmployee ? kpis.topEmployee.username : kpis.uniqueEmployees}
-        subtitle={
-          kpis.topEmployee
-            ? `${kpis.topEmployee.days.toFixed(1)} ${tDashboard('days')}`
-            : tDashboard('kpiEmployeesSubtitle')
-        }
       />
     </div>
   );

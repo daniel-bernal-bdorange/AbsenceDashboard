@@ -9,9 +9,10 @@ interface KPICardProps {
     direction: 'up' | 'down' | 'neutral';
   };
   icon?: ReactNode;
+  onClick?: () => void;
 }
 
-export function KPICard({ title, value, subtitle, trend, icon: _icon }: KPICardProps) {
+export function KPICard({ title, value, subtitle, trend, icon: _icon, onClick }: KPICardProps) {
   const trendColors = {
     up: 'text-error',
     down: 'text-success',
@@ -25,7 +26,13 @@ export function KPICard({ title, value, subtitle, trend, icon: _icon }: KPICardP
   };
 
   return (
-    <div className="flex flex-col gap-1 py-6 border-t border-gray-200">
+    <div
+      className={`flex flex-col gap-1 py-6 border-t border-gray-200${onClick ? ' cursor-pointer hover:opacity-70 transition-opacity' : ''}`}
+      onClick={onClick}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onKeyDown={onClick ? (e) => e.key === 'Enter' && onClick() : undefined}
+    >
       <span className="text-xs uppercase tracking-widest text-gray-400">{title}</span>
       <div className="flex items-baseline gap-3">
         <span className="text-5xl font-bold text-gray-900 tabular-nums">{value}</span>
