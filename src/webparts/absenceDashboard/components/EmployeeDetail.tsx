@@ -16,6 +16,19 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
+  const vacationStats = useAppStore((s) => s.vacationStats);
+
+  const currentYear = new Date().getFullYear();
+
+  const employeeCode = useMemo(() => {
+    const match = records.find((r) => r.employeeUsername === username);
+    return match?.employeeCode ?? null;
+  }, [records, username]);
+
+  const vacationCurrentYear = useMemo(() => {
+    if (!employeeCode) return null;
+    return vacationStats[employeeCode.toLowerCase()] ?? null;
+  }, [vacationStats, employeeCode]);
 
   const employeeDayRecords = useMemo(() => {
     return dailyRecords.filter((dr) => {
@@ -184,6 +197,42 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
               </div>
             </div>
           </div>
+
+          {vacationCurrentYear && (
+            <div className="mb-8">
+              <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">
+                {tDashboard('vacationCardTitle', { year: currentYear })}
+              </h3>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="bg-gray-50 rounded-xl p-4 text-center">
+                  <div className="text-2xl font-bold" style={{ color: chartColors.vacation }}>
+                    {vacationCurrentYear.usedY}
+                  </div>
+                  <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 truncate">
+                    {tDashboard('vacationRequested')}
+                  </div>
+                </div>
+                <div className="bg-gray-50 rounded-xl p-4 text-center">
+                  <div className="text-2xl font-bold text-gray-900">
+                    {vacationCurrentYear.entitlementY}
+                  </div>
+                  <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 truncate">
+                    {tDashboard('vacationEntitlement')}
+                  </div>
+                </div>
+                <div className="bg-gray-50 rounded-xl p-4 text-center">
+                  <div
+                    className={`text-2xl font-bold ${vacationCurrentYear.remainingY < 0 ? 'text-red-600' : 'text-green-600'}`}
+                  >
+                    {vacationCurrentYear.remainingY}
+                  </div>
+                  <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 truncate">
+                    {tDashboard('vacationRemaining')}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="mb-8">
             <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">

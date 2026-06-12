@@ -75,6 +75,7 @@ export function useSharePointData(): UseSharePointDataReturn {
   const setRegulRecords = useAppStore((state) => state.setRegulRecords);
   const setVacationStats = useAppStore((state) => state.setVacationStats);
   const setProcessedFileNotes = useAppStore((state) => state.setProcessedFileNotes);
+  const setFileErrors = useAppStore((state) => state.setFileErrors);
 
   const loadData = useCallback(async () => {
     const client = getSpHttpClient();
@@ -94,6 +95,7 @@ export function useSharePointData(): UseSharePointDataReturn {
 
     try {
       const processedFileNotes: string[] = [];
+      const fileErrors: string[] = [];
 
       // --- Roster folder: procesa TODOS los ficheros y mergea por Code ---
       // Excel: extrae departamento + arrival date escaneando todas las hojas.
@@ -175,13 +177,15 @@ export function useSharePointData(): UseSharePointDataReturn {
             const text = new TextDecoder('utf-8').decode(buffer);
             rawRecords.push(...parseSpreadsheetXmlFile(text, file.name));
           } else {
-            const workbook = XLSX.read(buffer, { type: 'array' });
+            const workbook = XLSX.read(buffer, { type: 'array', cellDates: true });
             rawRecords.push(...parseExcelFile(workbook, file.name));
           }
 
           processedFileNotes.push(file.name);
           console.debug(`[Absences] ${file.name} -> parseExcelFile/parseSpreadsheetXmlFile + dedup by code|type|from|till`);
         } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          fileErrors.push(`${file.name}: ${msg}`);
           console.error('Error parsing absence file', file.name, ':', err);
         }
       }
@@ -212,6 +216,8 @@ export function useSharePointData(): UseSharePointDataReturn {
             processedFileNotes.push(file.name);
             console.debug(`[Regul] ${file.name} -> parseRegulFile; only known absence row types`);
           } catch (err) {
+            const msg = err instanceof Error ? err.message : String(err);
+            fileErrors.push(`${file.name}: ${msg}`);
             console.error('Error parsing regul file', file.name, ':', err);
           }
         }
@@ -219,6 +225,7 @@ export function useSharePointData(): UseSharePointDataReturn {
 
       setRegulRecords(regulRecords);
       setProcessedFileNotes(processedFileNotes);
+      setFileErrors(fileErrors);
 
       // --- Vacation stats ---
       const currentYear = new Date().getFullYear();
@@ -234,7 +241,7 @@ export function useSharePointData(): UseSharePointDataReturn {
     } finally {
       setIsLoading(false);
     }
-  }, [setRecords, setRegulRecords, setVacationStats, setProcessedFileNotes, tErrors]);
+  }, [setRecords, setRegulRecords, setVacationStats, setProcessedFileNotes, setFileErrors, tErrors]);
 
   useEffect(() => {
     loadData().catch(() => { /* Error handled by state */ });

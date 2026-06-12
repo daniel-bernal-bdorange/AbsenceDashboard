@@ -11,6 +11,7 @@
   "processedFilesTitle": "Processed files",
   "processedFilesHint": "Click the icon to pin it to the screen.",
   "viewProcessedFiles": "View processed files",
+  "fileErrorsTitle": "Files with errors",
   "noRecordsFiltered": "No records to show with the current filters.",
   "emptyTitle": "No data"
 }

@@ -11,6 +11,7 @@
   "processedFilesTitle": "Archivos procesados",
   "processedFilesHint": "Pulsa el icono para fijarlo en pantalla.",
   "viewProcessedFiles": "Ver archivos procesados",
+  "fileErrorsTitle": "Archivos con errores",
   "noRecordsFiltered": "No hay registros que mostrar con los filtros actuales.",
   "emptyTitle": "Sin datos"
 }

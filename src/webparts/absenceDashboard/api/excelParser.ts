@@ -109,14 +109,37 @@ const parseBoundaryDate = (value: unknown, fieldName: string, sourceFile: string
   return parsed;
 };
 
+// Maps variant/abbreviated absence type strings to a known AbsenceType.
+// Returns the original string unchanged if it already matches exactly.
+const normalizeAbsenceType = (text: string): string => {
+  if (absenceTypeValues.has(text)) return text;
+
+  const lower = text.toLowerCase();
+
+  if (lower.includes('vacacion') && lower.includes('anterior')) return AbsenceType.VACATION_PREV_YEAR;
+  if (lower.includes('vacacion')) return AbsenceType.VACATION;
+  if (lower.includes('maternidad') || lower.includes('paternidad')) return AbsenceType.MATERNITY_PATERNITY;
+  // 'Enfermedad/ operaciones', 'Baja por enfermedad', etc.
+  if (lower.includes('enfermedad') || lower.includes('operacion') || lower.includes('baja')) return AbsenceType.SICK_LEAVE;
+  // Specific special-leave subtypes (already exact, but keep as fallback)
+  if (lower.includes('fallecimiento')) return AbsenceType.SPECIAL_BEREAVEMENT;
+  if (lower.includes('matrimonio')) return AbsenceType.SPECIAL_MARRIAGE;
+  if (lower.includes('mudanza')) return AbsenceType.SPECIAL_MOVING;
+  // Generic: 'Permisos', 'Permiso sin sueldo', 'Excedencia', etc.
+  if (lower.includes('permiso') || lower.includes('excedencia')) return AbsenceType.SPECIAL_FAMILY_ILLNESS;
+
+  return text;
+};
+
 const parseAbsenceType = (value: unknown, sourceFile: string) => {
   const text = parseRequiredText(value, 'Type', sourceFile);
+  const normalized = normalizeAbsenceType(text);
 
-  if (!absenceTypeValues.has(text)) {
+  if (!absenceTypeValues.has(normalized)) {
     throw new Error(`Tipo de ausencia desconocido en ${sourceFile}: ${text}`);
   }
 
-  return text as AbsenceType;
+  return normalized as AbsenceType;
 };
 
 const normalizeStatusText = (raw: string): string => {
@@ -143,7 +166,8 @@ const parseAbsenceRows = (rows: EverwinAbsenceRow[], sourceFile: string): Absenc
   return rows
     .filter((row) => {
       const code = String(row.Code ?? '').toLowerCase();
-      return !code.startsWith('total') && !code.includes('suma') && code.trim() !== '';
+      const type = String(row.Type ?? '').toLowerCase();
+      return !code.startsWith('total') && !code.includes('suma') && code.trim() !== '' && type !== 'total';
     })
     .map((row) => {
     const type = parseAbsenceType(row.Type, sourceFile);

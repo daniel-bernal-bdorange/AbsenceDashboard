@@ -48,5 +48,9 @@
   "vacationExpired": "caducados",
   "vacationConsumed": "Consumidos",
   "vacationPending": "pendientes",
+  "vacationCardTitle": "Vacaciones {{year}}",
+  "vacationRequested": "Solicitadas",
+  "vacationEntitlement": "Total",
+  "vacationRemaining": "Restantes",
   "colDepartment": "Dept."
 }

@@ -26,6 +26,7 @@ export function VacationStatsTable(): React.ReactElement {
   const { t } = useTranslation('dashboard');
   const vacationStats = useAppStore((s) => s.vacationStats);
   const records = useAppStore((s) => s.records);
+  const setSelectedEmployeeDetail = useAppStore((s) => s.setSelectedEmployeeDetail);
 
   // Build code → { username, department } map from records (same source as other tables)
   const infoByCode = useMemo(() => {
@@ -108,7 +109,11 @@ export function VacationStatsTable(): React.ReactElement {
           </thead>
           <tbody>
             {sorted.map((row) => (
-              <tr key={row.code} className="border-b border-gray-50 hover:bg-orange-50/40 transition-colors">
+              <tr
+                key={row.code}
+                className="border-b border-gray-50 hover:bg-orange-50/40 transition-colors cursor-pointer"
+                onClick={() => setSelectedEmployeeDetail(row.username)}
+              >
                 <td className="px-4 py-2.5 text-sm font-medium text-gray-800">{row.username}</td>
                 <td className="px-4 py-2.5 text-sm text-gray-500">{row.department}</td>
                 <td className="px-4 py-2.5 text-right text-sm text-gray-700">

@@ -6,9 +6,10 @@ import { useAppStore } from '../../store/useAppStore';
 export function ProcessedFilesTooltip(): ReactElement | null {
   const { t } = useTranslation('common');
   const processedFileNotes = useAppStore((state) => state.processedFileNotes);
+  const fileErrors = useAppStore((state) => state.fileErrors);
   const [isOpen, setIsOpen] = useState(false);
 
-  if (processedFileNotes.length === 0) {
+  if (processedFileNotes.length === 0 && fileErrors.length === 0) {
     return null;
   }
 
@@ -20,9 +21,13 @@ export function ProcessedFilesTooltip(): ReactElement | null {
           aria-label={t('viewProcessedFiles')}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((value) => !value)}
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white/95 text-xs font-semibold text-gray-500 shadow-sm backdrop-blur transition hover:border-orangeBusiness/40 hover:text-orangeBusiness focus:outline-none focus:ring-2 focus:ring-orangeBusiness/30"
+          className={`flex h-9 w-9 items-center justify-center rounded-full border bg-white/95 text-xs font-semibold shadow-sm backdrop-blur transition hover:border-orangeBusiness/40 hover:text-orangeBusiness focus:outline-none focus:ring-2 focus:ring-orangeBusiness/30 ${
+            fileErrors.length > 0
+              ? 'border-red-300 text-red-500'
+              : 'border-gray-200 text-gray-500'
+          }`}
         >
-          i
+          {fileErrors.length > 0 ? '!' : 'i'}
         </button>
 
         <div
@@ -30,16 +35,35 @@ export function ProcessedFilesTooltip(): ReactElement | null {
             isOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-1 opacity-0 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100'
           }`}
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-400">
-            {t('processedFilesTitle')}
-          </p>
-          <ul className="mt-3 space-y-2 text-xs leading-5 text-gray-600">
-            {processedFileNotes.map((note) => (
-              <li key={note} className="rounded-lg bg-gray-50 px-3 py-2">
-                {note}
-              </li>
-            ))}
-          </ul>
+          {fileErrors.length > 0 && (
+            <>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-red-500">
+                {t('fileErrorsTitle')}
+              </p>
+              <ul className="mt-2 space-y-2 text-xs leading-5 text-gray-600">
+                {fileErrors.map((note) => (
+                  <li key={note} className="rounded-lg bg-red-50 px-3 py-2 text-red-700">
+                    {note}
+                  </li>
+                ))}
+              </ul>
+              {processedFileNotes.length > 0 && <hr className="my-3 border-gray-200" />}
+            </>
+          )}
+          {processedFileNotes.length > 0 && (
+            <>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-400">
+                {t('processedFilesTitle')}
+              </p>
+              <ul className="mt-3 space-y-2 text-xs leading-5 text-gray-600">
+                {processedFileNotes.map((note) => (
+                  <li key={note} className="rounded-lg bg-gray-50 px-3 py-2">
+                    {note}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
           <p className="mt-3 text-[11px] text-gray-400">
             {t('processedFilesHint')}
           </p>
