@@ -20,7 +20,7 @@ export async function initI18n(): Promise<void> {
       defaultNS: defaultNamespace,
       ns: namespaces,
       detection: {
-        order: ['localStorage', 'navigator'],
+        order: ['localStorage'],
         caches: ['localStorage'],
         lookupLocalStorage: 'ob-dashboard-lang',
       },

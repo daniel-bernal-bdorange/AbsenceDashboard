@@ -124,46 +124,42 @@ export function OverviewChart() {
       const fromDate = new Date(chartYear, month, 1);
       const toDate = new Date(chartYear, month + 1, 0);
       
-      if (filters.selectedMonth === month) {
-        setFilters({ selectedMonth: null, dateRange: { from: null, to: null } });
+      const isMonthSelected = filters.selectedMonths.length === 1 && filters.selectedMonths[0] === month;
+      if (isMonthSelected) {
+        setFilters({ selectedMonths: [0,1,2,3,4,5,6,7,8,9,10,11] });
       } else {
-        setFilters({ 
-          selectedMonth: month,
-          dateRange: { from: fromDate, to: toDate }
-        });
+        setFilters({ selectedMonths: [month], selectedYears: [chartYear] });
       }
       return;
     }
     
     if (p.seriesIndex !== undefined && p.dataIndex !== undefined) {
       const month = p.dataIndex;
-      const fromDate = new Date(chartYear, month, 1);
-      const toDate = new Date(chartYear, month + 1, 0);
-      
-      if (filters.selectedMonth === month && filters.categories.length === 1 && category && filters.categories.includes(category)) {
-        setFilters({ selectedMonth: null, dateRange: { from: null, to: null }, categories: [] });
+      const isMonthAndCatSelected =
+        filters.selectedMonths.length === 1 &&
+        filters.selectedMonths[0] === month &&
+        filters.categories.length === 1 &&
+        category !== null &&
+        filters.categories.includes(category);
+      if (isMonthAndCatSelected) {
+        setFilters({ selectedMonths: [0,1,2,3,4,5,6,7,8,9,10,11], categories: [] });
       } else {
-        setFilters({ 
-          selectedMonth: month,
-          dateRange: { from: fromDate, to: toDate },
-          categories: category ? [category] : []
+        setFilters({
+          selectedMonths: [month],
+          selectedYears: [chartYear],
+          categories: category ? [category] : [],
         });
       }
     } else if (p.dataIndex !== undefined && p.seriesIndex === undefined) {
       const month = p.dataIndex;
-      const fromDate = new Date(chartYear, month, 1);
-      const toDate = new Date(chartYear, month + 1, 0);
-      
-      if (filters.selectedMonth === month) {
-        setFilters({ selectedMonth: null, dateRange: { from: null, to: null } });
+      const isMonthSelected = filters.selectedMonths.length === 1 && filters.selectedMonths[0] === month;
+      if (isMonthSelected) {
+        setFilters({ selectedMonths: [0,1,2,3,4,5,6,7,8,9,10,11] });
       } else {
-        setFilters({ 
-          selectedMonth: month,
-          dateRange: { from: fromDate, to: toDate }
-        });
+        setFilters({ selectedMonths: [month], selectedYears: [chartYear] });
       }
     }
-  }, [filters.selectedMonth, filters.categories, setFilters, chartYear, t]);
+  }, [filters.selectedMonths, filters.categories, setFilters, chartYear, t]);
 
   const handleLegendSelect = useCallback((params: unknown) => {
     const p = params as { selected: Record<string, boolean> };

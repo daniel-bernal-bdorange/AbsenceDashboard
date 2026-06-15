@@ -46,5 +46,7 @@ function makeDayRecord(
     status: record.status,
     validationStatus: record.validationStatus,
     sourceFile: record.sourceFile,
+    regularized: record.regularized,
+    regularizedDelta: record.regularizedDelta,
   };
 }

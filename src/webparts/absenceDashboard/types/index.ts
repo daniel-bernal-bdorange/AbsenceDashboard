@@ -71,6 +71,8 @@ export interface AbsenceRecord {
   status: AbsenceStatus;
   validationStatus: string;
   sourceFile: string;
+  regularized?: boolean;
+  regularizedDelta?: number;
 }
 
 export interface AbsenceDayRecord {
@@ -86,6 +88,8 @@ export interface AbsenceDayRecord {
   status: AbsenceStatus;
   validationStatus: string;
   sourceFile: string;
+  regularized?: boolean;
+  regularizedDelta?: number;
 }
 
 export const DAY_RECORD_FULL = 1;

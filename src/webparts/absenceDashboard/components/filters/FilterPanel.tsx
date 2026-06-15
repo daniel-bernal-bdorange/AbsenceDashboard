@@ -17,13 +17,13 @@ export function FilterPanel() {
   const panelRef = useRef<HTMLDivElement>(null);
   const fixedRectRef = useRef<DOMRect | null>(null);
 
+  const currentYear = new Date().getFullYear();
   const activeCount =
     filters.departments.length +
     filters.employees.length +
     filters.categories.length +
-    (filters.dateRange.from ? 1 : 0) +
-    (filters.dateRange.to ? 1 : 0) +
-    (filters.selectedMonth !== null ? 1 : 0);
+    (filters.selectedYears.length !== 1 || filters.selectedYears[0] !== currentYear ? 1 : 0) +
+    (filters.selectedMonths.length !== 12 ? 1 : 0);
 
   useEffect(() => {
     const sentinel = sentinelRef.current;

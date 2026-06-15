@@ -11,7 +11,7 @@ interface EmployeeDetailProps {
 }
 
 export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
-  const { t: tDashboard } = useTranslation('dashboard');
+  const { t: tDashboard, i18n } = useTranslation('dashboard');
   const { t: tCharts } = useTranslation('charts');
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const records = useAppStore((s) => s.records);
@@ -34,19 +34,33 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
     return dailyRecords.filter((dr) => {
       if (dr.employeeUsername !== username) return false;
       if (filters.categories.length && !filters.categories.includes(dr.category)) return false;
-      if (filters.dateRange.from) {
-        const from = new Date(filters.dateRange.from);
-        from.setHours(0, 0, 0, 0);
-        if (dr.date < from) return false;
-      }
-      if (filters.dateRange.to) {
-        const to = new Date(filters.dateRange.to);
-        to.setHours(0, 0, 0, 0);
-        if (dr.date > to) return false;
-      }
+      if (filters.selectedYears.length > 0 && !filters.selectedYears.includes(dr.date.getFullYear())) return false;
+      if (filters.selectedMonths.length > 0 && !filters.selectedMonths.includes(dr.date.getMonth())) return false;
       return true;
     });
   }, [dailyRecords, username, filters]);
+
+  const hasRegularizedRecords = useMemo(
+    () => employeeDayRecords.some((record) => record.regularized),
+    [employeeDayRecords],
+  );
+
+  const totalRegularizedDelta = useMemo(() => {
+    return records
+      .filter((record) => record.employeeUsername === username && record.regularized)
+      .reduce((total, record) => total + (record.regularizedDelta ?? 0), 0);
+  }, [records, username]);
+
+  const regularizedLabel = useMemo(() => {
+    const language = i18n.resolvedLanguage ?? i18n.language;
+    const deltaText = totalRegularizedDelta > 0 ? `+${totalRegularizedDelta}` : `${totalRegularizedDelta}`;
+
+    if (language?.startsWith('es')) {
+      return `Regularizado (${deltaText} días)`;
+    }
+
+    return `Regularized (${deltaText} days)`;
+  }, [i18n.language, i18n.resolvedLanguage, totalRegularizedDelta]);
 
   const employeeInfo = useMemo(() => {
     const acceptedDayRecords = employeeDayRecords.filter(r => r.status === 'Accepted');
@@ -131,6 +145,13 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
             <p className="text-sm text-gray-500 mt-1">
               {employeeInfo.department === 'Unknown' ? tDashboard('unknown') : employeeInfo.department}
             </p>
+            {hasRegularizedRecords && (
+              <div className="mt-2">
+                <span className="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-700">
+                  {regularizedLabel}
+                </span>
+              </div>
+            )}
           </div>
           <button
             onClick={onClose}

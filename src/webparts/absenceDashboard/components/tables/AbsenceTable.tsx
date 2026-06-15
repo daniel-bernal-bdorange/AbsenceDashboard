@@ -11,11 +11,22 @@ import { useSort } from '../../hooks/useSort';
 
 export function AbsenceTable() {
   const { t } = useTranslation('table');
-  const { t: tDashboard } = useTranslation('dashboard');
+  const { t: tDashboard, i18n } = useTranslation('dashboard');
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
   const isLoading = useAppStore((s) => s.records.length === 0);
+
+  const regularizedLabel = (delta: number): string => {
+    const language = i18n.resolvedLanguage ?? i18n.language;
+    const deltaText = delta > 0 ? `+${delta}` : `${delta}`;
+
+    if (language?.startsWith('es')) {
+      return `Regularizado (${deltaText} días)`;
+    }
+
+    return `Regularized (${deltaText} days)`;
+  };
 
   const filteredRecords = useMemo(() => {
     const matchingIds = new Set(
@@ -117,34 +128,46 @@ export function AbsenceTable() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
-            {sortedRecords.map((record) => (
-              <tr
-                key={record.id}
-                className="transition-colors hover:bg-gray-50/50"
-              >
-                <td className="px-4 py-3 text-sm text-gray-900">
-                  <div className="font-medium">{record.employeeUsername}</div>
-                  <div className="text-xs text-gray-400">
-                    {record.department ?? 'Unknown'}
-                  </div>
-                </td>
-                <td className="px-4 py-3 text-sm text-gray-700">
-                  <Badge label={record.type} variant="type" />
-                </td>
-                <td className="px-4 py-3 text-sm text-gray-700">
-                  {formatDate(record.from)}
-                </td>
-                <td className="px-4 py-3 text-sm text-gray-700">
-                  {formatDate(record.till)}
-                </td>
-                <td className="px-4 py-3 text-right text-sm font-medium text-gray-900">
-                  {record.numberOfDays}
-                </td>
-                <td className="px-4 py-3 text-sm">
-                  <Badge label={record.status} variant="status" />
-                </td>
-              </tr>
-            ))}
+            {sortedRecords.map((record) => {
+              const regularizedDelta = record.regularizedDelta ?? 0;
+
+              return (
+                <tr
+                  key={record.id}
+                  className={`transition-colors hover:bg-gray-50/50 ${record.regularized ? 'bg-amber-50/40' : ''}`}
+                >
+                  <td className="px-4 py-3 text-sm text-gray-900">
+                    <div className="flex items-center gap-2 font-medium">
+                      <span>{record.employeeUsername}</span>
+                      {record.regularized && (
+                        <Badge
+                          label={regularizedLabel(regularizedDelta)}
+                          variant="regularized"
+                        />
+                      )}
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      {record.department ?? 'Unknown'}
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-700">
+                    <Badge label={record.type} variant="type" />
+                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-700">
+                    {formatDate(record.from)}
+                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-700">
+                    {formatDate(record.till)}
+                  </td>
+                  <td className="px-4 py-3 text-right text-sm font-medium text-gray-900">
+                    {record.numberOfDays}
+                  </td>
+                  <td className="px-4 py-3 text-sm">
+                    <Badge label={record.status} variant="status" />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

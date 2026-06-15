@@ -34,13 +34,13 @@ export function TrendLine() {
 
     if ((p.componentType === 'xAxis' || p.componentType === 'axisLabel') && p.dataIndex !== undefined) {
       const month = p.dataIndex;
-
-      if (filters.selectedMonth === month) {
-        setFilters({ selectedMonth: null, dateRange: { from: null, to: null } });
+      const isMonthSelected = filters.selectedMonths.length === 1 && filters.selectedMonths[0] === month;
+      if (isMonthSelected) {
+        setFilters({ selectedMonths: [0,1,2,3,4,5,6,7,8,9,10,11] });
       }
       return;
     }
-  }, [filters.selectedMonth, setFilters]);
+  }, [filters.selectedMonths, setFilters]);
 
   const onEvents = {
   click: handleChartClick
@@ -51,17 +51,8 @@ export function TrendLine() {
       if (filters.departments.length && !filters.departments.includes(dr.department ?? 'Unknown')) return false;
       if (filters.employees.length && !filters.employees.includes(dr.employeeUsername)) return false;
       if (filters.categories.length && !filters.categories.includes(dr.category)) return false;
-      if (filters.dateRange.from) {
-        const from = new Date(filters.dateRange.from);
-        from.setHours(0, 0, 0, 0);
-        if (dr.date < from) return false;
-      }
-      if (filters.dateRange.to) {
-        const to = new Date(filters.dateRange.to);
-        to.setHours(0, 0, 0, 0);
-        if (dr.date > to) return false;
-      }
-      if (filters.selectedMonth !== null && dr.date.getMonth() !== filters.selectedMonth) return false;
+      if (filters.selectedYears.length > 0 && !filters.selectedYears.includes(dr.date.getFullYear())) return false;
+      if (filters.selectedMonths.length > 0 && !filters.selectedMonths.includes(dr.date.getMonth())) return false;
       return true;
     });
   }, [dailyRecords, filters]);

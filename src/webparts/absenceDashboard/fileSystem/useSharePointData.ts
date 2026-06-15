@@ -66,6 +66,61 @@ const enrichWithDepartment = (
     department: departmentMap.get(record.employeeUsername.toLowerCase()) ?? 'Unknown',
   }));
 
+const normalizeDay = (date: Date): number => {
+  const normalized = new Date(date);
+  normalized.setHours(0, 0, 0, 0);
+  return normalized.getTime();
+};
+
+const applyRegularizations = (records: AbsenceRecord[], regulRecords: RegulRecord[]): AbsenceRecord[] => {
+  const adjustedRecords = records.map((record) => ({
+    ...record,
+    from: new Date(record.from),
+    till: new Date(record.till),
+    requestDate: new Date(record.requestDate),
+    regularized: record.regularized ?? false,
+    regularizedDelta: record.regularizedDelta ?? 0,
+  }));
+
+  const regularizations = regulRecords
+    .filter((regul) => regul.expenditureQuantity !== 0)
+    .slice()
+    .sort((a, b) => normalizeDay(a.dateToRegularise) - normalizeDay(b.dateToRegularise) || a.date.getTime() - b.date.getTime());
+
+  for (const regul of regularizations) {
+    const employeeCode = regul.employeeCode.toLowerCase();
+    const targetDay = normalizeDay(regul.dateToRegularise);
+
+    const candidates = adjustedRecords
+      .filter(
+        (record) =>
+          record.employeeCode.toLowerCase() === employeeCode &&
+          record.type === regul.rowType &&
+          record.status === 'Accepted',
+      )
+      .sort((a, b) => normalizeDay(a.from) - normalizeDay(b.from) || normalizeDay(a.till) - normalizeDay(b.till));
+
+    const targetRecord =
+      candidates.find((record) => normalizeDay(record.from) >= targetDay) ??
+      candidates.find((record) => normalizeDay(record.from) < targetDay);
+
+    if (!targetRecord) {
+      continue;
+    }
+
+    const currentFrom = normalizeDay(targetRecord.from);
+    if (targetDay < currentFrom) {
+      targetRecord.from = new Date(targetDay);
+    }
+
+    targetRecord.numberOfDays = Math.max(targetRecord.numberOfDays + regul.expenditureQuantity, 0);
+    targetRecord.regularized = true;
+    targetRecord.regularizedDelta += regul.expenditureQuantity;
+  }
+
+  return adjustedRecords;
+};
+
 export function useSharePointData(): UseSharePointDataReturn {
   const { t: tErrors } = useTranslation('errors');
   const [isLoading, setIsLoading] = useState(false);
@@ -196,7 +251,6 @@ export function useSharePointData(): UseSharePointDataReturn {
 
       const dedupedRecords = deduplicateRecords(rawRecords);
       const enriched = enrichWithDepartment(dedupedRecords, departmentMap);
-      setRecords(enriched, ausenciasUrl);
 
       // --- Regularizaciones ---
       const regulRecords: RegulRecord[] = [];
@@ -224,12 +278,14 @@ export function useSharePointData(): UseSharePointDataReturn {
       }
 
       setRegulRecords(regulRecords);
+      const adjusted = applyRegularizations(enriched, regulRecords);
+      setRecords(adjusted, ausenciasUrl);
       setProcessedFileNotes(processedFileNotes);
       setFileErrors(fileErrors);
 
       // --- Vacation stats ---
       const currentYear = new Date().getFullYear();
-      const statsMap = computeVacationStats(enriched, arrivalDates, currentYear);
+      const statsMap = computeVacationStats(adjusted, arrivalDates, currentYear);
       const statsRecord: Record<string, import('../types').VacationStats> = {};
       statsMap.forEach((v, k) => { statsRecord[k] = v; });
       setVacationStats(statsRecord);

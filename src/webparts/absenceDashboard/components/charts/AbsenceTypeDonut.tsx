@@ -27,16 +27,8 @@ export function AbsenceTypeDonut() {
       if (filters.departments.length && !filters.departments.includes(dr.department ?? 'Unknown')) return false;
       if (filters.employees.length && !filters.employees.includes(dr.employeeUsername)) return false;
       if (filters.categories.length && !filters.categories.includes(dr.category)) return false;
-      if (filters.dateRange.from) {
-        const from = new Date(filters.dateRange.from);
-        from.setHours(0, 0, 0, 0);
-        if (dr.date < from) return false;
-      }
-      if (filters.dateRange.to) {
-        const to = new Date(filters.dateRange.to);
-        to.setHours(0, 0, 0, 0);
-        if (dr.date > to) return false;
-      }
+      if (filters.selectedYears.length > 0 && !filters.selectedYears.includes(dr.date.getFullYear())) return false;
+      if (filters.selectedMonths.length > 0 && !filters.selectedMonths.includes(dr.date.getMonth())) return false;
       return true;
     });
   }, [dailyRecords, filters]);

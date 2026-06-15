@@ -52,5 +52,12 @@
   "vacationRequested": "Solicitadas",
   "vacationEntitlement": "Total",
   "vacationRemaining": "Restantes",
+  "regularizedRecord": "Regularizado ({{delta}} días)",
+  "regularizationsTitle": "Regularizaciones",
+  "regularizationsDate": "Fecha",
+  "regularizationsType": "Tipo",
+  "regularizationsConcept": "Concepto",
+  "regularizationsQuantity": "Cantidad",
+  "regularizationsStatus": "Estado",
   "colDepartment": "Dept."
 }

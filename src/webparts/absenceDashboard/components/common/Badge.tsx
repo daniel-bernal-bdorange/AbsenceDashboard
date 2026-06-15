@@ -1,6 +1,6 @@
 import { getAbsenceColor, getAbsenceBgColor, getStatusColor } from '../../utils/colorMap';
 
-type BadgeVariant = 'type' | 'status';
+type BadgeVariant = 'type' | 'status' | 'regularized';
 
 interface BadgeProps {
   label: string;
@@ -15,6 +15,9 @@ export function Badge({ label, variant = 'type', className = '' }: BadgeProps) {
   if (variant === 'type') {
     bg = getAbsenceBgColor(label);
     fg = getAbsenceColor(label);
+  } else if (variant === 'regularized') {
+    bg = '#FFF4E5';
+    fg = '#9A5B00';
   } else {
     const statusColors = getStatusColor(label);
     bg = statusColors.bg;

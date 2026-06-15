@@ -1,5 +1,9 @@
 {
   "year": "Año",
+  "yearLabel": "Año",
+  "monthLabel": "Meses",
+  "monthAll": "Todos",
+  "monthNone": "Ninguno",
   "language": "Idioma",
   "scope": "Alcance",
   "allDepartments": "Todos los departamentos",
