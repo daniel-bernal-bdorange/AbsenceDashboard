@@ -5,6 +5,7 @@ import { DepartmentFilter } from './DepartmentFilter';
 import { AbsenceTypeFilter } from './AbsenceTypeFilter';
 import { EmployeeFilter } from './EmployeeFilter';
 import { DateRangeFilter } from './DateRangeFilter';
+import { StatusFilter } from './StatusFilter';
 
 export function FilterPanel() {
   const { t } = useTranslation('filters');
@@ -22,6 +23,7 @@ export function FilterPanel() {
     filters.departments.length +
     filters.employees.length +
     filters.categories.length +
+    filters.statuses.length +
     (filters.selectedYears.length !== 1 || filters.selectedYears[0] !== currentYear ? 1 : 0) +
     (filters.selectedMonths.length !== 12 ? 1 : 0);
 
@@ -126,7 +128,7 @@ export function FilterPanel() {
           }}
         >
           <div className="px-5 py-4">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-5">
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-6 gap-y-5">
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-medium uppercase tracking-wide text-gray-400">
                   {t('department')}
@@ -150,6 +152,12 @@ export function FilterPanel() {
                   {t('dates')}
                 </label>
                 <DateRangeFilter />
+              </div>
+              <div className="flex flex-col gap-2 col-span-2 lg:col-span-3 xl:col-span-1">
+                <label className="text-xs font-medium uppercase tracking-wide text-gray-400">
+                  {t('status')}
+                </label>
+                <StatusFilter />
               </div>
             </div>
           </div>

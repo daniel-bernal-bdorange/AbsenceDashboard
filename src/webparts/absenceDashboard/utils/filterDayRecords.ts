@@ -17,6 +17,7 @@ export function filterDayRecords(
     if (filters.departments.length && !filters.departments.includes(dr.department ?? 'Unknown')) return false;
     if (filters.employees.length && !filters.employees.includes(dr.employeeUsername)) return false;
     if (filters.categories.length && !filters.categories.includes(dr.category)) return false;
+    if (filters.statuses.length && !filters.statuses.includes(dr.status)) return false;
     return true;
   });
 }

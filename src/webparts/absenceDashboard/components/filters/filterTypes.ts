@@ -2,12 +2,16 @@ export type AbsenceCategory = 'Vacation' | 'VacationPreviousYear' | 'SickLeave' 
 
 export type Department = 'Prod' | 'BackOffice' | 'Unknown';
 
+import { AbsenceStatus } from '../../types';
+export { AbsenceStatus };
+
 export interface AbsenceFilters {
   departments: Department[];
   employees: string[];
   selectedYears: number[];
   selectedMonths: number[];
   categories: AbsenceCategory[];
+  statuses: AbsenceStatus[];
 }
 
 const ALL_MONTHS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
@@ -20,4 +24,5 @@ export const defaultFilters: AbsenceFilters = {
   selectedYears: [new Date().getFullYear()],
   selectedMonths: ALL_MONTHS,
   categories: [],
+  statuses: [],
 };

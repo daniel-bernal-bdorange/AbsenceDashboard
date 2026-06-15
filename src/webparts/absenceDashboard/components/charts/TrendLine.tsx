@@ -11,7 +11,6 @@ import { getDayValue } from '../../types';
 const buildYearData = (records: AbsenceDayRecord[], year: number): number[] => {
   const data = Array(12).fill(0);
   for (const record of records) {
-    if (record.status !== 'Accepted') continue;
     if (record.date.getFullYear() !== year) continue;
     data[record.date.getMonth()] += getDayValue(record.isFullDay);
   }
@@ -57,15 +56,16 @@ export function TrendLine() {
   // Month index of the current month (0-based). Months 0..currentMonth-1 have real data.
   const currentMonthIndex = new Date().getMonth();
 
-  // Filter only by department, employee and category — year/month are handled internally.
+  // Filter by dept/employee/category. Status: use selection when active, otherwise default to Accepted only.
   const baseRecords = useMemo(() => {
     return dailyRecords.filter((dr) => {
       if (filters.departments.length && !filters.departments.includes(dr.department ?? 'Unknown')) return false;
       if (filters.employees.length && !filters.employees.includes(dr.employeeUsername)) return false;
       if (filters.categories.length && !filters.categories.includes(dr.category)) return false;
+      if (filters.statuses.length ? !filters.statuses.includes(dr.status) : dr.status !== 'Accepted') return false;
       return true;
     });
-  }, [dailyRecords, filters.departments, filters.employees, filters.categories]);
+  }, [dailyRecords, filters.departments, filters.employees, filters.categories, filters.statuses]);
 
   const currentYearData = useMemo(() => buildYearData(baseRecords, currentYear), [baseRecords, currentYear]);
   const previousYearData = useMemo(() => buildYearData(baseRecords, previousYear), [baseRecords, previousYear]);

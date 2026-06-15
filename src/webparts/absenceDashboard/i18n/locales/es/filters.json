@@ -20,5 +20,13 @@
   "dates": "Fechas",
   "from": "Desde",
   "to": "Hasta",
-  "searchEmployees": "Buscar empleado..."
+  "searchEmployees": "Buscar empleado...",
+  "status": "Estado",
+  "statusAccepted": "Aceptado",
+  "statusRefused": "Rechazado",
+  "statusCanceled": "Cancelado",
+  "statusCancellation": "Cancelaci\u00f3n",
+  "statusRunning": "En curso",
+  "statusEmployeeValidation": "Validaci\u00f3n empleado",
+  "statusHrValidation": "Validaci\u00f3n RRHH"
 }

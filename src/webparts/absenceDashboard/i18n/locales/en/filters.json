@@ -20,5 +20,13 @@
   "dates": "Dates",
   "from": "From",
   "to": "To",
-  "searchEmployees": "Search employee..."
+  "searchEmployees": "Search employee...",
+  "status": "Status",
+  "statusAccepted": "Accepted",
+  "statusRefused": "Refused",
+  "statusCanceled": "Canceled",
+  "statusCancellation": "Cancellation",
+  "statusRunning": "Running",
+  "statusEmployeeValidation": "Employee validation",
+  "statusHrValidation": "HR validation"
 }

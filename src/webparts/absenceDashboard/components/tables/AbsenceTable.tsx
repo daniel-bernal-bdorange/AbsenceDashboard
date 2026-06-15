@@ -12,6 +12,7 @@ import { useSort } from '../../hooks/useSort';
 export function AbsenceTable() {
   const { t } = useTranslation('table');
   const { t: tDashboard, i18n } = useTranslation('dashboard');
+  const { t: tFilters } = useTranslation('filters');
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
@@ -26,6 +27,19 @@ export function AbsenceTable() {
     }
 
     return `Regularized (${deltaText} days)`;
+  };
+
+  const statusLabel = (status: string): string => {
+    const map: Record<string, string> = {
+      Accepted: tFilters('statusAccepted'),
+      Refused: tFilters('statusRefused'),
+      Canceled: tFilters('statusCanceled'),
+      Cancellation: tFilters('statusCancellation'),
+      Running: tFilters('statusRunning'),
+      'Employee validation': tFilters('statusEmployeeValidation'),
+      'HR validation': tFilters('statusHrValidation'),
+    };
+    return map[status] ?? status;
   };
 
   const filteredRecords = useMemo(() => {
@@ -163,7 +177,7 @@ export function AbsenceTable() {
                     {record.numberOfDays}
                   </td>
                   <td className="px-4 py-3 text-sm">
-                    <Badge label={record.status} variant="status" />
+                    <Badge label={statusLabel(record.status)} colorKey={record.status} variant="status" />
                   </td>
                 </tr>
               );

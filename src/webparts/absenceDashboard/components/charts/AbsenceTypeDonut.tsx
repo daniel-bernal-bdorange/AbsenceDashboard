@@ -29,6 +29,7 @@ export function AbsenceTypeDonut() {
       if (filters.categories.length && !filters.categories.includes(dr.category)) return false;
       if (filters.selectedYears.length > 0 && !filters.selectedYears.includes(dr.date.getFullYear())) return false;
       if (filters.selectedMonths.length > 0 && !filters.selectedMonths.includes(dr.date.getMonth())) return false;
+      if (filters.statuses.length ? !filters.statuses.includes(dr.status) : dr.status !== 'Accepted') return false;
       return true;
     });
   }, [dailyRecords, filters]);
@@ -43,7 +44,6 @@ export function AbsenceTypeDonut() {
     };
 
     for (const record of filteredDayRecords) {
-      if (record.status !== 'Accepted') continue;
       totals[record.category] += getDayValue(record.isFullDay);
     }
 

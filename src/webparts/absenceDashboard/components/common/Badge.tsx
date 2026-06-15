@@ -4,22 +4,23 @@ type BadgeVariant = 'type' | 'status' | 'regularized';
 
 interface BadgeProps {
   label: string;
+  colorKey?: string;
   variant?: BadgeVariant;
   className?: string;
 }
 
-export function Badge({ label, variant = 'type', className = '' }: BadgeProps) {
+export function Badge({ label, colorKey, variant = 'type', className = '' }: BadgeProps) {
   let bg: string;
   let fg: string;
 
   if (variant === 'type') {
-    bg = getAbsenceBgColor(label);
-    fg = getAbsenceColor(label);
+    bg = getAbsenceBgColor(colorKey ?? label);
+    fg = getAbsenceColor(colorKey ?? label);
   } else if (variant === 'regularized') {
     bg = '#FFF4E5';
     fg = '#9A5B00';
   } else {
-    const statusColors = getStatusColor(label);
+    const statusColors = getStatusColor(colorKey ?? label);
     bg = statusColors.bg;
     fg = statusColors.text;
   }
