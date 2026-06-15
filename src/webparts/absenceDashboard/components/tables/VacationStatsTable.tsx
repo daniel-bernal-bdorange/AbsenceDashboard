@@ -10,6 +10,7 @@ interface VacationRow {
   username: string;
   department: string;
   entitlementY: number;
+  requestedY: number;
   usedY: number;
   remainingY: number;
   entitlementPrev: number;
@@ -26,7 +27,15 @@ export function VacationStatsTable(): React.ReactElement {
   const { t } = useTranslation('dashboard');
   const vacationStats = useAppStore((s) => s.vacationStats);
   const records = useAppStore((s) => s.records);
+  const filters = useAppStore((s) => s.filters);
+  const getFilteredRecords = useAppStore((s) => s.getFilteredRecords);
   const setSelectedEmployeeDetail = useAppStore((s) => s.setSelectedEmployeeDetail);
+
+  // Usernames visible after applying active filters
+  const filteredUsernames = useMemo(() => {
+    const filtered = getFilteredRecords();
+    return new Set(filtered.map((r) => (r.employeeUsername ?? r.employeeCode).toLowerCase()));
+  }, [getFilteredRecords, filters]);
 
   // Build code → { username, department } map from records (same source as other tables)
   const infoByCode = useMemo(() => {
@@ -43,16 +52,42 @@ export function VacationStatsTable(): React.ReactElement {
   }, [records]);
 
   const rows = useMemo<VacationRow[]>(() => {
-    return Object.entries(vacationStats).map(([code, stats]) => {
+    // Merge rows that share the same username (same employee under different codes).
+    const merged = new Map<string, VacationRow>();
+
+    for (const [code, stats] of Object.entries(vacationStats)) {
       const info = infoByCode.get(code);
-      return {
-        code,
-        username: info?.username ?? code,
-        department: info?.department ?? 'Unknown',
-        ...stats,
-      };
-    });
-  }, [vacationStats, infoByCode]);
+      const username = info?.username ?? code;
+
+      // Respect active filters — skip employees not in the filtered set
+      if (filteredUsernames.size > 0 && !filteredUsernames.has(username.toLowerCase())) continue;
+      const existing = merged.get(username);
+
+      if (existing) {
+        existing.entitlementY = Math.max(existing.entitlementY, stats.entitlementY);
+        existing.requestedY += stats.requestedY;
+        existing.usedY += stats.usedY;
+        existing.usedPrev += stats.usedPrev;
+        existing.usedCarryover += stats.usedCarryover;
+        existing.entitlementPrev = Math.max(existing.entitlementPrev, stats.entitlementPrev);
+        // Recalculate from merged totals — do NOT sum remainingPrev directly
+        // (two codes for the same person would double-count the entitlement).
+        existing.remainingPrev = existing.entitlementPrev - existing.usedPrev - existing.usedCarryover;
+        existing.remainingY = existing.entitlementY - existing.requestedY;
+        // Recalculate from merged remainingPrev — individual flags may be stale.
+        existing.expiredPrev = existing.remainingPrev > 0;
+      } else {
+        merged.set(username, {
+          code,
+          username,
+          department: info?.department ?? 'Unknown',
+          ...stats,
+        });
+      }
+    }
+
+    return Array.from(merged.values());
+  }, [vacationStats, infoByCode, filteredUsernames]);
 
   const { sortConfig, handleSort, getSortIndicator } = useSort({ key: 'employee', direction: 'asc' });
 
@@ -64,6 +99,8 @@ export function VacationStatsTable(): React.ReactElement {
       switch (key) {
         case 'employee': return a.username.localeCompare(b.username) * mult;
         case 'department': return a.department.localeCompare(b.department) * mult;
+        case 'entitlementY': return (a.entitlementY - b.entitlementY) * mult;
+        case 'requestedY': return (a.requestedY - b.requestedY) * mult;
         case 'usedY': return (a.usedY - b.usedY) * mult;
         case 'remainingY': return (a.remainingY - b.remainingY) * mult;
         case 'remainingPrev': return (a.remainingPrev - b.remainingPrev) * mult;
@@ -95,11 +132,14 @@ export function VacationStatsTable(): React.ReactElement {
               <th className={thClass} onClick={() => handleSort('department')}>
                 {t('colDepartment')}{getSortIndicator('department')}
               </th>
+              <th className={thRightClass} onClick={() => handleSort('entitlementY')}>
+                {t('vacationEntitlement')} {currentYear}{getSortIndicator('entitlementY')}
+              </th>
+              <th className={thRightClass} onClick={() => handleSort('requestedY')}>
+                {t('vacationRequested')} {currentYear}{getSortIndicator('requestedY')}
+              </th>
               <th className={thRightClass} onClick={() => handleSort('usedY')}>
                 {t('vacationUsedYear', { year: currentYear })}{getSortIndicator('usedY')}
-              </th>
-              <th className={thRightClass} onClick={() => handleSort('remainingY')}>
-                {t('vacationRemainingYear', { year: currentYear })}{getSortIndicator('remainingY')}
               </th>
               <th className={thRightClass} onClick={() => handleSort('remainingPrev')}>
                 {t('vacationRemainingYear', { year: prevYear })}{getSortIndicator('remainingPrev')}
@@ -116,10 +156,9 @@ export function VacationStatsTable(): React.ReactElement {
               >
                 <td className="px-4 py-2.5 text-sm font-medium text-gray-800">{row.username}</td>
                 <td className="px-4 py-2.5 text-sm text-gray-500">{row.department}</td>
-                <td className="px-4 py-2.5 text-right text-sm text-gray-700">
-                  {row.usedY} / {row.entitlementY}
-                </td>
-                <td className="px-4 py-2.5 text-right text-sm text-gray-700">{row.remainingY}</td>
+                <td className="px-4 py-2.5 text-right text-sm text-gray-700">{row.entitlementY}</td>
+                <td className="px-4 py-2.5 text-right text-sm text-gray-700">{row.requestedY}</td>
+                <td className="px-4 py-2.5 text-right text-sm text-gray-700">{row.usedY}</td>
                 <td className="px-4 py-2.5 text-right text-sm text-gray-700">
                   {row.remainingPrev > 0 ? row.remainingPrev : 0}
                 </td>

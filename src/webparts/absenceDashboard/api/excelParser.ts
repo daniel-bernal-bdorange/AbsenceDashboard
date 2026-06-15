@@ -70,8 +70,6 @@ const parseDateTime = (value: unknown, fieldName: string, sourceFile: string) =>
 };
 
 const parseBoundaryDate = (value: unknown, fieldName: string, sourceFile: string) => {
-  console.log('parseBoundaryDate', fieldName, 'value:', value, 'type:', typeof value, 'instance:', value?.constructor?.name);
-
   if (value instanceof Date) {
     const d = new Date(value);
     d.setHours(23, 59, 0, 0);

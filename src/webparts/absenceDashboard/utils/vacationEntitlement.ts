@@ -23,12 +23,28 @@ const yearsComplete = (arrivalDate: Date, refDate: Date): number => {
 /**
  * Computes vacation entitlement for a given year.
  * Base: 23 days + 1 per complete trienio at 01/01/Y.
+ * - Employees who arrived after refYear get 0 (they were not employed that year).
+ * - Employees who arrived during refYear get a prorated amount (full months worked / 12).
  */
 export function computeEntitlement(arrivalDate: Date, refYear: number): number {
-  const jan1 = new Date(refYear, 0, 1);
-  const complete = yearsComplete(arrivalDate, jan1);
+  // Not employed during this year at all
+  if (arrivalDate.getFullYear() > refYear) return 0;
+
+  // Use Dec 31 so that an anniversary reached during the year (e.g. Sep 4)
+  // counts toward that calendar year's entitlement.
+  const dec31 = new Date(refYear, 11, 31);
+  const complete = yearsComplete(arrivalDate, dec31);
   const trienios = complete < 0 ? 0 : Math.floor(complete / TRIENIO_YEARS);
-  return Math.min(BASE_DAYS + trienios * TRIENIO_DAYS, MAX_ENTITLEMENT_DAYS);
+  const fullEntitlement = Math.min(BASE_DAYS + trienios * TRIENIO_DAYS, MAX_ENTITLEMENT_DAYS);
+
+  // Prorate when the employee joined mid-year: count full months worked in refYear
+  if (arrivalDate.getFullYear() === refYear) {
+    // Months worked = from arrival month to December (inclusive), 0-indexed
+    const monthsWorked = 12 - arrivalDate.getMonth();
+    return Math.ceil(fullEntitlement * monthsWorked / 12);
+  }
+
+  return fullEntitlement;
 }
 
 /**
@@ -50,10 +66,23 @@ export function computeVacationStats(
   const carryoverDeadline = new Date(year, CARRYOVER_DEADLINE_MONTH, CARRYOVER_DEADLINE_DAY, 23, 59, 0, 0);
   const pastDeadline = today > carryoverDeadline;
 
+  // Active = any status except Refused / Cancelled.
+  // Used for computing "remaining" (includes in-progress requests).
+  const isActive = (s: AbsenceStatus) =>
+    s !== AbsenceStatus.REFUSED &&
+    s !== AbsenceStatus.CANCELED &&
+    s !== AbsenceStatus.CANCELLATION;
+
   const vacationAccepted = records.filter(
     (r) =>
       (r.type === AbsenceType.VACATION || r.type === AbsenceType.VACATION_PREV_YEAR) &&
       r.status === AbsenceStatus.ACCEPTED,
+  );
+
+  const vacationActive = records.filter(
+    (r) =>
+      (r.type === AbsenceType.VACATION || r.type === AbsenceType.VACATION_PREV_YEAR) &&
+      isActive(r.status),
   );
 
   // Collect all employee codes present in records
@@ -78,21 +107,23 @@ export function computeVacationStats(
     const entitlementY = arrival ? computeEntitlement(arrival, year) : BASE_DAYS;
     const entitlementPrev = arrival ? computeEntitlement(arrival, prevYear) : BASE_DAYS;
 
-    // Current year: Vacaciones accepted in year Y
-    const usedY = vacationAccepted
+    // Current year: active requests (non-refused/cancelled) — shown as "solicitadas"
+    const requestedY = vacationActive
       .filter((r) => r.employeeCode.toLowerCase() === code && r.type === AbsenceType.VACATION && r.from.getFullYear() === year)
       .reduce((sum, r) => sum + r.numberOfDays, 0);
 
-    // Previous year: Vacaciones accepted in year Y-1
-    const usedPrev = vacationAccepted
+    // Current year: active requests whose start date is already in the past — shown as "disfrutadas"
+    const usedY = vacationActive
+      .filter((r) => r.employeeCode.toLowerCase() === code && r.type === AbsenceType.VACATION && r.from.getFullYear() === year && r.from <= today)
+      .reduce((sum, r) => sum + r.numberOfDays, 0);
+
+    // Previous year: active vacation days consumed in year Y-1
+    const usedPrev = vacationActive
       .filter((r) => r.employeeCode.toLowerCase() === code && r.type === AbsenceType.VACATION && r.from.getFullYear() === prevYear)
       .reduce((sum, r) => sum + r.numberOfDays, 0);
 
-    // Carry-over: "Vacaciones año anterior" accepted in year Y.
-    // Cuentan TODOS los días disfrutados en Y como consumo del entitlement Y-1,
-    // sin limitar a la fecha tope de carry-over (la regla de caducidad se evalúa
-    // aparte sobre `remainingPrev`).
-    const usedCarryover = vacationAccepted
+    // Carry-over: active "Vacaciones año anterior" days consumed in year Y.
+    const usedCarryover = vacationActive
       .filter(
         (r) =>
           r.employeeCode.toLowerCase() === code &&
@@ -105,12 +136,15 @@ export function computeVacationStats(
     const regularizationPrev = regularizationConsumption(code, prevYear, AbsenceType.VACATION);
     const regularizationCarryover = regularizationConsumption(code, year, AbsenceType.VACATION_PREV_YEAR);
 
-    const remainingY = entitlementY - usedY - regularizationY;
+    const remainingY = entitlementY - requestedY - regularizationY;
     const remainingPrev = entitlementPrev - usedPrev - usedCarryover - regularizationPrev - regularizationCarryover;
     const expiredPrev = pastDeadline && remainingPrev > 0;
 
+    console.debug(`[VacStats] ${code}: entPrev=${entitlementPrev} usedPrev=${usedPrev} carryover=${usedCarryover} remainingPrev=${remainingPrev} | activeVacRows=${vacationActive.filter((r) => r.employeeCode.toLowerCase() === code).length}`);
+
     result.set(code, {
       entitlementY,
+      requestedY,
       usedY,
       remainingY,
       entitlementPrev,

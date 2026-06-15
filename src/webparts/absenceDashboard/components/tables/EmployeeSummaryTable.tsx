@@ -20,14 +20,16 @@ export function EmployeeSummaryTable() {
   const { t } = useTranslation('table');
   const { t: tCharts } = useTranslation('charts');
   const { t: tDashboard } = useTranslation('dashboard');
+  const getFilteredDayRecords = useAppStore((s) => s.getFilteredDayRecords);
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const setSelectedEmployeeDetail = useAppStore((s) => s.setSelectedEmployeeDetail);
   const isLoading = useAppStore((s) => s.dailyRecords.length === 0);
+  const filteredDayRecords = getFilteredDayRecords();
 
   const employeeSummaries = useMemo(() => {
     const summaryMap: Record<string, EmployeeSummary> = {};
 
-    for (const record of dailyRecords) {
+    for (const record of filteredDayRecords) {
       if (record.status !== 'Accepted') continue;
 
       if (!summaryMap[record.employeeUsername]) {
@@ -66,7 +68,7 @@ export function EmployeeSummaryTable() {
     }
 
     return Object.values(summaryMap);
-  }, [dailyRecords]);
+  }, [filteredDayRecords]);
 
   const { sortConfig, handleSort, getSortIndicator } = useSort({ key: 'days', direction: 'desc' });
 

@@ -42,7 +42,7 @@
   "records": "registros",
   "vacationTitle": "Vacaciones {{currentYear}} / {{prevYear}}",
   "vacationNoData": "No hay datos de entitlement vacacional.",
-  "vacationUsedYear": "Vacac. {{year}}",
+  "vacationUsedYear": "Disfrutadas {{year}}",
   "vacationRemainingYear": "Rest. {{year}}",
   "vacationStatusYear": "Estado {{year}}",
   "vacationExpired": "caducados",

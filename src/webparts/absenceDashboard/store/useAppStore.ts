@@ -113,7 +113,6 @@ export const useAppStore = create<AppState>()(
       partialize: (state) => ({
         records: state.records,
         regulRecords: state.regulRecords,
-        vacationStats: state.vacationStats,
         folderName: state.folderName,
       }),
       merge: (persisted, current) => {
@@ -125,6 +124,8 @@ export const useAppStore = create<AppState>()(
         if (merged.regulRecords?.length) {
           merged.regulRecords = reviveRegulDates(merged.regulRecords);
         }
+        // vacationStats is derived — always reset to force recomputation on load.
+        merged.vacationStats = {};
         return merged;
       },
     },

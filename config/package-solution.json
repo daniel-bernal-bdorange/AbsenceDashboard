@@ -3,7 +3,7 @@
   "solution": {
     "name": "absence-dashboard-client-side-solution",
     "id": "da9908c6-0fea-44bf-adfc-2e22294fd92f",
-    "version": "1.0.0.0",
+    "version": "1.0.1.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -30,7 +30,7 @@
         "title": "absence-dashboard Feature",
         "description": "The feature that activates elements of the absence-dashboard solution.",
         "id": "b1f5d049-7bd6-4078-9aad-fb002dfe86ad",
-        "version": "1.0.0.0"
+        "version": "1.0.1.0"
       }
     ]
   },

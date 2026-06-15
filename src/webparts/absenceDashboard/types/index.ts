@@ -119,10 +119,15 @@ export interface FocusRosterRow {
 
 export interface VacationStats {
   entitlementY: number;
+  /** Days with an active request in year Y (excludes Refused/Cancelled). */
+  requestedY: number;
+  /** Days confirmed as Accepted in year Y. */
   usedY: number;
   remainingY: number;
   entitlementPrev: number;
+  /** Active vacation days (Accepted + pending) consumed in year Y-1. */
   usedPrev: number;
+  /** Active carry-over "año anterior" days (Accepted + pending) consumed in year Y. */
   usedCarryover: number;
   remainingPrev: number;
   expiredPrev: boolean;

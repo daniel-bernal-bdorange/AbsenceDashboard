@@ -193,9 +193,12 @@ export async function loadFocusRoster(
 // Rows without an `Arrival date` column/value are simply ignored for arrivals.
 export const extractRosterDataFromBuffer = (
   buffer: ArrayBuffer,
-): { departments: Map<string, Department>; arrivals: Map<string, Date> } => {
+): { departments: Map<string, Department>; checkDepartments: Map<string, Department>; arrivals: Map<string, Date> } => {
   const workbook = XLSX.read(buffer, { type: 'array', cellDates: true });
   const departments = new Map<string, Department>();
+  // Departments sourced from the authoritative `Check` column (OBD roster).
+  // These override any `Primary entity` mappings regardless of file order.
+  const checkDepartments = new Map<string, Department>();
   const arrivals = new Map<string, Date>();
 
   for (const sheetName of workbook.SheetNames) {
@@ -217,25 +220,30 @@ export const extractRosterDataFromBuffer = (
         }
       }
 
-      // Department: `Check` takes priority over `Primary entity`.
-      const dept =
-        normalizeDepartment(row.Check) ?? normalizeDepartment(row['Primary entity']);
+      // Department: `Check` is authoritative; `Primary entity` is the fallback.
+      const checkDept = normalizeDepartment(row.Check);
+      const entityDept = normalizeDepartment(row['Primary entity']);
+      if (checkDept) {
+        checkDepartments.set(code, checkDept);
+      }
+      const dept = checkDept ?? entityDept;
       if (dept && !departments.has(code)) {
         departments.set(code, dept);
       }
     }
   }
 
-  return { departments, arrivals };
+  return { departments, checkDepartments, arrivals };
 };
 
 export async function loadRosterFile(
   client: SPHttpClient,
   siteUrl: string,
   fileServerRelativeUrl: string,
-): Promise<{ departments: Map<string, Department>; arrivals: Map<string, Date> }> {
+): Promise<{ departments: Map<string, Department>; checkDepartments: Map<string, Department>; arrivals: Map<string, Date> }> {
   const empty = {
     departments: new Map<string, Department>(),
+    checkDepartments: new Map<string, Department>(),
     arrivals: new Map<string, Date>(),
   };
 

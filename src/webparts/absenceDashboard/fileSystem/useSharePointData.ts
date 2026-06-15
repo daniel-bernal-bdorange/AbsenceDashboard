@@ -158,6 +158,8 @@ export function useSharePointData(): UseSharePointDataReturn {
       // Las filas sin `Arrival date` se ignoran para entitlement; el primer
       // valor encontrado por code prevalece sobre los siguientes.
       const departmentMap = new Map<string, Department>();
+      // Departments explicitly set via the `Check` column — applied last to override Primary entity.
+      const checkDepartmentMap = new Map<string, Department>();
       const arrivalDates = new Map<string, Date>();
 
       if (rosterUrl) {
@@ -181,7 +183,7 @@ export function useSharePointData(): UseSharePointDataReturn {
           if (!isRosterExcelFile(file.name)) continue;
 
           try {
-            const { departments, arrivals } = await loadRosterFile(
+            const { departments, checkDepartments, arrivals } = await loadRosterFile(
               client,
               siteAbsUrl,
               file.serverRelativeUrl,
@@ -195,6 +197,8 @@ export function useSharePointData(): UseSharePointDataReturn {
                 deptAdded += 1;
               }
             });
+            // Collect Check-based mappings — applied after all files to ensure they win.
+            checkDepartments.forEach((v: Department, k: string) => checkDepartmentMap.set(k, v));
             arrivals.forEach((v, k) => {
               if (!arrivalDates.has(k)) {
                 arrivalDates.set(k, v);
@@ -214,6 +218,9 @@ export function useSharePointData(): UseSharePointDataReturn {
         console.debug(
           `[Roster total] ${departmentMap.size} departments, ${arrivalDates.size} arrival dates`,
         );
+        // Apply Check-based overrides — these win over Primary entity regardless of file order.
+        checkDepartmentMap.forEach((v, k) => departmentMap.set(k, v));
+        console.debug(`[Roster total] ${checkDepartmentMap.size} Check-based overrides applied`);
       }
 
       // --- Ausencias ---
