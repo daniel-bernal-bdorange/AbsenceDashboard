@@ -1,9 +1,10 @@
 import { AbsenceStatus, AbsenceType } from '../types';
-import type { AbsenceRecord, VacationStats } from '../types';
+import type { AbsenceRecord, RegulRecord, VacationStats } from '../types';
 
 const BASE_DAYS = 23;
 const TRIENIO_DAYS = 1;
 const TRIENIO_YEARS = 3;
+const MAX_ENTITLEMENT_DAYS = 26;
 // Carry-over deadline: January 31 of the current year
 const CARRYOVER_DEADLINE_MONTH = 0; // January (0-indexed)
 const CARRYOVER_DEADLINE_DAY = 31;
@@ -27,7 +28,7 @@ export function computeEntitlement(arrivalDate: Date, refYear: number): number {
   const jan1 = new Date(refYear, 0, 1);
   const complete = yearsComplete(arrivalDate, jan1);
   const trienios = complete < 0 ? 0 : Math.floor(complete / TRIENIO_YEARS);
-  return BASE_DAYS + trienios * TRIENIO_DAYS;
+  return Math.min(BASE_DAYS + trienios * TRIENIO_DAYS, MAX_ENTITLEMENT_DAYS);
 }
 
 /**
@@ -42,6 +43,7 @@ export function computeVacationStats(
   records: AbsenceRecord[],
   arrivalDates: Map<string, Date>,
   year: number,
+  regulRecords: RegulRecord[] = [],
   today: Date = new Date(),
 ): Map<string, VacationStats> {
   const prevYear = year - 1;
@@ -56,6 +58,16 @@ export function computeVacationStats(
 
   // Collect all employee codes present in records
   const codes = new Set<string>(records.map((r) => r.employeeCode.toLowerCase()));
+
+  const regularizationConsumption = (employeeCode: string, targetYear: number, rowType: AbsenceType): number =>
+    regulRecords
+      .filter(
+        (r) =>
+          r.employeeCode.toLowerCase() === employeeCode &&
+          r.dateToRegularise.getFullYear() === targetYear &&
+          r.rowType === rowType,
+      )
+      .reduce((sum, r) => sum - r.expenditureQuantity, 0);
 
   const result = new Map<string, VacationStats>();
 
@@ -89,8 +101,12 @@ export function computeVacationStats(
       )
       .reduce((sum, r) => sum + r.numberOfDays, 0);
 
-    const remainingY = entitlementY - usedY;
-    const remainingPrev = entitlementPrev - usedPrev - usedCarryover;
+    const regularizationY = regularizationConsumption(code, year, AbsenceType.VACATION);
+    const regularizationPrev = regularizationConsumption(code, prevYear, AbsenceType.VACATION);
+    const regularizationCarryover = regularizationConsumption(code, year, AbsenceType.VACATION_PREV_YEAR);
+
+    const remainingY = entitlementY - usedY - regularizationY;
+    const remainingPrev = entitlementPrev - usedPrev - usedCarryover - regularizationPrev - regularizationCarryover;
     const expiredPrev = pastDeadline && remainingPrev > 0;
 
     result.set(code, {
