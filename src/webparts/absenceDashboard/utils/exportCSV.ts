@@ -1,9 +1,10 @@
+import * as XLSX from 'xlsx';
 import type { AbsenceRecord } from '../types';
 import i18n from '../i18n';
 
 export function exportCSV(
   records: AbsenceRecord[],
-  filename: string = 'ausencias.csv',
+  filename: string = 'ausencias.xlsx',
 ): void {
   const lang = i18n.language.startsWith('en') ? 'en' : 'es';
 
@@ -24,30 +25,13 @@ export function exportCSV(
     r.type,
     formatDate(r.from),
     formatDate(r.till),
-    String(r.numberOfDays),
+    r.numberOfDays,
     r.status,
     r.sourceFile,
   ]);
 
-  const csvContent = [
-    headers.join(','),
-    ...rows.map((row) =>
-      row.map((cell) => {
-        const escaped = String(cell).replace(/"/g, '""');
-        return escaped.includes(',') || escaped.includes('"')
-          ? `"${escaped}"`
-          : escaped;
-      }).join(','),
-    ),
-  ].join('\n');
-
-  const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+  const worksheet = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, lang === 'es' ? 'Ausencias' : 'Absences');
+  XLSX.writeFile(workbook, filename);
 }

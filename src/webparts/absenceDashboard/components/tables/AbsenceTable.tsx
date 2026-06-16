@@ -76,7 +76,7 @@ export function AbsenceTable() {
   }, [filteredRecords, sortConfig]);
 
   const handleExport = () => {
-    exportCSV(filteredRecords, `ausencias_${new Date().toISOString().split('T')[0]}.csv`);
+    exportCSV(filteredRecords, `ausencias_${new Date().toISOString().split('T')[0]}.xlsx`);
   };
 
   if (isLoading) {

@@ -7,6 +7,7 @@ import {
   type AbsenceRecord,
   type EverwinAbsenceRow,
   type RegulRecord,
+  type VacationException,
 } from '../types';
 
 import type { WorkBook } from 'xlsx';
@@ -302,4 +303,29 @@ export function parseRegulFile(workbook: WorkBook, sourceFile: string): RegulRec
       validationStatus: asText(row['Validation status']),
       sourceFile,
     }));
+}
+
+/**
+ * Parses exceptions.xlsx — columns: Employee, Year, Days.
+ * Deduplicates by (employeeCode, year): last row wins.
+ */
+export function parseExceptionsFile(workbook: WorkBook): VacationException[] {
+  const firstSheet = workbook.SheetNames[0];
+  if (!firstSheet) return [];
+
+  const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(workbook.Sheets[firstSheet], { defval: '' });
+
+  const map = new Map<string, VacationException>();
+
+  for (const row of rows) {
+    const employeeCode = asText(row['Employee']).replace(/-\d+$/, '').toLowerCase();
+    const year = typeof row['Year'] === 'number' ? row['Year'] : parseInt(asText(row['Year']), 10);
+    const days = typeof row['Days'] === 'number' ? row['Days'] : parseInt(asText(row['Days']), 10);
+
+    if (!employeeCode || isNaN(year) || isNaN(days) || days < 0) continue;
+
+    map.set(`${employeeCode}|${year}`, { employeeCode, year, days, notes: asText(row['Notes']) || undefined });
+  }
+
+  return Array.from(map.values());
 }

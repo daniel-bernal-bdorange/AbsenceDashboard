@@ -18,6 +18,7 @@ export interface IAbsenceDashboardWebPartProps {
   regulFolder: string;
   rosterFolder: string;
   rosterFileName: string;
+  exceptionsFolder: string;
   appTitle: string;
 }
 
@@ -36,6 +37,7 @@ export default class AbsenceDashboardWebPart extends BaseClientSideWebPart<IAbse
         : buildPath(this.properties.folderPath),
       regulLibraryUrl: buildPath(this.properties.regulFolder),
       rosterLibraryUrl: buildPath(this.properties.rosterFolder),
+      exceptionsLibraryUrl: buildPath(this.properties.exceptionsFolder),
       // Legacy backward compat
       libraryUrl: this.properties.folderPath
         ? `${lib}/${this.properties.folderPath}`
@@ -100,6 +102,10 @@ export default class AbsenceDashboardWebPart extends BaseClientSideWebPart<IAbse
                 PropertyPaneTextField('rosterFileName', {
                   label: 'Archivo OBD (roster principal)',
                   placeholder: 'OBD Spain_employee list_2026.xlsx',
+                }),
+                PropertyPaneTextField('exceptionsFolder', {
+                  label: 'Carpeta Excepciones vacaciones',
+                  placeholder: 'Data/Excepciones vacaciones',
                 }),
               ],
             },

@@ -8,6 +8,7 @@ export interface IAppConfig {
   regulLibraryUrl: string;
   rosterLibraryUrl: string;
   rosterFileName: string;
+  exceptionsLibraryUrl: string;
 }
 
 let _config: IAppConfig = {
@@ -17,6 +18,7 @@ let _config: IAppConfig = {
   regulLibraryUrl: '',
   rosterLibraryUrl: '',
   rosterFileName: 'employee-departments.json',
+  exceptionsLibraryUrl: '',
 };
 
 let _spHttpClient: SPHttpClient | null = null;

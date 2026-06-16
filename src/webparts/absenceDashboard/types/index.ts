@@ -117,6 +117,13 @@ export interface FocusRosterRow {
   'Arrival date': string | Date;
 }
 
+export interface VacationException {
+  employeeCode: string;
+  year: number;
+  days: number;
+  notes?: string;
+}
+
 export interface VacationStats {
   entitlementY: number;
   /** Days with an active request in year Y (excludes Refused/Cancelled). */

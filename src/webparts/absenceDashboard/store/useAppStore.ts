@@ -12,6 +12,8 @@ type AppState = {
   dailyRecords: AbsenceDayRecord[];
   regulRecords: RegulRecord[];
   vacationStats: Record<string, VacationStats>;
+  vacationExceptions: Record<string, { days: number; notes?: string }>;
+  arrivalDates: Record<string, string>;
   processedFileNotes: string[];
   fileErrors: string[];
   folderName: string | null;
@@ -21,6 +23,8 @@ type AppState = {
   setRecords: (records: AbsenceRecord[], folderName?: string | null) => void;
   setRegulRecords: (records: RegulRecord[]) => void;
   setVacationStats: (stats: Record<string, VacationStats>) => void;
+  setVacationExceptions: (exceptions: Record<string, { days: number; notes?: string }>) => void;
+  setArrivalDates: (dates: Record<string, string>) => void;
   setProcessedFileNotes: (notes: string[]) => void;
   setFileErrors: (errors: string[]) => void;
   setSidebarOpen: (isOpen: boolean) => void;
@@ -70,6 +74,8 @@ export const useAppStore = create<AppState>()(
       dailyRecords: [],
       regulRecords: [],
       vacationStats: {},
+      vacationExceptions: {} as Record<string, { days: number; notes?: string }>,
+      arrivalDates: {},
       processedFileNotes: [],
       fileErrors: [],
       folderName: null,
@@ -84,6 +90,8 @@ export const useAppStore = create<AppState>()(
         }),
       setRegulRecords: (records) => set({ regulRecords: records }),
       setVacationStats: (stats) => set({ vacationStats: stats }),
+      setVacationExceptions: (exceptions) => set({ vacationExceptions: exceptions }),
+      setArrivalDates: (dates) => set({ arrivalDates: dates }),
       setProcessedFileNotes: (notes) => set({ processedFileNotes: notes }),
       setFileErrors: (errors) => set({ fileErrors: errors }),
       clearRecords: () => set({ records: [], dailyRecords: [], folderName: null, regulRecords: [], vacationStats: {}, processedFileNotes: [], fileErrors: [] }),

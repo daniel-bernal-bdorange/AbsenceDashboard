@@ -53,7 +53,9 @@ export function computeEntitlement(arrivalDate: Date, refYear: number): number {
  * @param records - All absence records (may span multiple years).
  * @param arrivalDates - Map<employeeCode, arrivalDate> from FOCUS roster.
  * @param year - The current year (Y).
+ * @param regulRecords - Regularization records.
  * @param today - Reference date for expiry check (defaults to now).
+ * @param exceptions - Optional map keyed `${code}|${year}` overriding the default entitlement.
  */
 export function computeVacationStats(
   records: AbsenceRecord[],
@@ -61,6 +63,7 @@ export function computeVacationStats(
   year: number,
   regulRecords: RegulRecord[] = [],
   today: Date = new Date(),
+  exceptions: Map<string, number> = new Map(),
 ): Map<string, VacationStats> {
   const prevYear = year - 1;
   const carryoverDeadline = new Date(year, CARRYOVER_DEADLINE_MONTH, CARRYOVER_DEADLINE_DAY, 23, 59, 0, 0);
@@ -104,8 +107,8 @@ export function computeVacationStats(
 
   for (const code of codeArray) {
     const arrival = arrivalDates.get(code);
-    const entitlementY = arrival ? computeEntitlement(arrival, year) : BASE_DAYS;
-    const entitlementPrev = arrival ? computeEntitlement(arrival, prevYear) : BASE_DAYS;
+    const entitlementY = exceptions.get(`${code}|${year}`) ?? (arrival ? computeEntitlement(arrival, year) : BASE_DAYS);
+    const entitlementPrev = exceptions.get(`${code}|${prevYear}`) ?? (arrival ? computeEntitlement(arrival, prevYear) : BASE_DAYS);
 
     // Current year: active requests (non-refused/cancelled) — shown as "solicitadas"
     const requestedY = vacationActive

@@ -3,7 +3,7 @@ import { SPHttpClient } from '@microsoft/sp-http';
 import * as XLSX from 'xlsx';
 
 import { useTranslation } from '../i18n/useTranslation';
-import { parseExcelFile, parseSpreadsheetXmlFile, parseRegulFile } from '../api/excelParser';
+import { parseExcelFile, parseSpreadsheetXmlFile, parseRegulFile, parseExceptionsFile } from '../api/excelParser';
 import {
   loadDepartmentMap,
   loadRosterFile,
@@ -131,6 +131,8 @@ export function useSharePointData(): UseSharePointDataReturn {
   const setVacationStats = useAppStore((state) => state.setVacationStats);
   const setProcessedFileNotes = useAppStore((state) => state.setProcessedFileNotes);
   const setFileErrors = useAppStore((state) => state.setFileErrors);
+  const setVacationExceptions = useAppStore((state) => state.setVacationExceptions);
+  const setArrivalDates = useAppStore((state) => state.setArrivalDates);
 
   const loadData = useCallback(async () => {
     const client = getSpHttpClient();
@@ -290,9 +292,41 @@ export function useSharePointData(): UseSharePointDataReturn {
       setProcessedFileNotes(processedFileNotes);
       setFileErrors(fileErrors);
 
+      // --- Excepciones vacaciones ---
+      const exceptionsMap = new Map<string, number>(); // for computation
+      const exceptionsFullRecord: Record<string, { days: number; notes?: string }> = {};
+      const exceptionsUrl = appEnv.exceptionsLibraryUrl;
+
+      if (exceptionsUrl) {
+        const excFiles = await listFolderFiles(client, siteAbsUrl, siteRelUrl, exceptionsUrl);
+        for (const file of excFiles) {
+          if (!/exceptions\.xlsx$/i.test(file.name)) continue;
+          try {
+            const buffer = await fetchFileBuffer(client, siteAbsUrl, file.serverRelativeUrl);
+            if (!buffer) continue;
+            const workbook = XLSX.read(buffer, { type: 'array', cellDates: false });
+            for (const exc of parseExceptionsFile(workbook)) {
+              const key = `${exc.employeeCode.toLowerCase()}|${exc.year}`;
+              exceptionsMap.set(key, exc.days);
+              exceptionsFullRecord[key] = { days: exc.days, notes: exc.notes };
+            }
+            console.debug(`[Exceptions] ${file.name} -> ${exceptionsMap.size} entries`);
+          } catch (err) {
+            console.error('Error parsing exceptions file', file.name, ':', err);
+          }
+        }
+      }
+
+      setVacationExceptions(exceptionsFullRecord);
+
+      // --- Arrival dates (persisted for post-save recomputation) ---
+      const arrivalDatesRecord: Record<string, string> = {};
+      arrivalDates.forEach((v, k) => { arrivalDatesRecord[k] = v.toISOString(); });
+      setArrivalDates(arrivalDatesRecord);
+
       // --- Vacation stats ---
       const currentYear = new Date().getFullYear();
-      const statsMap = computeVacationStats(adjusted, arrivalDates, currentYear);
+      const statsMap = computeVacationStats(adjusted, arrivalDates, currentYear, regulRecords, new Date(), exceptionsMap);
       const statsRecord: Record<string, import('../types').VacationStats> = {};
       statsMap.forEach((v, k) => { statsRecord[k] = v; });
       setVacationStats(statsRecord);
@@ -304,7 +338,7 @@ export function useSharePointData(): UseSharePointDataReturn {
     } finally {
       setIsLoading(false);
     }
-  }, [setRecords, setRegulRecords, setVacationStats, setProcessedFileNotes, setFileErrors, tErrors]);
+  }, [setRecords, setRegulRecords, setVacationStats, setProcessedFileNotes, setFileErrors, setVacationExceptions, setArrivalDates, tErrors]);
 
   useEffect(() => {
     loadData().catch(() => { /* Error handled by state */ });
@@ -313,3 +347,124 @@ export function useSharePointData(): UseSharePointDataReturn {
   return { isLoading, error, dataLoaded };
 }
 
+// ---------------------------------------------------------------------------
+// Helpers: write exceptions.xlsx back to SharePoint
+// ---------------------------------------------------------------------------
+
+const EXCEPTIONS_FILE_NAME = 'exceptions.xlsx';
+const EXCEPTIONS_HEADERS = ['Employee', 'Year', 'Days', 'Notes'];
+
+/** Downloads the current exceptions.xlsx or returns an empty workbook if it doesn't exist. */
+async function fetchOrCreateExceptionsWorkbook(
+  client: SPHttpClient,
+  siteAbsUrl: string,
+  fileServerRelativeUrl: string,
+): Promise<XLSX.WorkBook> {
+  const url = `${siteAbsUrl}/_api/web/GetFileByServerRelativeUrl('${encodeURIComponent(fileServerRelativeUrl)}')/$value`;
+  const response = await client.get(url, SPHttpClient.configurations.v1);
+  if (response.ok) {
+    const buffer = await response.arrayBuffer();
+    return XLSX.read(buffer, { type: 'array', cellDates: false });
+  }
+  // File doesn't exist yet — create an empty workbook with headers
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet([EXCEPTIONS_HEADERS]);
+  XLSX.utils.book_append_sheet(wb, ws, 'Exceptions');
+  return wb;
+}
+
+/** Uploads a workbook as xlsx to a SharePoint file URL (creates or overwrites). */
+async function uploadExceptionsWorkbook(
+  client: SPHttpClient,
+  siteAbsUrl: string,
+  folderServerRelativePath: string,
+  workbook: XLSX.WorkBook,
+): Promise<void> {
+  const buf = XLSX.write(workbook, { type: 'array', bookType: 'xlsx' }) as Uint8Array;
+
+  // decodedurl must NOT be percent-encoded — the parameter name already implies a decoded value.
+  const uploadUrl = `${siteAbsUrl}/_api/web/GetFolderByServerRelativeUrl('${encodeURIComponent(folderServerRelativePath)}')/Files/AddUsingPath(decodedurl='${EXCEPTIONS_FILE_NAME}',overwrite=true)`;
+  const response = await client.post(uploadUrl, SPHttpClient.configurations.v1, {
+    headers: { 'Content-Type': 'application/octet-stream' },
+    body: new Blob([buf], { type: 'application/octet-stream' }),
+  });
+
+  if (!response.ok) {
+    const text = await response.text().catch(() => response.statusText);
+    throw new Error(`Error al guardar exceptions.xlsx: ${text}`);
+  }
+}
+
+function getExceptionsServerRelativePaths(siteRelUrl: string): { folderPath: string; filePath: string } {
+  const excUrl = appEnv.exceptionsLibraryUrl;
+  if (!excUrl) {
+    throw new Error('Carpeta "Excepciones vacaciones" no configurada en las propiedades del web part.');
+  }
+  const folderPath = `${siteRelUrl.replace(/\/+$/, '')}/${excUrl.replace(/^\/+/, '')}`;
+  const filePath = `${folderPath}/${EXCEPTIONS_FILE_NAME}`;
+  return { folderPath, filePath };
+}
+
+/**
+ * Upserts a row in exceptions.xlsx for the given employee+year.
+ * Creates the file if it doesn't exist.
+ */
+export async function saveVacationException(employeeCode: string, year: number, days: number, notes?: string): Promise<void> {
+  const client = getSpHttpClient();
+  const siteAbsUrl = getSiteAbsoluteUrl();
+  const siteRelUrl = getSiteServerRelativeUrl();
+  const { folderPath, filePath } = getExceptionsServerRelativePaths(siteRelUrl);
+
+  const wb = await fetchOrCreateExceptionsWorkbook(client, siteAbsUrl, filePath);
+  const sheetName = wb.SheetNames[0];
+  const ws = wb.Sheets[sheetName];
+
+  type Row = { Employee: string; Year: number; Days: number; Notes: string };
+  const rows = XLSX.utils.sheet_to_json<Row>(ws, { defval: '' });
+
+  const normalizedCode = employeeCode.toLowerCase();
+  const existingIdx = rows.findIndex(
+    (r) => String(r.Employee).replace(/-\d+$/, '').toLowerCase() === normalizedCode && Number(r.Year) === year,
+  );
+
+  if (existingIdx >= 0) {
+    rows[existingIdx] = { Employee: employeeCode, Year: year, Days: days, Notes: notes ?? '' };
+  } else {
+    rows.push({ Employee: employeeCode, Year: year, Days: days, Notes: notes ?? '' });
+  }
+
+  const newWs = XLSX.utils.json_to_sheet(rows, { header: EXCEPTIONS_HEADERS });
+  wb.Sheets[sheetName] = newWs;
+
+  await uploadExceptionsWorkbook(client, siteAbsUrl, folderPath, wb);
+}
+
+/**
+ * Removes the row for the given employee+year from exceptions.xlsx.
+ * No-ops if no matching row exists.
+ */
+export async function deleteVacationException(employeeCode: string, year: number): Promise<void> {
+  const client = getSpHttpClient();
+  const siteAbsUrl = getSiteAbsoluteUrl();
+  const siteRelUrl = getSiteServerRelativeUrl();
+  const { folderPath, filePath } = getExceptionsServerRelativePaths(siteRelUrl);
+
+  const wb = await fetchOrCreateExceptionsWorkbook(client, siteAbsUrl, filePath);
+  const sheetName = wb.SheetNames[0];
+  const ws = wb.Sheets[sheetName];
+
+  type Row = { Employee: string; Year: number; Days: number };
+  const rows = XLSX.utils.sheet_to_json<Row>(ws, { defval: '' });
+
+  const normalizedCode = employeeCode.toLowerCase();
+  const filtered = rows.filter(
+    (r) => !(String(r.Employee).replace(/-\d+$/, '').toLowerCase() === normalizedCode && Number(r.Year) === year),
+  );
+
+  if (filtered.length === rows.length) return; // Nothing to delete
+
+  const newWs = XLSX.utils.json_to_sheet(filtered, { header: EXCEPTIONS_HEADERS });
+  wb.Sheets[sheetName] = newWs;
+
+  await uploadExceptionsWorkbook(client, siteAbsUrl, folderPath, wb);
+}
