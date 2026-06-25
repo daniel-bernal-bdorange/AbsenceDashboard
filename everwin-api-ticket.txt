@@ -1,0 +1,64 @@
+Subject: REST API v3 Access Request — Absence Dashboard Integration
+
+To: Everwin Support / Everwin Account Manager
+
+---
+
+Context
+
+We are developing an internal HR Absence Dashboard (Orange Business Spain) that currently
+reads absence data from Excel exports. We want to migrate to a live data feed using the
+Everwin SX REST API v3.
+
+Our app is a browser-based SharePoint Framework (SPFx) web part hosted on Microsoft 365
+tenant bdbelux1.sharepoint.com.
+
+---
+
+Questions / Requests
+
+1. API access credentials
+We need read-only credentials to consume the SX REST API v3. Please advise whether an
+API key or OAuth 2.0 client credentials (clientId + clientSecret) is preferred, and how
+to generate them from the SX administration console.
+
+2. Base URL of our SX instance
+Please confirm the base URL for our instance's REST API, expected format:
+https://<our-instance>/sx/rest/v3
+
+3. CORS configuration
+Our app runs in the browser and will make direct HTTP calls to the SX API. We need the
+SX server to return appropriate CORS headers allowing requests from our SharePoint origin
+(https://bdbelux1.sharepoint.com).
+If CORS cannot be configured server-side, please let us know so we can set up a backend
+proxy instead.
+
+4. Network accessibility
+Is the SX API endpoint accessible from the public internet, or only from an internal
+network? If internal only, please advise on the recommended connectivity option
+(VPN, API gateway, etc.).
+
+5. Endpoints we intend to use (read-only)
+- GET /leave-requests                          — query all leave/absence requests
+- GET /employees                               — query employee list
+- GET /leave-request-types                     — query absence type catalog
+- GET /employees/{id}/leave-requests           — leave requests per employee
+- GET /employees/{id}/employee-time-counters   — time counters per employee
+
+6. Time regularizations
+Our current Excel export includes time regularization records. Is there a dedicated REST
+endpoint for this data (e.g. /work-units or similar)? Please confirm the correct endpoint
+and its response schema.
+
+7. OpenAPI / Swagger specification
+If available, could you share the OpenAPI spec file (JSON or YAML) for the v3 API?
+This will allow us to auto-generate a TypeScript client.
+
+---
+
+Reference
+Public Java client library used as reference: https://github.com/everwin-sx/sx-api (v25.2.0)
+
+---
+
+Thank you in advance.

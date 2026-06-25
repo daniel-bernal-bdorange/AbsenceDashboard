@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ErrorBoundary, OverviewChart, TrendLine, AbsenceTypeDonut, DepartmentComparison, AppShell, ToastContainer, FilterPanel, EmployeeDetail, KPIBar } from './components';
+import { ErrorBoundary, OverviewChart, TrendLine, AbsenceTypeDonut, DepartmentComparison, AbsenceGanttCalendar, AppShell, ToastContainer, FilterPanel, EmployeeDetail, KPIBar } from './components';
 import { AbsenceTable, EmployeeSummaryTable, VacationStatsTable } from './components/tables';
 import { type NavigationItem } from './components/layout/AppShell';
 import { appEnv } from './config/env';
@@ -14,6 +14,7 @@ export function App() {
   const [activeSection, setActiveSection] = useState('overview');
   const [absenceTableExpanded, setAbsenceTableExpanded] = useState(true);
   const [employeeSummaryExpanded, setEmployeeSummaryExpanded] = useState(true);
+  const [ganttCalendarExpanded, setGanttCalendarExpanded] = useState(true);
   const { t: tCommon } = useTranslation('common');
   const { t: tDashboard } = useTranslation('dashboard');
   const { t: tCharts } = useTranslation('charts');
@@ -127,6 +128,23 @@ export function App() {
               {tCharts('departmentComparison')}
             </p>
             <DepartmentComparison />
+          </div>
+
+          <hr className="border-gray-100" />
+
+          <div className="py-10">
+            <button
+              onClick={() => setGanttCalendarExpanded(!ganttCalendarExpanded)}
+              className="flex w-full items-center justify-between px-2 py-3 hover:bg-gray-50 rounded-lg transition-colors"
+            >
+              <span className="text-xs font-medium uppercase tracking-widest text-gray-400">
+                {tCharts('absenceCalendar')}
+              </span>
+              <span className={`text-gray-400 transition-transform duration-200 ${ganttCalendarExpanded ? 'rotate-180' : ''}`}>
+                ▼
+              </span>
+            </button>
+            {ganttCalendarExpanded && <AbsenceGanttCalendar />}
           </div>
 
           <hr className="border-gray-100" />

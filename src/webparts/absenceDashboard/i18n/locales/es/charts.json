@@ -25,5 +25,9 @@
   "departmentComparison": "Comparativa departamentos",
   "prodDept": "Producción",
   "backOfficeDept": "Back Office",
-  "tableTitle": "Registro de ausencias"
+  "tableTitle": "Registro de ausencias",
+  "ganttNoData": "Sin ausencias para el periodo seleccionado",
+  "ganttYear": "Año",
+  "ganttTooltipFrom": "Desde",
+  "ganttTooltipTill": "Hasta"
 }
