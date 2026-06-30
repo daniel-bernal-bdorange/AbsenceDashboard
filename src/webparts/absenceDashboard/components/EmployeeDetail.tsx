@@ -6,6 +6,7 @@ import type { AbsenceCategory } from '../types';
 import { getDayValue } from '../types';
 import { saveVacationException, deleteVacationException } from '../fileSystem/useSharePointData';
 import { computeVacationStats } from '../utils/vacationEntitlement';
+import { resolveEmployeeDisplayName } from '../utils/employeeDisplayName';
 
 interface EmployeeDetailProps {
   username: string;
@@ -22,6 +23,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
   const vacationStats = useAppStore((s) => s.vacationStats);
   const vacationExceptions = useAppStore((s) => s.vacationExceptions);
   const arrivalDates = useAppStore((s) => s.arrivalDates);
+  const employeeDisplayNames = useAppStore((s) => s.employeeDisplayNames);
   const setVacationStats = useAppStore((s) => s.setVacationStats);
   const setVacationExceptions = useAppStore((s) => s.setVacationExceptions);
 
@@ -39,6 +41,11 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
     const match = records.find((r) => r.employeeUsername === username);
     return match?.employeeCode ?? null;
   }, [records, username]);
+
+  const employeeDisplayName = useMemo(
+    () => resolveEmployeeDisplayName(username, employeeDisplayNames),
+    [employeeDisplayNames, username],
+  );
 
   const vacationCurrentYear = useMemo(() => {
     if (!employeeCode) return null;
@@ -156,7 +163,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">{username}</h2>
+            <h2 className="text-2xl font-bold text-gray-900">{employeeDisplayName}</h2>
             <p className="text-sm text-gray-500 mt-1">
               {employeeInfo.department === 'Unknown' ? tDashboard('unknown') : employeeInfo.department}
             </p>
@@ -223,7 +230,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
                 </div>
               </div>
               <div className="flex-1 text-right">
-                <div className="text-sm text-gray-500 mb-1">{username}</div>
+                <div className="text-sm text-gray-500 mb-1">{employeeDisplayName}</div>
                 <div className="text-2xl font-bold text-gray-900">
                   {employeeInfo.totalDays.toFixed(0)} {tDashboard('days').toLowerCase()}
                 </div>

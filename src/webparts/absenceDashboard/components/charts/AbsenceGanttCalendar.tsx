@@ -7,6 +7,7 @@ import { useTranslation } from '../../i18n/useTranslation';
 import { chartColors } from './chartColors';
 import { EmptyState } from '../common/EmptyState';
 import type { AbsenceCategory } from '../../types';
+import { resolveEmployeeDisplayName } from '../../utils/employeeDisplayName';
 
 const CATEGORY_COLOR: Record<AbsenceCategory, string> = {
   Vacation: chartColors.vacation,
@@ -35,6 +36,7 @@ function computeInitialZoom(year: number): { start: number; end: number } {
 export function AbsenceGanttCalendar() {
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
+  const employeeDisplayNames = useAppStore((s) => s.employeeDisplayNames);
   const { t, i18n } = useTranslation('charts');
   const { t: tTypes } = useTranslation('absenceTypes');
 
@@ -70,8 +72,17 @@ export function AbsenceGanttCalendar() {
 
   const employees = useMemo(() => {
     const names = new Set(yearRecords.map((r) => r.employeeUsername));
-    return Array.from(names).sort((a, b) => a.localeCompare(b, i18n.language));
-  }, [yearRecords, i18n.language]);
+    return Array.from(names).sort((a, b) => {
+      const aLabel = resolveEmployeeDisplayName(a, employeeDisplayNames);
+      const bLabel = resolveEmployeeDisplayName(b, employeeDisplayNames);
+      return aLabel.localeCompare(bLabel, i18n.language);
+    });
+  }, [yearRecords, i18n.language, employeeDisplayNames]);
+
+  const employeeLabels = useMemo(
+    () => employees.map((username) => resolveEmployeeDisplayName(username, employeeDisplayNames)),
+    [employees, employeeDisplayNames],
+  );
 
   // Each row: [startMs, endMs, yIndex, colorHex, absenceType, numberOfDays, employeeUsername]
   const chartData = useMemo<(string | number)[][]>(() => {
@@ -112,13 +123,13 @@ export function AbsenceGanttCalendar() {
         year: 'numeric',
       });
     return [
-      `<strong>${employee as string}</strong>`,
+      `<strong>${resolveEmployeeDisplayName(employee as string, employeeDisplayNames)}</strong>`,
       (tTypes as unknown as (k: string) => string)(type as string),
       `${t('ganttTooltipFrom')}: ${fmt(startMs)}`,
       `${t('ganttTooltipTill')}: ${fmt(endMs)}`,
       `${t('days')}: ${days as number}`,
     ].join('<br/>');
-  }, [i18n.language, t, tTypes]);
+  }, [i18n.language, t, tTypes, employeeDisplayNames]);
 
   // ── Header chart ──────────────────────────────────────────────────────────
   // Shows x-axis labels and the zoom slider. Sits above the scroll container
@@ -177,7 +188,7 @@ export function AbsenceGanttCalendar() {
     },
     yAxis: {
       type: 'category',
-      data: employees,
+      data: employeeLabels,
       axisTick: { show: false },
       axisLine: { show: false },
       axisLabel: { fontSize: 12, color: '#374151', overflow: 'truncate', width: 140 },

@@ -1,26 +1,32 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from '../../i18n/useTranslation';
 import { useAppStore } from '../../store/useAppStore';
+import { resolveEmployeeDisplayName } from '../../utils/employeeDisplayName';
 
 export function EmployeeFilter() {
   const { t } = useTranslation('filters');
-  const { records, filters, setFilters } = useAppStore();
+  const { records, filters, setFilters, employeeDisplayNames } = useAppStore();
   const [search, setSearch] = useState('');
 
   const employees = useMemo(() => {
-    const seen = new Map<string, string>();
+    const seen = new Map<string, { username: string; label: string }>();
     for (const r of records) {
       if (!seen.has(r.employeeUsername)) {
-        seen.set(r.employeeUsername, r.employeeUsername);
+        seen.set(r.employeeUsername, {
+          username: r.employeeUsername,
+          label: resolveEmployeeDisplayName(r.employeeUsername, employeeDisplayNames),
+        });
       }
     }
-    return Array.from(seen.values()).sort();
-  }, [records]);
+    return Array.from(seen.values()).sort((a, b) => a.label.localeCompare(b.label));
+  }, [records, employeeDisplayNames]);
 
   const filtered = useMemo(
     () =>
-      employees.filter((e) =>
-        e.toLowerCase().includes(search.toLowerCase()),
+      employees.filter(
+        (e) =>
+          e.label.toLowerCase().includes(search.toLowerCase()) ||
+          e.username.toLowerCase().includes(search.toLowerCase()),
       ),
     [employees, search],
   );
@@ -44,27 +50,27 @@ export function EmployeeFilter() {
       {search && filtered.length > 0 && (
         <ul className="absolute z-20 mt-1 max-h-48 w-full overflow-auto rounded-lg border border-gray-200 bg-white shadow-lg">
           {filtered.slice(0, 20).map((emp) => (
-            <li key={emp}>
+            <li key={emp.username}>
               <button
                 className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-gray-50"
                 type="button"
                 onClick={() => {
-                  handleToggle(emp);
+                  handleToggle(emp.username);
                   setSearch('');
                 }}
               >
                 <span
                   className={`h-4 w-4 rounded border ${
-                    filters.employees.includes(emp)
+                    filters.employees.includes(emp.username)
                       ? 'bg-orangeBusiness border-orangeBusiness'
                       : 'border-gray-300'
                   } flex items-center justify-center`}
                 >
-                  {filters.employees.includes(emp) && (
+                  {filters.employees.includes(emp.username) && (
                     <span className="text-white text-xs">✓</span>
                   )}
                 </span>
-                {emp}
+                {emp.label}
               </button>
             </li>
           ))}
@@ -77,7 +83,7 @@ export function EmployeeFilter() {
               key={emp}
               className="inline-flex items-center gap-1 rounded-full bg-orangeBusiness-pale px-2 py-0.5 text-xs text-orangeBusiness"
             >
-              {emp}
+              {resolveEmployeeDisplayName(emp, employeeDisplayNames)}
               <button
                 className="hover:text-orangeBusiness-dark"
                 onClick={() => handleToggle(emp)}

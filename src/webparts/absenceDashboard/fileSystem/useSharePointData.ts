@@ -16,6 +16,7 @@ import { useAppStore } from '../store/useAppStore';
 import { appEnv, getSpHttpClient, getSiteAbsoluteUrl, getSiteServerRelativeUrl } from '../config/env';
 import { AbsenceStatus } from '../types';
 import type { AbsenceRecord, Department, RegulRecord } from '../types';
+import type { EmployeeDisplayNames } from '../utils/employeeDisplayName';
 
 type UseSharePointDataReturn = {
   isLoading: boolean;
@@ -168,6 +169,7 @@ export function useSharePointData(): UseSharePointDataReturn {
   const setFileErrors = useAppStore((state) => state.setFileErrors);
   const setVacationExceptions = useAppStore((state) => state.setVacationExceptions);
   const setArrivalDates = useAppStore((state) => state.setArrivalDates);
+  const setEmployeeDisplayNames = useAppStore((state) => state.setEmployeeDisplayNames);
 
   const loadData = useCallback(async () => {
     const client = getSpHttpClient();
@@ -198,6 +200,7 @@ export function useSharePointData(): UseSharePointDataReturn {
       // Departments explicitly set via the `Check` column — applied last to override Primary entity.
       const checkDepartmentMap = new Map<string, Department>();
       const arrivalDates = new Map<string, Date>();
+      const employeeDisplayNames = new Map<string, string>();
 
       if (rosterUrl) {
         const rosterFiles = await listFolderFiles(client, siteAbsUrl, siteRelUrl, rosterUrl);
@@ -220,7 +223,7 @@ export function useSharePointData(): UseSharePointDataReturn {
           if (!isRosterExcelFile(file.name)) continue;
 
           try {
-            const { departments, checkDepartments, arrivals } = await loadRosterFile(
+            const { departments, checkDepartments, arrivals, displayNames } = await loadRosterFile(
               client,
               siteAbsUrl,
               file.serverRelativeUrl,
@@ -228,6 +231,7 @@ export function useSharePointData(): UseSharePointDataReturn {
 
             let deptAdded = 0;
             let arrAdded = 0;
+            let nameAdded = 0;
             departments.forEach((v, k) => {
               if (!departmentMap.has(k)) {
                 departmentMap.set(k, v);
@@ -242,10 +246,16 @@ export function useSharePointData(): UseSharePointDataReturn {
                 arrAdded += 1;
               }
             });
+            displayNames.forEach((v, k) => {
+              if (!employeeDisplayNames.has(k)) {
+                employeeDisplayNames.set(k, v);
+                nameAdded += 1;
+              }
+            });
 
             processedFileNotes.push(file.name);
             console.debug(
-              `[Roster Excel] ${file.name} -> +${deptAdded} dept, +${arrAdded} arrival`,
+              `[Roster Excel] ${file.name} -> +${deptAdded} dept, +${arrAdded} arrival, +${nameAdded} names`,
             );
           } catch (err) {
             console.error('Error parsing roster file', file.name, ':', err);
@@ -253,7 +263,7 @@ export function useSharePointData(): UseSharePointDataReturn {
         }
 
         console.debug(
-          `[Roster total] ${departmentMap.size} departments, ${arrivalDates.size} arrival dates`,
+          `[Roster total] ${departmentMap.size} departments, ${arrivalDates.size} arrival dates, ${employeeDisplayNames.size} names`,
         );
         // Apply Check-based overrides — these win over Primary entity regardless of file order.
         checkDepartmentMap.forEach((v, k) => departmentMap.set(k, v));
@@ -356,14 +366,24 @@ export function useSharePointData(): UseSharePointDataReturn {
 
       // --- Arrival dates (persisted for post-save recomputation) ---
       const arrivalDatesRecord: Record<string, string> = {};
-      arrivalDates.forEach((v, k) => { arrivalDatesRecord[k] = v.toISOString(); });
+      arrivalDates.forEach((v, k) => {
+        arrivalDatesRecord[k] = v.toISOString();
+      });
       setArrivalDates(arrivalDatesRecord);
+
+      const employeeDisplayNamesRecord: EmployeeDisplayNames = {};
+      employeeDisplayNames.forEach((v, k) => {
+        employeeDisplayNamesRecord[k] = v;
+      });
+      setEmployeeDisplayNames(employeeDisplayNamesRecord);
 
       // --- Vacation stats ---
       const currentYear = new Date().getFullYear();
       const statsMap = computeVacationStats(adjusted, arrivalDates, currentYear, regulRecords, new Date(), exceptionsMap);
       const statsRecord: Record<string, import('../types').VacationStats> = {};
-      statsMap.forEach((v, k) => { statsRecord[k] = v; });
+      statsMap.forEach((v, k) => {
+        statsRecord[k] = v;
+      });
       setVacationStats(statsRecord);
 
       setDataLoaded(true);
@@ -373,10 +393,12 @@ export function useSharePointData(): UseSharePointDataReturn {
     } finally {
       setIsLoading(false);
     }
-  }, [setRecords, setRegulRecords, setVacationStats, setProcessedFileNotes, setFileErrors, setVacationExceptions, setArrivalDates, tErrors]);
+  }, [setRecords, setRegulRecords, setVacationStats, setProcessedFileNotes, setFileErrors, setVacationExceptions, setArrivalDates, setEmployeeDisplayNames, tErrors]);
 
   useEffect(() => {
-    loadData().catch(() => { /* Error handled by state */ });
+    loadData().catch(() => {
+      // Error handled by state
+    });
   }, [loadData]);
 
   return { isLoading, error, dataLoaded };

@@ -8,6 +8,7 @@ import { exportCSV } from '../../utils/exportCSV';
 import { formatDate } from '../../utils/dateUtils';
 import { filterDayRecords } from '../../utils/filterDayRecords';
 import { useSort } from '../../hooks/useSort';
+import { resolveEmployeeDisplayName } from '../../utils/employeeDisplayName';
 
 export function AbsenceTable() {
   const { t } = useTranslation('table');
@@ -16,6 +17,7 @@ export function AbsenceTable() {
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
+  const employeeDisplayNames = useAppStore((s) => s.employeeDisplayNames);
   const isLoading = useAppStore((s) => s.records.length === 0);
 
   const regularizedLabel = (delta: number): string => {
@@ -58,7 +60,11 @@ export function AbsenceTable() {
     return [...filteredRecords].sort((a, b) => {
       switch (key) {
         case 'employee':
-          return a.employeeUsername.localeCompare(b.employeeUsername) * mult;
+          return (
+            resolveEmployeeDisplayName(a.employeeUsername, employeeDisplayNames).localeCompare(
+              resolveEmployeeDisplayName(b.employeeUsername, employeeDisplayNames),
+            ) * mult
+          );
         case 'type':
           return a.type.localeCompare(b.type) * mult;
         case 'from':
@@ -73,7 +79,7 @@ export function AbsenceTable() {
           return 0;
       }
     });
-  }, [filteredRecords, sortConfig]);
+  }, [filteredRecords, sortConfig, employeeDisplayNames]);
 
   const handleExport = () => {
     exportCSV(filteredRecords, `ausencias_${new Date().toISOString().split('T')[0]}.xlsx`);
@@ -152,7 +158,7 @@ export function AbsenceTable() {
                 >
                   <td className="px-4 py-3 text-sm text-gray-900">
                     <div className="flex items-center gap-2 font-medium">
-                      <span>{record.employeeUsername}</span>
+                      <span>{resolveEmployeeDisplayName(record.employeeUsername, employeeDisplayNames)}</span>
                       {record.regularized && (
                         <Badge
                           label={regularizedLabel(regularizedDelta)}

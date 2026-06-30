@@ -46,6 +46,17 @@ const addMapping = (map: Map<string, Department>, username: string, department: 
   map.set(username.toLowerCase(), department);
 };
 
+const formatDisplayName = (row: { Name?: unknown; 'Last name'?: unknown; 'First name'?: unknown }): string | null => {
+  const lastName = toText(row['Last name']) || toText(row.Name);
+  const firstName = toText(row['First name']);
+
+  if (lastName && firstName) {
+    return `${lastName}, ${firstName}`;
+  }
+
+  return lastName || firstName || null;
+};
+
 const loadJsonMappings = (jsonText: string): Map<string, Department> => {
   const raw = jsonText.trim();
 
@@ -63,13 +74,14 @@ const loadJsonMappings = (jsonText: string): Map<string, Department> => {
   return map;
 };
 
-const loadExcelMappings = (buffer: ArrayBuffer): Map<string, Department> => {
+const loadExcelMappings = (buffer: ArrayBuffer): { departments: Map<string, Department>; displayNames: Map<string, string> } => {
   const workbook = XLSX.read(buffer, { type: 'array' });
   const map = new Map<string, Department>();
+  const displayNames = new Map<string, string>();
   const worksheet = workbook.Sheets['Export ASA'] ?? workbook.Sheets[workbook.SheetNames[0]];
 
   if (!worksheet) {
-    return map;
+    return { departments: map, displayNames };
   }
 
   const rows = XLSX.utils.sheet_to_json<EmployeeRosterRow>(worksheet, {
@@ -81,13 +93,17 @@ const loadExcelMappings = (buffer: ArrayBuffer): Map<string, Department> => {
     const primaryEntity = toText(row['Primary entity']);
     const checkEntity = toText(row.Check);
     const departmentValue = normalizeDepartment(checkEntity) ?? normalizeDepartment(primaryEntity);
+    const displayName = formatDisplayName(row);
 
     if (usernameValue && isUsernameLike(usernameValue)) {
       addMapping(map, usernameValue, departmentValue);
+      if (displayName && !displayNames.has(usernameValue.toLowerCase())) {
+        displayNames.set(usernameValue.toLowerCase(), displayName);
+      }
     }
   }
 
-  return map;
+  return { departments: map, displayNames };
 };
 
 export async function loadDepartmentMap(
@@ -125,7 +141,7 @@ export async function loadDepartmentMap(
       }
 
       const buffer = await response.arrayBuffer();
-      return loadExcelMappings(buffer);
+      return loadExcelMappings(buffer).departments;
     } catch {
       return new Map<string, Department>();
     }
@@ -190,17 +206,18 @@ export async function loadFocusRoster(
 }
 
 // Generic roster extractor: scans ALL sheets of a workbook and pulls out
-// department + arrival data from any row that has a usable `Code`.
+// department + arrival + display-name data from any row that has a usable `Code`.
 // Rows without an `Arrival date` column/value are simply ignored for arrivals.
 export const extractRosterDataFromBuffer = (
   buffer: ArrayBuffer,
-): { departments: Map<string, Department>; checkDepartments: Map<string, Department>; arrivals: Map<string, Date> } => {
+): { departments: Map<string, Department>; checkDepartments: Map<string, Department>; arrivals: Map<string, Date>; displayNames: Map<string, string> } => {
   const workbook = XLSX.read(buffer, { type: 'array', cellDates: true });
   const departments = new Map<string, Department>();
   // Departments sourced from the authoritative `Check` column (OBD roster).
   // These override any `Primary entity` mappings regardless of file order.
   const checkDepartments = new Map<string, Department>();
   const arrivals = new Map<string, Date>();
+  const displayNames = new Map<string, string>();
 
   for (const sheetName of workbook.SheetNames) {
     const ws = workbook.Sheets[sheetName];
@@ -224,6 +241,7 @@ export const extractRosterDataFromBuffer = (
       // Department: `Check` is authoritative; `Primary entity` is the fallback.
       const checkDept = normalizeDepartment(row.Check);
       const entityDept = normalizeDepartment(row['Primary entity']);
+      const name = formatDisplayName(row);
       if (checkDept) {
         checkDepartments.set(code, checkDept);
       }
@@ -231,21 +249,26 @@ export const extractRosterDataFromBuffer = (
       if (dept && !departments.has(code)) {
         departments.set(code, dept);
       }
+
+      if (name && !displayNames.has(code)) {
+        displayNames.set(code, name);
+      }
     }
   }
 
-  return { departments, checkDepartments, arrivals };
+  return { departments, checkDepartments, arrivals, displayNames };
 };
 
 export async function loadRosterFile(
   client: SPHttpClient,
   siteUrl: string,
   fileServerRelativeUrl: string,
-): Promise<{ departments: Map<string, Department>; checkDepartments: Map<string, Department>; arrivals: Map<string, Date> }> {
+): Promise<{ departments: Map<string, Department>; checkDepartments: Map<string, Department>; arrivals: Map<string, Date>; displayNames: Map<string, string> }> {
   const empty = {
     departments: new Map<string, Department>(),
     checkDepartments: new Map<string, Department>(),
     arrivals: new Map<string, Date>(),
+    displayNames: new Map<string, string>(),
   };
 
   if (!isExcelFile(fileServerRelativeUrl)) return empty;

@@ -5,8 +5,10 @@ import { NoDataState } from '../common/EmptyState';
 import { LoadingSpinner } from '../common/LoadingSpinner';
 import { getDayValue } from '../../types';
 import { useSort } from '../../hooks/useSort';
+import { resolveEmployeeDisplayName } from '../../utils/employeeDisplayName';
 interface EmployeeSummary {
   username: string;
+  displayName: string;
   department: string;
   totalDays: number;
   vacationDays: number;
@@ -22,6 +24,7 @@ export function EmployeeSummaryTable() {
   const { t: tDashboard } = useTranslation('dashboard');
   const filteredDayRecords = useAppStore((s) => s.getFilteredDayRecords());
   const setSelectedEmployeeDetail = useAppStore((s) => s.setSelectedEmployeeDetail);
+  const employeeDisplayNames = useAppStore((s) => s.employeeDisplayNames);
   const isLoading = useAppStore((s) => s.dailyRecords.length === 0);
 
   const employeeSummaries = useMemo(() => {
@@ -33,6 +36,7 @@ export function EmployeeSummaryTable() {
       if (!summaryMap[record.employeeUsername]) {
         summaryMap[record.employeeUsername] = {
           username: record.employeeUsername,
+          displayName: resolveEmployeeDisplayName(record.employeeUsername, employeeDisplayNames),
           department: record.department ?? 'Unknown',
           totalDays: 0,
           vacationDays: 0,
@@ -66,7 +70,7 @@ export function EmployeeSummaryTable() {
     }
 
     return Object.values(summaryMap);
-  }, [filteredDayRecords]);
+  }, [filteredDayRecords, employeeDisplayNames]);
 
   const { sortConfig, handleSort, getSortIndicator } = useSort({ key: 'days', direction: 'desc' });
 
@@ -77,7 +81,7 @@ export function EmployeeSummaryTable() {
     return [...employeeSummaries].sort((a, b) => {
       switch (key) {
         case 'employee':
-          return a.username.localeCompare(b.username) * mult;
+          return a.displayName.localeCompare(b.displayName) * mult;
         case 'department':
           return a.department.localeCompare(b.department) * mult;
         case 'days':
@@ -172,7 +176,7 @@ export function EmployeeSummaryTable() {
                 onClick={() => setSelectedEmployeeDetail(summary.username)}
               >
                 <td className="px-4 py-3 text-sm font-medium text-gray-900">
-                  {summary.username}
+                  {summary.displayName}
                 </td>
                 <td className={`px-4 py-3 text-sm ${isUnknown ? 'text-yellow-700 font-medium' : 'text-gray-500'}`}>
                   {isUnknown ? t('unknown') : summary.department}

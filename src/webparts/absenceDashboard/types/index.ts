@@ -38,6 +38,7 @@ export interface EverwinAbsenceRow {
 export interface EmployeeRosterRow {
   Code: string;
   Name: string;
+  'Last name'?: string;
   'First name': string;
   'Primary entity': string;
   'Resource type': string;

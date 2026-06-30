@@ -6,6 +6,7 @@ import type { AbsenceFilters } from '../components/filters/filterTypes';
 import { defaultFilters } from '../components/filters/filterTypes';
 import { expandToDailyRecords } from '../utils/absenceExpander';
 import { filterDayRecords } from '../utils/filterDayRecords';
+import type { EmployeeDisplayNames } from '../utils/employeeDisplayName';
 
 type AppState = {
   records: AbsenceRecord[];
@@ -14,6 +15,7 @@ type AppState = {
   vacationStats: Record<string, VacationStats>;
   vacationExceptions: Record<string, { days: number; notes?: string }>;
   arrivalDates: Record<string, string>;
+  employeeDisplayNames: EmployeeDisplayNames;
   processedFileNotes: string[];
   fileErrors: string[];
   folderName: string | null;
@@ -25,6 +27,7 @@ type AppState = {
   setVacationStats: (stats: Record<string, VacationStats>) => void;
   setVacationExceptions: (exceptions: Record<string, { days: number; notes?: string }>) => void;
   setArrivalDates: (dates: Record<string, string>) => void;
+  setEmployeeDisplayNames: (names: EmployeeDisplayNames) => void;
   setProcessedFileNotes: (notes: string[]) => void;
   setFileErrors: (errors: string[]) => void;
   setSidebarOpen: (isOpen: boolean) => void;
@@ -76,6 +79,7 @@ export const useAppStore = create<AppState>()(
       vacationStats: {},
       vacationExceptions: {} as Record<string, { days: number; notes?: string }>,
       arrivalDates: {},
+      employeeDisplayNames: {},
       processedFileNotes: [],
       fileErrors: [],
       folderName: null,
@@ -92,9 +96,10 @@ export const useAppStore = create<AppState>()(
       setVacationStats: (stats) => set({ vacationStats: stats }),
       setVacationExceptions: (exceptions) => set({ vacationExceptions: exceptions }),
       setArrivalDates: (dates) => set({ arrivalDates: dates }),
+      setEmployeeDisplayNames: (names) => set({ employeeDisplayNames: names }),
       setProcessedFileNotes: (notes) => set({ processedFileNotes: notes }),
       setFileErrors: (errors) => set({ fileErrors: errors }),
-      clearRecords: () => set({ records: [], dailyRecords: [], folderName: null, regulRecords: [], vacationStats: {}, processedFileNotes: [], fileErrors: [] }),
+      clearRecords: () => set({ records: [], dailyRecords: [], folderName: null, regulRecords: [], vacationStats: {}, employeeDisplayNames: {}, processedFileNotes: [], fileErrors: [] }),
       setSidebarOpen: (isOpen) => set({ sidebarOpen: isOpen }),
       toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
       setFilters: (newFilters) =>

@@ -4,10 +4,12 @@ import { useTranslation } from '../../i18n/useTranslation';
 import { useAppStore } from '../../store/useAppStore';
 import { NoDataState } from '../common/EmptyState';
 import { useSort } from '../../hooks/useSort';
+import { resolveEmployeeDisplayName } from '../../utils/employeeDisplayName';
 
 interface VacationRow {
   code: string;
   username: string;
+  displayName: string;
   department: string;
   entitlementY: number;
   requestedY: number;
@@ -30,6 +32,7 @@ export function VacationStatsTable(): React.ReactElement {
   const filters = useAppStore((s) => s.filters);
   const getFilteredRecords = useAppStore((s) => s.getFilteredRecords);
   const setSelectedEmployeeDetail = useAppStore((s) => s.setSelectedEmployeeDetail);
+  const employeeDisplayNames = useAppStore((s) => s.employeeDisplayNames);
 
   // Usernames visible after applying active filters
   const filteredUsernames = useMemo(() => {
@@ -58,6 +61,7 @@ export function VacationStatsTable(): React.ReactElement {
     for (const [code, stats] of Object.entries(vacationStats)) {
       const info = infoByCode.get(code);
       const username = info?.username ?? code;
+      const displayName = resolveEmployeeDisplayName(username, employeeDisplayNames);
 
       // Respect active filters — skip employees not in the filtered set
       if (filteredUsernames.size > 0 && !filteredUsernames.has(username.toLowerCase())) continue;
@@ -80,6 +84,7 @@ export function VacationStatsTable(): React.ReactElement {
         merged.set(username, {
           code,
           username,
+          displayName,
           department: info?.department ?? 'Unknown',
           ...stats,
         });
@@ -87,7 +92,7 @@ export function VacationStatsTable(): React.ReactElement {
     }
 
     return Array.from(merged.values());
-  }, [vacationStats, infoByCode, filteredUsernames]);
+  }, [vacationStats, infoByCode, filteredUsernames, employeeDisplayNames]);
 
   const { sortConfig, handleSort, getSortIndicator } = useSort({ key: 'employee', direction: 'asc' });
 
@@ -97,7 +102,7 @@ export function VacationStatsTable(): React.ReactElement {
     const mult = direction === 'asc' ? 1 : -1;
     return [...rows].sort((a, b) => {
       switch (key) {
-        case 'employee': return a.username.localeCompare(b.username) * mult;
+        case 'employee': return a.displayName.localeCompare(b.displayName) * mult;
         case 'department': return a.department.localeCompare(b.department) * mult;
         case 'entitlementY': return (a.entitlementY - b.entitlementY) * mult;
         case 'requestedY': return (a.requestedY - b.requestedY) * mult;
@@ -154,7 +159,7 @@ export function VacationStatsTable(): React.ReactElement {
                 className="border-b border-gray-50 hover:bg-orange-50/40 transition-colors cursor-pointer"
                 onClick={() => setSelectedEmployeeDetail(row.username)}
               >
-                <td className="px-4 py-2.5 text-sm font-medium text-gray-800">{row.username}</td>
+                <td className="px-4 py-2.5 text-sm font-medium text-gray-800">{row.displayName}</td>
                 <td className="px-4 py-2.5 text-sm text-gray-500">{row.department}</td>
                 <td className="px-4 py-2.5 text-right text-sm text-gray-700">{row.entitlementY}</td>
                 <td className="px-4 py-2.5 text-right text-sm text-gray-700">{row.requestedY}</td>
