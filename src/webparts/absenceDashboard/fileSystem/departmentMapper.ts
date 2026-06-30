@@ -2,6 +2,7 @@ import { SPHttpClient } from '@microsoft/sp-http';
 import * as XLSX from 'xlsx';
 
 import type { Department, EmployeeRosterRow, FocusRosterRow } from '../types';
+import { normalizeEmployeeCode } from '../api/excelParser';
 
 type JsonDepartmentMapping = {
   mappings?: Array<{ username?: string; department?: Department | string }>;
@@ -76,7 +77,7 @@ const loadExcelMappings = (buffer: ArrayBuffer): Map<string, Department> => {
   });
 
   for (const row of rows) {
-    const usernameValue = toText(row.Code);
+    const usernameValue = normalizeEmployeeCode(row.Code);
     const primaryEntity = toText(row['Primary entity']);
     const checkEntity = toText(row.Check);
     const departmentValue = normalizeDepartment(checkEntity) ?? normalizeDepartment(primaryEntity);
@@ -145,7 +146,7 @@ const loadFocusRosterFromBuffer = (buffer: ArrayBuffer): Map<string, Date> => {
   const rows = XLSX.utils.sheet_to_json<FocusRosterRow>(worksheet, { defval: '' });
 
   for (const row of rows) {
-    const code = toText(row.Code);
+    const code = normalizeEmployeeCode(row.Code);
 
     if (!code || !isUsernameLike(code)) {
       continue;
@@ -208,7 +209,7 @@ export const extractRosterDataFromBuffer = (
     const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(ws, { defval: '' });
 
     for (const row of rows) {
-      const code = toText(row.Code).toLowerCase();
+      const code = normalizeEmployeeCode(row.Code).toLowerCase();
       if (!code || !isUsernameLike(code)) continue;
 
       // Arrival date: only set if the column is present AND parseable.

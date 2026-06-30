@@ -116,7 +116,7 @@ export const useAppStore = create<AppState>()(
       setSelectedEmployeeDetail: (username) => set({ selectedEmployeeDetail: username }),
     }),
     {
-      name: 'absence-dashboard-storage',
+      name: 'absence-dashboard-storage-v2',
       storage: createJSONStorage(() => sessionStorageMiddleware),
       partialize: (state) => ({
         records: state.records,

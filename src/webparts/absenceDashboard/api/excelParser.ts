@@ -33,7 +33,14 @@ const asText = (value: unknown) => String(value ?? '').trim();
 // Everwin Codes en ficheros de ausencias vienen como `<stem>-NNN` (un
 // counter por registro/empleado). El roster (OBD/FOCUS) usa sólo el stem,
 // así que hay que quitar el sufijo para que el join funcione.
-const normalizeEmployeeCode = (raw: unknown) => asText(raw).replace(/-\d+$/, '');
+// Adicionalmente, Everwin histórico generaba códigos con prefijo inicial-punto
+// (ej. "d.martinez-020") que luego cambió a formato sin punto ("dmartinez-033").
+// Se normaliza eliminando el punto que sigue a una única letra inicial para
+// que ambas variantes resuelvan al mismo código.
+export const normalizeEmployeeCode = (raw: unknown) =>
+  asText(raw)
+    .replace(/-\d+$/, '')           // strip Everwin absence counter: dmartinez-026 → dmartinez
+    .replace(/^([a-zA-Z])\./, '$1'); // strip historical initial-dot:  d.martinez → dmartinez
 
 const parseRequiredText = (value: unknown, fieldName: string, sourceFile: string) => {
   const text = asText(value);
@@ -176,7 +183,7 @@ const parseAbsenceRows = (rows: EverwinAbsenceRow[], sourceFile: string): Absenc
     return {
       id: crypto.randomUUID(),
       employeeCode: normalizeEmployeeCode(rawCode),
-      employeeUsername: parseRequiredText(row.Employee, 'Employee', sourceFile),
+      employeeUsername: normalizeEmployeeCode(parseRequiredText(row.Employee, 'Employee', sourceFile)),
       type,
       category: getAbsenceCategory(type),
       from: parseBoundaryDate(row.From, 'From', sourceFile),

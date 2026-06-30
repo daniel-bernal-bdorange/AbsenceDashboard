@@ -3,7 +3,7 @@ import { SPHttpClient } from '@microsoft/sp-http';
 import * as XLSX from 'xlsx';
 
 import { useTranslation } from '../i18n/useTranslation';
-import { parseExcelFile, parseSpreadsheetXmlFile, parseRegulFile, parseExceptionsFile } from '../api/excelParser';
+import { getAbsenceCategory, parseExcelFile, parseSpreadsheetXmlFile, parseRegulFile, parseExceptionsFile } from '../api/excelParser';
 import {
   loadDepartmentMap,
   loadRosterFile,
@@ -14,6 +14,7 @@ import { deduplicateRecords } from '../utils/deduplicateRecords';
 import { computeVacationStats } from '../utils/vacationEntitlement';
 import { useAppStore } from '../store/useAppStore';
 import { appEnv, getSpHttpClient, getSiteAbsoluteUrl, getSiteServerRelativeUrl } from '../config/env';
+import { AbsenceStatus } from '../types';
 import type { AbsenceRecord, Department, RegulRecord } from '../types';
 
 type UseSharePointDataReturn = {
@@ -100,12 +101,46 @@ const applyRegularizations = (records: AbsenceRecord[], regulRecords: RegulRecor
       )
       .sort((a, b) => normalizeDay(a.from) - normalizeDay(b.from) || normalizeDay(a.till) - normalizeDay(b.till));
 
-    const targetRecord =
-      candidates.find((record) => normalizeDay(record.from) >= targetDay) ??
-      candidates.find((record) => normalizeDay(record.from) < targetDay);
+    let targetRecord =
+      candidates
+        .filter((record) => {
+          const recordFrom = normalizeDay(record.from);
+          const recordTill = normalizeDay(record.till);
+          return targetDay >= recordFrom && targetDay <= recordTill;
+        })
+        .sort((a, b) => {
+          const aSpan = normalizeDay(a.till) - normalizeDay(a.from);
+          const bSpan = normalizeDay(b.till) - normalizeDay(b.from);
+
+          if (aSpan !== bSpan) return aSpan - bSpan;
+
+          const aFromDistance = Math.abs(normalizeDay(a.from) - targetDay);
+          const bFromDistance = Math.abs(normalizeDay(b.from) - targetDay);
+
+          if (aFromDistance !== bFromDistance) return aFromDistance - bFromDistance;
+
+          return a.requestDate.getTime() - b.requestDate.getTime();
+        })[0];
 
     if (!targetRecord) {
-      continue;
+      targetRecord = {
+        id: crypto.randomUUID(),
+        employeeCode,
+        employeeUsername: regul.employeeCode,
+        department: undefined,
+        type: regul.rowType as AbsenceRecord['type'],
+        category: getAbsenceCategory(regul.rowType as AbsenceRecord['type']),
+        from: new Date(regul.dateToRegularise),
+        till: new Date(regul.dateToRegularise),
+        requestDate: new Date(regul.date),
+        numberOfDays: 0,
+        status: AbsenceStatus.ACCEPTED,
+        validationStatus: regul.validationStatus,
+        sourceFile: regul.sourceFile,
+        regularized: false,
+        regularizedDelta: 0,
+      };
+      adjustedRecords.push(targetRecord);
     }
 
     const currentFrom = normalizeDay(targetRecord.from);

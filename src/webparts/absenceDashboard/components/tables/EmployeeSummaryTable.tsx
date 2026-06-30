@@ -20,11 +20,9 @@ export function EmployeeSummaryTable() {
   const { t } = useTranslation('table');
   const { t: tCharts } = useTranslation('charts');
   const { t: tDashboard } = useTranslation('dashboard');
-  const getFilteredDayRecords = useAppStore((s) => s.getFilteredDayRecords);
-  const dailyRecords = useAppStore((s) => s.dailyRecords);
+  const filteredDayRecords = useAppStore((s) => s.getFilteredDayRecords());
   const setSelectedEmployeeDetail = useAppStore((s) => s.setSelectedEmployeeDetail);
   const isLoading = useAppStore((s) => s.dailyRecords.length === 0);
-  const filteredDayRecords = getFilteredDayRecords();
 
   const employeeSummaries = useMemo(() => {
     const summaryMap: Record<string, EmployeeSummary> = {};
