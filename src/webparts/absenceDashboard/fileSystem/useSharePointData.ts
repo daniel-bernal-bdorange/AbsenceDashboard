@@ -74,6 +74,12 @@ const normalizeDay = (date: Date): number => {
   return normalized.getTime();
 };
 
+const addDays = (date: Date, days: number): Date => {
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return next;
+};
+
 const applyRegularizations = (records: AbsenceRecord[], regulRecords: RegulRecord[]): AbsenceRecord[] => {
   const adjustedRecords = records.map((record) => ({
     ...record,
@@ -124,6 +130,9 @@ const applyRegularizations = (records: AbsenceRecord[], regulRecords: RegulRecor
         })[0];
 
     if (!targetRecord) {
+      const daysToAdd = Math.max(Math.trunc(regul.expenditureQuantity), 1);
+      const startDate = new Date(regul.date);
+
       targetRecord = {
         id: crypto.randomUUID(),
         employeeCode,
@@ -131,8 +140,8 @@ const applyRegularizations = (records: AbsenceRecord[], regulRecords: RegulRecor
         department: undefined,
         type: regul.rowType as AbsenceRecord['type'],
         category: getAbsenceCategory(regul.rowType as AbsenceRecord['type']),
-        from: new Date(regul.dateToRegularise),
-        till: new Date(regul.dateToRegularise),
+        from: startDate,
+        till: addDays(startDate, daysToAdd - 1),
         requestDate: new Date(regul.date),
         numberOfDays: 0,
         status: AbsenceStatus.ACCEPTED,
@@ -150,6 +159,10 @@ const applyRegularizations = (records: AbsenceRecord[], regulRecords: RegulRecor
     }
 
     targetRecord.numberOfDays = Math.max(targetRecord.numberOfDays + regul.expenditureQuantity, 0);
+    targetRecord.till =
+      targetRecord.numberOfDays < 1
+        ? new Date(targetRecord.from)
+        : addDays(targetRecord.from, Math.trunc(targetRecord.numberOfDays) - 1);
     targetRecord.regularized = true;
     targetRecord.regularizedDelta += regul.expenditureQuantity;
   }
