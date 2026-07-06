@@ -264,7 +264,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
                           s.setVacationExceptions(newExc);
                           const excMap = new Map(Object.entries(newExc).map(([k, v]) => [k, (v as { days: number }).days]));
                           const arrMap = new Map(Object.entries(s.arrivalDates).map(([k, v]) => [k, new Date(v as string)]));
-                          const stats = computeVacationStats(s.records, arrMap, currentYear, s.regulRecords, new Date(), excMap);
+                          const stats = computeVacationStats(s.records, arrMap, currentYear, new Date(), excMap);
                           const rec: Record<string, import('../types').VacationStats> = {};
                           stats.forEach((v, k) => { rec[k] = v; });
                           s.setVacationStats({ ...s.vacationStats, ...rec });
@@ -370,7 +370,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
                             s.setVacationExceptions(newExc);
                             const excMap = new Map(Object.entries(newExc).map(([k, v]) => [k, (v as { days: number }).days]));
                             const arrMap = new Map(Object.entries(s.arrivalDates).map(([k, v]) => [k, new Date(v as string)]));
-                            const stats = computeVacationStats(s.records, arrMap, currentYear, s.regulRecords, new Date(), excMap);
+                            const stats = computeVacationStats(s.records, arrMap, currentYear, new Date(), excMap);
                             const rec: Record<string, import('../types').VacationStats> = {};
                             stats.forEach((v, k) => { rec[k] = v; });
                             s.setVacationStats({ ...s.vacationStats, ...rec });

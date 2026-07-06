@@ -1,5 +1,5 @@
 import { AbsenceStatus, AbsenceType } from '../types';
-import type { AbsenceRecord, RegulRecord, VacationStats } from '../types';
+import type { AbsenceRecord, VacationStats } from '../types';
 
 const BASE_DAYS = 23;
 const TRIENIO_DAYS = 1;
@@ -50,10 +50,9 @@ export function computeEntitlement(arrivalDate: Date, refYear: number): number {
 /**
  * Computes vacation stats for each employee code.
  *
- * @param records - All absence records (may span multiple years).
+ * @param records - All absence records, with regularizations already applied when applicable.
  * @param arrivalDates - Map<employeeCode, arrivalDate> from FOCUS roster.
  * @param year - The current year (Y).
- * @param regulRecords - Regularization records.
  * @param today - Reference date for expiry check (defaults to now).
  * @param exceptions - Optional map keyed `${code}|${year}` overriding the default entitlement.
  */
@@ -61,7 +60,6 @@ export function computeVacationStats(
   records: AbsenceRecord[],
   arrivalDates: Map<string, Date>,
   year: number,
-  regulRecords: RegulRecord[] = [],
   today: Date = new Date(),
   exceptions: Map<string, number> = new Map(),
 ): Map<string, VacationStats> {
@@ -71,16 +69,10 @@ export function computeVacationStats(
 
   // Active = any status except Refused / Cancelled.
   // Used for computing "remaining" (includes in-progress requests).
-  const isActive = (s: AbsenceStatus) =>
+  const isActive = (s: AbsenceStatus): boolean =>
     s !== AbsenceStatus.REFUSED &&
     s !== AbsenceStatus.CANCELED &&
     s !== AbsenceStatus.CANCELLATION;
-
-  const vacationAccepted = records.filter(
-    (r) =>
-      (r.type === AbsenceType.VACATION || r.type === AbsenceType.VACATION_PREV_YEAR) &&
-      r.status === AbsenceStatus.ACCEPTED,
-  );
 
   const vacationActive = records.filter(
     (r) =>
@@ -90,16 +82,6 @@ export function computeVacationStats(
 
   // Collect all employee codes present in records
   const codes = new Set<string>(records.map((r) => r.employeeCode.toLowerCase()));
-
-  const regularizationConsumption = (employeeCode: string, targetYear: number, rowType: AbsenceType): number =>
-    regulRecords
-      .filter(
-        (r) =>
-          r.employeeCode.toLowerCase() === employeeCode &&
-          r.dateToRegularise.getFullYear() === targetYear &&
-          r.rowType === rowType,
-      )
-      .reduce((sum, r) => sum - r.expenditureQuantity, 0);
 
   const result = new Map<string, VacationStats>();
 
@@ -135,12 +117,8 @@ export function computeVacationStats(
       )
       .reduce((sum, r) => sum + r.numberOfDays, 0);
 
-    const regularizationY = regularizationConsumption(code, year, AbsenceType.VACATION);
-    const regularizationPrev = regularizationConsumption(code, prevYear, AbsenceType.VACATION);
-    const regularizationCarryover = regularizationConsumption(code, year, AbsenceType.VACATION_PREV_YEAR);
-
-    const remainingY = entitlementY - requestedY - regularizationY;
-    const remainingPrev = entitlementPrev - usedPrev - usedCarryover - regularizationPrev - regularizationCarryover;
+    const remainingY = entitlementY - requestedY;
+    const remainingPrev = entitlementPrev - usedPrev - usedCarryover;
     const expiredPrev = pastDeadline && remainingPrev > 0;
 
     console.debug(`[VacStats] ${code}: entPrev=${entitlementPrev} usedPrev=${usedPrev} carryover=${usedCarryover} remainingPrev=${remainingPrev} | activeVacRows=${vacationActive.filter((r) => r.employeeCode.toLowerCase() === code).length}`);

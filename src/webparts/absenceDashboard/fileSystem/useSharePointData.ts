@@ -379,7 +379,7 @@ export function useSharePointData(): UseSharePointDataReturn {
 
       // --- Vacation stats ---
       const currentYear = new Date().getFullYear();
-      const statsMap = computeVacationStats(adjusted, arrivalDates, currentYear, regulRecords, new Date(), exceptionsMap);
+      const statsMap = computeVacationStats(adjusted, arrivalDates, currentYear, new Date(), exceptionsMap);
       const statsRecord: Record<string, import('../types').VacationStats> = {};
       statsMap.forEach((v, k) => {
         statsRecord[k] = v;
