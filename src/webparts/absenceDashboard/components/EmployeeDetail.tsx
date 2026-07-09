@@ -190,7 +190,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
             <div className="col-span-1">
               <div className="bg-gray-50 rounded-xl p-4 text-center">
                 <div className="text-3xl font-bold text-gray-900">{employeeInfo.totalDays.toFixed(0)}</div>
-                <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 truncate">{tDashboard('totalDays')}</div>
+                <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 leading-tight whitespace-normal break-words">{tDashboard('totalDays')}</div>
               </div>
             </div>
             <div className="col-span-3 grid grid-cols-4 gap-3">
@@ -199,7 +199,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
                   <div className="text-xl font-bold" style={{ color: categoryColors[cat] }}>
                     {employeeInfo.totals[cat].toFixed(0)}
                   </div>
-                  <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 truncate">
+                  <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 leading-tight whitespace-normal break-words">
                     {tCharts(categoryLabels[cat] as 'vacationSeries' | 'vacationPrevYearSeries' | 'sickLeaveSeries' | 'maternitySeries' | 'specialSeries')}
                   </div>
                 </div>
@@ -208,7 +208,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
           </div>
 
           <div className="mb-8">
-            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4 truncate">
+            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4 whitespace-normal break-words leading-tight">
               {tDashboard('comparisonVs')} {employeeInfo.department === 'Unknown' ? tDashboard('unknown') : employeeInfo.department}
             </h3>
             <div className="flex items-center gap-8 p-6 bg-gray-50 rounded-xl">
@@ -408,9 +408,9 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
               <div className="grid grid-cols-3 gap-4">
                 <div className="bg-gray-50 rounded-xl p-4 text-center">
                   <div className="text-2xl font-bold" style={{ color: chartColors.vacation }}>
-                    {vacationCurrentYear.usedY}
+                    {vacationCurrentYear.requestedY}
                   </div>
-                  <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 truncate">
+                  <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 leading-tight whitespace-normal break-words">
                     {tDashboard('vacationRequested')}
                   </div>
                 </div>
@@ -418,7 +418,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
                   <div className="text-2xl font-bold text-gray-900">
                     {vacationCurrentYear.entitlementY}
                   </div>
-                  <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 truncate">
+                  <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 leading-tight whitespace-normal break-words">
                     {tDashboard('vacationEntitlement')}
                   </div>
                   {vacationExceptions[`${employeeCode.toLowerCase()}|${currentYear}`] !== undefined && (
@@ -441,7 +441,7 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
                   >
                     {vacationCurrentYear.remainingY}
                   </div>
-                  <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 truncate">
+                  <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 leading-tight whitespace-normal break-words">
                     {tDashboard('vacationRemaining')}
                   </div>
                 </div>

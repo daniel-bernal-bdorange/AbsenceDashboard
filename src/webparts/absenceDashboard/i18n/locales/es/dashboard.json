@@ -11,7 +11,7 @@
   "overviewTitle": "Visión general",
   "absenceRegister": "Registro de ausencias",
   "employeeSummary": "Resumen por empleado",
-  "vacationSectionTitle": "Vacaciones y entitlement",
+  "vacationSectionTitle": "Resumen vacaciones",
   "folderPickerTitle": "Selecciona la carpeta de ausencias",
   "folderPickerDescription": "Elige la carpeta local que contiene los Excel. La app leerá los ficheros de ausencias y el archivo de mapeo de departamentos dentro de esa misma carpeta.",
   "selectFolder": "Seleccionar carpeta",

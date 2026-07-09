@@ -22,6 +22,7 @@ export function EmployeeSummaryTable() {
   const { t } = useTranslation('table');
   const { t: tCharts } = useTranslation('charts');
   const { t: tDashboard } = useTranslation('dashboard');
+  const currentYear = new Date().getFullYear();
   const filteredDayRecords = useAppStore((s) => s.getFilteredDayRecords());
   const setSelectedEmployeeDetail = useAppStore((s) => s.setSelectedEmployeeDetail);
   const employeeDisplayNames = useAppStore((s) => s.employeeDisplayNames);
@@ -138,7 +139,7 @@ export function EmployeeSummaryTable() {
                 className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
                 onClick={() => handleSort('vacationDays')}
               >
-                {tCharts('vacationSeries')}{getSortIndicator('vacationDays')}
+                {tDashboard('vacationCardTitle', { year: currentYear })}{getSortIndicator('vacationDays')}
               </th>
               <th
                 className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
