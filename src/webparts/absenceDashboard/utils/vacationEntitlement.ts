@@ -24,7 +24,6 @@ const yearsComplete = (arrivalDate: Date, refDate: Date): number => {
  * Computes vacation entitlement for a given year.
  * Base: 23 days + 1 per complete trienio at 01/01/Y.
  * - Employees who arrived after refYear get 0 (they were not employed that year).
- * - Employees who arrived during refYear get a prorated amount (full months worked / 12).
  */
 export function computeEntitlement(arrivalDate: Date, refYear: number): number {
   // Not employed during this year at all
@@ -35,16 +34,7 @@ export function computeEntitlement(arrivalDate: Date, refYear: number): number {
   const dec31 = new Date(refYear, 11, 31);
   const complete = yearsComplete(arrivalDate, dec31);
   const trienios = complete < 0 ? 0 : Math.floor(complete / TRIENIO_YEARS);
-  const fullEntitlement = Math.min(BASE_DAYS + trienios * TRIENIO_DAYS, MAX_ENTITLEMENT_DAYS);
-
-  // Prorate when the employee joined mid-year: count full months worked in refYear
-  if (arrivalDate.getFullYear() === refYear) {
-    // Months worked = from arrival month to December (inclusive), 0-indexed
-    const monthsWorked = 12 - arrivalDate.getMonth();
-    return Math.ceil(fullEntitlement * monthsWorked / 12);
-  }
-
-  return fullEntitlement;
+  return Math.min(BASE_DAYS + trienios * TRIENIO_DAYS, MAX_ENTITLEMENT_DAYS);
 }
 
 /**
