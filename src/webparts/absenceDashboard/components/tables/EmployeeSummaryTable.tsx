@@ -11,6 +11,7 @@ interface EmployeeSummary {
   displayName: string;
   department: string;
   totalDays: number;
+  daysPerAbsence: number;
   vacationDays: number;
   vacationPrevYearDays: number;
   sickDays: number;
@@ -40,6 +41,7 @@ export function EmployeeSummaryTable() {
           displayName: resolveEmployeeDisplayName(record.employeeUsername, employeeDisplayNames),
           department: record.department ?? 'Unknown',
           totalDays: 0,
+          daysPerAbsence: 0,
           vacationDays: 0,
           vacationPrevYearDays: 0,
           sickDays: 0,
@@ -52,6 +54,7 @@ export function EmployeeSummaryTable() {
       const days = getDayValue(record.isFullDay);
       summary.totalDays += days;
       summary.absenceCount += 1;
+      summary.daysPerAbsence = summary.totalDays / summary.absenceCount;
 
       switch (record.category) {
         case 'Vacation':
@@ -87,6 +90,8 @@ export function EmployeeSummaryTable() {
           return a.department.localeCompare(b.department) * mult;
         case 'days':
           return (a.totalDays - b.totalDays) * mult;
+        case 'daysPerAbsence':
+          return (a.daysPerAbsence - b.daysPerAbsence) * mult;
         case 'vacationDays':
           return (a.vacationDays - b.vacationDays) * mult;
         case 'vacationPrevYearDays':
@@ -137,6 +142,12 @@ export function EmployeeSummaryTable() {
               </th>
               <th
                 className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+                onClick={() => handleSort('daysPerAbsence')}
+              >
+                {t('daysPerAbsence')}{getSortIndicator('daysPerAbsence')}
+              </th>
+              <th
+                className="cursor-pointer select-none px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
                 onClick={() => handleSort('vacationDays')}
               >
                 {tDashboard('vacationCardTitle', { year: currentYear })}{getSortIndicator('vacationDays')}
@@ -184,6 +195,9 @@ export function EmployeeSummaryTable() {
                 </td>
                 <td className="px-4 py-3 text-right text-sm font-bold text-gray-900">
                   {summary.totalDays}
+                </td>
+                <td className="px-4 py-3 text-right text-sm text-gray-600">
+                  {summary.daysPerAbsence.toFixed(1)}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-orangeBusiness">
                   {summary.vacationDays}

@@ -4,6 +4,7 @@
   "from": "Desde",
   "till": "Hasta",
   "days": "Días",
+  "daysPerAbsence": "Días / ausencia",
   "status": "Estado",
   "emptyState": "Sin registros",
   "rowsPerPage": "Filas por página",

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ErrorBoundary, OverviewChart, TrendLine, AbsenceTypeDonut, DepartmentComparison, AbsenceGanttCalendar, AppShell, ToastContainer, FilterPanel, EmployeeDetail, KPIBar } from './components';
+import { ErrorBoundary, OverviewChart, TrendLine, AbsenceTypeDonut, AbsenceGanttCalendar, AppShell, ToastContainer, FilterPanel, EmployeeDetail, KPIBar } from './components';
 import { AbsenceTable, EmployeeSummaryTable, VacationStatsTable } from './components/tables';
 import { type NavigationItem } from './components/layout/AppShell';
 import { appEnv } from './config/env';
@@ -119,15 +119,6 @@ export function App() {
               </p>
               <AbsenceTypeDonut />
             </div>
-          </div>
-
-          <hr className="border-gray-100" />
-
-          <div className="py-10">
-            <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-6">
-              {tCharts('departmentComparison')}
-            </p>
-            <DepartmentComparison />
           </div>
 
           <hr className="border-gray-100" />

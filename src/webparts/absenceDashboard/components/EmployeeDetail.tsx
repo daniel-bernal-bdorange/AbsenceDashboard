@@ -190,7 +190,9 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
             <div className="col-span-1">
               <div className="bg-gray-50 rounded-xl p-4 text-center">
                 <div className="text-3xl font-bold text-gray-900">{employeeInfo.totalDays.toFixed(0)}</div>
-                <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 leading-tight whitespace-normal break-words">{tDashboard('totalDays')}</div>
+                <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-1 leading-tight whitespace-normal break-words">
+                  {tDashboard('employeeDetailTotalAbsences')}
+                </div>
               </div>
             </div>
             <div className="col-span-3 grid grid-cols-4 gap-3">

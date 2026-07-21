@@ -4,6 +4,7 @@
   "from": "From",
   "till": "Till",
   "days": "Days",
+  "daysPerAbsence": "Days / absence",
   "status": "Status",
   "emptyState": "No records",
   "rowsPerPage": "Rows per page",
