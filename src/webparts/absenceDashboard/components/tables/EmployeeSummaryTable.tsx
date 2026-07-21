@@ -19,7 +19,7 @@ interface EmployeeSummary {
   absenceCount: number;
 }
 
-export function EmployeeSummaryTable() {
+export function EmployeeSummaryTable(): JSX.Element {
   const { t } = useTranslation('table');
   const { t: tCharts } = useTranslation('charts');
   const { t: tDashboard } = useTranslation('dashboard');

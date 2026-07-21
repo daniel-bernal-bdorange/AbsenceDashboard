@@ -8,7 +8,7 @@ import { useTranslation } from './i18n/useTranslation';
 import { useAppStore } from './store/useAppStore';
 import { useSharePointData } from './fileSystem/useSharePointData';
 
-export function App() {
+export function App(): JSX.Element {
   const { records, selectedEmployeeDetail, setSelectedEmployeeDetail } = useAppStore();
   const { isLoading, error } = useSharePointData();
   const [activeSection, setActiveSection] = useState('overview');
@@ -49,7 +49,7 @@ export function App() {
     );
   }
 
-  const handleNavigate = (sectionId: string) => {
+  const handleNavigate = (sectionId: string): void => {
     setActiveSection(sectionId);
     const target = document.getElementById(sectionId);
     if (target) {

@@ -18,14 +18,10 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
   const { t: tCharts } = useTranslation('charts');
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const records = useAppStore((s) => s.records);
-  const regulRecords = useAppStore((s) => s.regulRecords);
   const filters = useAppStore((s) => s.filters);
   const vacationStats = useAppStore((s) => s.vacationStats);
   const vacationExceptions = useAppStore((s) => s.vacationExceptions);
-  const arrivalDates = useAppStore((s) => s.arrivalDates);
   const employeeDisplayNames = useAppStore((s) => s.employeeDisplayNames);
-  const setVacationStats = useAppStore((s) => s.setVacationStats);
-  const setVacationExceptions = useAppStore((s) => s.setVacationExceptions);
 
   const currentYear = new Date().getFullYear();
 
