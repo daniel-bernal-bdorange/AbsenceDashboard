@@ -37,8 +37,6 @@
   "noRecords": "No records",
   "unknown": "Unknown",
   "dataLoaded": "Data loaded successfully",
-  "comparisonVs": "Comparison vs",
-  "departmentAverage": "Department average",
   "employees": "employees",
   "records": "records",
   "vacationTitle": "Vacations {{currentYear}} / {{prevYear}}",

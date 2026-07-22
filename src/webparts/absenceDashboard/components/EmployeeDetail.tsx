@@ -16,6 +16,7 @@ interface EmployeeDetailProps {
 export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
   const { t: tDashboard, i18n } = useTranslation('dashboard');
   const { t: tCharts } = useTranslation('charts');
+  const { t: tTable } = useTranslation('table');
   const dailyRecords = useAppStore((s) => s.dailyRecords);
   const records = useAppStore((s) => s.records);
   const filters = useAppStore((s) => s.filters);
@@ -102,23 +103,6 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
     return { totals, totalDays, department, count: uniqueAbsenceIds.size };
   }, [employeeDayRecords]);
 
-  const departmentAverages = useMemo(() => {
-    const deptDayRecords = dailyRecords.filter((dr) => {
-      if (dr.status !== 'Accepted') return false;
-      if (dr.department !== employeeInfo.department) return false;
-      if (dr.employeeUsername === username) return false;
-      return true;
-    });
-
-    const employeeCount = new Set(deptDayRecords.map(r => r.employeeUsername)).size || 1;
-    const totalDays = deptDayRecords.reduce((sum, r) => sum + getDayValue(r.isFullDay), 0);
-
-    return {
-      avgDaysPerEmployee: totalDays / employeeCount,
-      employeeCount,
-    };
-  }, [dailyRecords, employeeInfo.department, username]);
-
   const timelineData = useMemo(() => {
     const acceptedIds = new Set(
       employeeDayRecords
@@ -145,11 +129,6 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
     Maternity: chartColors.maternity,
     Special: chartColors.special,
   };
-
-  const diff = employeeInfo.totalDays - departmentAverages.avgDaysPerEmployee;
-  const diffPercent = departmentAverages.avgDaysPerEmployee > 0 
-    ? ((diff / departmentAverages.avgDaysPerEmployee) * 100).toFixed(1)
-    : '0';
 
   return (
     <div className="fixed inset-0 z-[60] flex items-start justify-center pt-32 bg-black/50 backdrop-blur-sm" onClick={onClose}>
@@ -202,40 +181,6 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-
-          <div className="mb-8">
-            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4 whitespace-normal break-words leading-tight">
-              {tDashboard('comparisonVs')} {employeeInfo.department === 'Unknown' ? tDashboard('unknown') : employeeInfo.department}
-            </h3>
-            <div className="flex items-center gap-8 p-6 bg-gray-50 rounded-xl">
-              <div className="flex-1">
-                <div className="text-sm text-gray-500 mb-1">{tDashboard('departmentAverage')}</div>
-                <div className="text-2xl font-bold text-gray-900">
-                  {departmentAverages.avgDaysPerEmployee.toFixed(1)} {tDashboard('days').toLowerCase()}
-                </div>
-                <div className="text-xs text-gray-400 mt-1">
-                  {departmentAverages.employeeCount} {tDashboard('employees')}
-                </div>
-              </div>
-              <div className="text-center px-6">
-                <div className={`text-3xl font-bold ${diff > 0 ? 'text-red-600' : 'text-green-600'}`}>
-                  {diff > 0 ? '+' : ''}{diff.toFixed(1)}
-                </div>
-                <div className="text-xs text-gray-400 mt-1">
-                  {diff > 0 ? '+' : ''}{diffPercent}%
-                </div>
-              </div>
-              <div className="flex-1 text-right">
-                <div className="text-sm text-gray-500 mb-1">{employeeDisplayName}</div>
-                <div className="text-2xl font-bold text-gray-900">
-                  {employeeInfo.totalDays.toFixed(0)} {tDashboard('days').toLowerCase()}
-                </div>
-                <div className="text-xs text-gray-400 mt-1">
-                  {employeeInfo.count} {tDashboard('absences').toLowerCase()}
-                </div>
-              </div>
             </div>
           </div>
 
@@ -451,37 +396,50 @@ export function EmployeeDetail({ username, onClose }: EmployeeDetailProps) {
             <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">
               {tDashboard('timeline')}
             </h3>
-            <div className="space-y-4">
-              {timelineData.map((record, idx) => (
-                <div key={idx} className="flex gap-4">
-                  <div className="flex flex-col items-center">
-                    <div 
-                      className="w-3 h-3 rounded-full" 
-                      style={{ backgroundColor: categoryColors[record.category] }}
-                    />
-                    {idx < timelineData.length - 1 && (
-                      <div className="w-0.5 flex-1 bg-gray-200 mt-2" />
-                    )}
-                  </div>
-                  <div className="flex-1 pb-6">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium text-gray-900">
-                        {tCharts(categoryLabels[record.category] as 'vacationSeries' | 'vacationPrevYearSeries' | 'sickLeaveSeries' | 'maternitySeries' | 'specialSeries')}
-                      </span>
-                      <span className="text-sm text-gray-500">
-                        {record.from.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })} - {record.till.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })}
-                      </span>
-                    </div>
-                    <div className="text-sm text-gray-500 mt-1">
-                      {record.numberOfDays.toFixed(1)} {tDashboard('days').toLowerCase()}
-                    </div>
-                  </div>
-                </div>
-              ))}
-              {timelineData.length === 0 && (
-                <p className="text-gray-400 text-sm">{tDashboard('noRecords')}</p>
-              )}
-            </div>
+            {timelineData.length === 0 ? (
+              <p className="text-gray-400 text-sm">{tDashboard('noRecords')}</p>
+            ) : (
+              <div className="max-h-[260px] overflow-y-auto rounded-xl border border-gray-200 bg-white">
+                <table className="w-full border-collapse">
+                  <thead className="sticky top-0 z-10 border-b border-gray-100 bg-gray-50/50">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">{tTable('type')}</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">{tTable('from')}</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">{tTable('till')}</th>
+                      <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-400">{tTable('days')}</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">{tTable('status')}</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-50">
+                    {timelineData.map((record) => (
+                      <tr key={record.id} className="hover:bg-gray-50/60 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-gray-900">
+                          <span className="inline-flex items-center gap-2">
+                            <span
+                              className="h-2.5 w-2.5 rounded-full"
+                              style={{ backgroundColor: categoryColors[record.category] }}
+                            />
+                            {tCharts(categoryLabels[record.category] as 'vacationSeries' | 'vacationPrevYearSeries' | 'sickLeaveSeries' | 'maternitySeries' | 'specialSeries')}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-500">
+                          {record.from.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })}
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-500">
+                          {record.till.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })}
+                        </td>
+                        <td className="px-4 py-3 text-right text-sm font-medium text-gray-900">
+                          {record.numberOfDays.toFixed(1)}
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-500">
+                          {record.status}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
 
           

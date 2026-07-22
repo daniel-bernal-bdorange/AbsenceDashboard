@@ -2,7 +2,7 @@ import * as XLSX from 'xlsx';
 import type { AbsenceRecord } from '../types';
 import i18n from '../i18n';
 
-export function exportCSV(
+export function exportExcel(
   records: AbsenceRecord[],
   filename: string = 'ausencias.xlsx',
 ): void {

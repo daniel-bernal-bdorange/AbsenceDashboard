@@ -9,9 +9,9 @@ Registrar el avance de los cambios pendientes para poder continuar entre convers
 
 | Estado | Cambio | Nota |
 |---|---|---|
-| Pendiente | Integrar tope máximo de 26 días de vacaciones | Límite independiente de trienios |
-| Pendiente | Hacer que los filtros afecten a la tabla de empleados | La tabla debe respetar los filtros activos |
-| Pendiente | Exportar a Excel en lugar de CSV | Mantener nombre de archivo y descarga directa |
+| Hecho | Integrar tope máximo de 26 días de vacaciones | Límite independiente de trienios; validado en [src/webparts/absenceDashboard/utils/vacationEntitlement.ts](src/webparts/absenceDashboard/utils/vacationEntitlement.ts) |
+| Hecho | Hacer que los filtros afecten a la tabla de empleados | La tabla usa `getFilteredDayRecords()` en [src/webparts/absenceDashboard/components/tables/EmployeeSummaryTable.tsx](src/webparts/absenceDashboard/components/tables/EmployeeSummaryTable.tsx) |
+| Hecho | Exportar a Excel en lugar de CSV | Mantener nombre de archivo y descarga directa; implementado en [src/webparts/absenceDashboard/utils/exportCSV.ts](src/webparts/absenceDashboard/utils/exportCSV.ts) y [src/webparts/absenceDashboard/components/tables/AbsenceTable.tsx](src/webparts/absenceDashboard/components/tables/AbsenceTable.tsx) |
 | Pendiente | Eliminar duplicados en la tabla de vacaciones | Revisar clave de deduplicación y agregación |
 | Pendiente | Incluir regularizaciones en el cálculo | Considerar el impacto de `expenditureQuantity` |
 | Pendiente | Añadir filtro de estado | Debe aplicar a todas las tablas afectadas |

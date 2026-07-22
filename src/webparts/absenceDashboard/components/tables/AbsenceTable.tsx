@@ -4,7 +4,7 @@ import { useAppStore } from '../../store/useAppStore';
 import { Badge } from '../common/Badge';
 import { NoDataState } from '../common/EmptyState';
 import { LoadingSpinner } from '../common/LoadingSpinner';
-import { exportCSV } from '../../utils/exportCSV';
+import { exportExcel } from '../../utils/exportCSV';
 import { formatDate } from '../../utils/dateUtils';
 import { filterDayRecords } from '../../utils/filterDayRecords';
 import { useSort } from '../../hooks/useSort';
@@ -82,7 +82,7 @@ export function AbsenceTable() {
   }, [filteredRecords, sortConfig, employeeDisplayNames]);
 
   const handleExport = () => {
-    exportCSV(filteredRecords, `ausencias_${new Date().toISOString().split('T')[0]}.xlsx`);
+    exportExcel(filteredRecords, `ausencias_${new Date().toISOString().split('T')[0]}.xlsx`);
   };
 
   if (isLoading) {
@@ -101,7 +101,7 @@ export function AbsenceTable() {
           className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
         >
           <span>⬇</span>
-          {t('exportCsv')}
+          {t('exportExcel')}
         </button>
       </div>
 

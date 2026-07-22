@@ -37,8 +37,6 @@
   "noRecords": "Sin registros",
   "unknown": "Desconocido",
   "dataLoaded": "Datos cargados correctamente",
-  "comparisonVs": "Comparativa vs",
-  "departmentAverage": "Media departamento",
   "employees": "empleados",
   "records": "registros",
   "vacationTitle": "Vacaciones {{currentYear}} / {{prevYear}}",

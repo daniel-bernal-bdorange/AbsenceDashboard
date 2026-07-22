@@ -8,6 +8,6 @@
   "status": "Estado",
   "emptyState": "Sin registros",
   "rowsPerPage": "Filas por página",
-  "exportCsv": "Exportar Excel",
+  "exportExcel": "Exportar Excel",
   "unknown": "Desconocido"
 }

@@ -8,6 +8,6 @@
   "status": "Status",
   "emptyState": "No records",
   "rowsPerPage": "Rows per page",
-  "exportCsv": "Export Excel",
+  "exportExcel": "Export Excel",
   "unknown": "Unknown"
 }
